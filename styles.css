@@ -10,14 +10,36 @@ body {
 
 #inputContainer {
     display: flex;
-    justify-content: space-between; /* コンテナ内のスペースを均等に分散 */
-    align-items: center;
-    width: 780px; /* キャンバス幅に合わせて調整 */
+    flex-direction: column;
+    align-items: stretch;
+    width: 780px;
     padding: 10px;
-    margin-bottom: 20px; /* キャンバスとの隙間を確保 */
+    margin-bottom: 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+}
+
+#fileSelect {
+    width: 300px;
+}
+  
+.row {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: left;
+    margin-bottom: 10px;
+}
+
+.row_align_center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+  
+.row:last-child {
+    margin-bottom: 0;
 }
 
 .button {
@@ -38,7 +60,7 @@ body {
 }
 
 #timeSlider {
-    width: 300px; /* スライダーの幅を調整 */
+    width: 450px; /* スライダーの幅を調整 */
 }
 
 #currentTimeInput,
@@ -65,4 +87,24 @@ body {
     align-items: center;
     font-size: 14px;
     margin: 0 5px; /* スピードコントロールの左右のマージンを調整 */
+}
+
+#message-container {
+    position: fixed;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #3094ffc9;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    z-index: 9999;
+    transition: top 0.3s ease-in-out;
+}
+
+#message-container.slide-in {
+    top: 0px;
 }

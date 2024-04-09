@@ -1,19 +1,20 @@
 # p5visualizer
 競プロ用。C++コードに描画コマンドを埋め込み、ファイルを出力し、それをブラウザ上で表示させる
 
-## 使用上の注意
-sketch.js内のevalを使用しているので**任意コードが実行できてしまいます**。パブリックな場所に置くのは危険です！ローカルやプライベートでの使用に留めておいてください。
 
 ## 特徴
 提出コードに、描画コマンドが埋め込めるので、簡単！
 * スコア判定などをビジュアライザ用と提出コード用2回書かずに済む。
 * 提出コードの一時変数を表示させたいときに、直接描画できるので便利。
+* TODO
 * p5.jsに準拠しているので、それなりに機能も豊富。
 
 ### コードの例
+* TODO
 ![image](https://github.com/shindannin/p5visualizer/assets/8682966/6c90c405-d893-48eb-8c66-2e3aa08903db)
 
 ### ビジュアライズの例
+* TODO
 ![image](https://github.com/shindannin/p5visualizer/assets/8682966/e4837fad-0408-41c2-9cf5-0711cef2af3a)
 
 ## 使用方法
@@ -21,66 +22,20 @@ sketch.js内のevalを使用しているので**任意コードが実行でき�
 2. 描画コマンドを書いていく。
 3. 自分のコードを実行すると、ファイルVisCommands.txtが出力される。
 4. ビジュアライザindex.htmlをブラウザで開く。
+* TODO
 5. 「ファイル」で先ほど出力されたVisCommands.txtを開く。
 6. 表示される。時間のスライダーで表示させたい時間を選べる。
 
 ※自分のコードを提出するときは、#define VISUALIZE をコメントアウトしてください。
 
 ## 描画命令一覧
-詳細は https://p5js.org/reference を見てください。なお、https://editor.p5js.org/ にウェブ版のエディタがあるので、描画コマンドがおかしいときはここでも確認できます。
 
 ### 時間命令
 p5.jsにないオリジナルの命令です。ここで指定した時間は再変更するまで全ての描画で使用される。
 * time(t) スライダーで時間指定したときに表示される時間を指定する。
-* always(t) スライダーの時間を無視し、いつでも表示される。
 
 ### 基本図形
-* arc(x,y,w,h,start,stop)
-* ellipse(x,y,w,h)
-* circle(x,y,d)
-* line(x1,y1,x2,y2)
-* point(x,y)
-* quad(x1,y1,x2,y2,x3,y3,x4,y4)
-* rect(x,y,w,h)
-* square(x,y,s)
-* triangle(x1,y1,x2,y2,x3,y3)
-
-### 属性
-* ellipseMode(mode)
-* noSmooth()
-* rectMode(mode)
-* smooth()
-* strokeCap(cap)
-* strokeJoin(join) 
-* strokeWeight(weight)
-
-### カーブ
-* bezier(x1, y1, x2, y2, x3, y3, x4, y4)
-* bezierDetail(detail)
-* bezierPoint(a, b, c, d, t)
-* bezierTangent(a, b, c, d, t) 
-* curve(x1, y1, x2, y2, x3, y3, x4, y4)
-* curveDetail(detail)
-* curveTightness(tightness)
-* curvePoint(a, b, c, d, t)
-* curveTangent(a, b, c, d, t)
-
-### スタイル指定
-* background(gray, alpha = 255)
-* background(r, g, b, a)
-* background(colorName)
-* clear()
-* colorMode(mode, max1, max2, max3, maxA)
-* fill(gray, alpha = 255)
-* fill(r, g, b, a)
-* fill(colorName)
-* noFill()
-* noStroke()
-* stroke(gray, alpha = 255)
-* stroke(r, g, b, alpha = 255)
-* stroke(colorName)
-* erase()
-* noErase()
+* TODO
 
 ### 描画スタイルや属性の一時退避
 * push()
@@ -99,6 +54,7 @@ p5.jsにないオリジナルの命令です。ここで指定した時間は再
 * textFont(fontName)
 
 ## サンプル
+* TODO
 AHC009 ( https://atcoder.jp/contests/ahc009 ) に提出可能です。
 * ahc009_sample.cpp 提出コード
 * ahc009_VisCommands.txt 出力された描画コマンド

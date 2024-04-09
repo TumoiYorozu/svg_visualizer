@@ -1,387 +1,250 @@
-﻿using namespace std;
+﻿
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <complex>
+#include <utility>
+#include <optional>
+#include <cmath>
 
-//----------- p5visualizerのマクロ Version 1.1（ここから） -------------
+namespace visualizer {
+using std::string;
+using std::vector;
+using std::optional;
+using std::nullopt;
+using Point = std::complex<double>;
+Point visualizer_campus_size;
+bool visualizer_internal_y_upper = false;
+
 #define VISUALIZE // 提出時にはここをコメントアウトすること。そうしないとTLEする。
 
+#if defined(ONLINE_JUDGE) || defined(ATCODER)
+#undef VISUALIZE // 誤提出防止
+#endif
+
+
 #ifdef VISUALIZE
-std::ofstream sVisStream("VisCommands.txt");
+#define VRET ;
+FILE* visFile = nullptr;
+struct visualizer_helper {
+    visualizer_helper(Point size, Point origin = Point(), bool y_upper = false) {
+        if (size.imag() <= 0) { size.imag(size.real());}
+        visualizer_campus_size = size;
+        visFile = fopen("VisCommands.svg", "w");
 
-// ビジュアライザ上で表示される時間を指定します
-inline void time(int t) {
-	sVisStream << "time = " << t << ";" << std::endl;
+        fprintf(visFile, "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='800' viewBox='%f %f %f %f'", origin.real(), origin.imag(), size.real(), size.imag());
+        if (y_upper) {
+            visualizer_internal_y_upper = true;
+            fprintf(visFile, " transform='scale(1, -1)' transform-origin='0 %f'", size.imag()/2);
+            fprintf(visFile, "><style>text {transform: scale(1, -1);}</style");
+        }
+        fprintf(visFile, ">\n");
+    }
+    ~visualizer_helper(){
+        fprintf(visFile, "</svg>\n");
+        fclose(visFile);
+    }
+};
+template<typename... Args>
+void print(const char* format, Args... args) {
+    VRET;
+    if constexpr (sizeof...(args) > 0) {
+        fprintf(visFile, format, args...);
+    } else {
+        fprintf(visFile, "%s", format);
+    }
 }
 
-// ビジュアライザ上で常に表示されます
-inline void always() {
-	time(-1);
+#else
+#define VRET return;
+struct visualizer_helper { template<typename... Args> visualizer_helper(Args... args) {} };
+template<typename... Args>
+void print(const char* format, Args... args) { return; }
+#endif
+
+
+struct Vopt {
+    struct v {
+        optional<string> fill = nullopt;
+        optional<string> stroke = nullopt;
+        optional<float> swidth = nullopt;
+
+        optional<string> text_anchor = nullopt;
+        optional<string> dominant_baseline = nullopt;
+        optional<string> title = nullopt;
+        optional<string> desc_text = nullopt;
+    } v;
+    Vopt(){};
+    Vopt(const Vopt& op) : v{op.v} {};
+    Vopt(const string fill) { v.fill = fill; }
+    Vopt(const char*  fill) { v.fill = fill; }
+    Vopt(const string stroke, double width) { v.fill = ""; v.stroke=stroke; v.swidth=width; }
+    Vopt(const char*  stroke, double width) { v.fill = ""; v.stroke=stroke; v.swidth=width; }
+    Vopt(const string fill, const string stroke, double width) { v.fill = fill; v.stroke=stroke; v.swidth=width; }
+    Vopt(const char*  fill, const char*  stroke, double width) { v.fill = fill; v.stroke=stroke; v.swidth=width; }
+
+
+    void p(const optional<string>& a, const char* label, const string empty = "") {
+        if (a) print(" %s='%s'", label, (a.value().size()?a.value():empty).c_str());
+    }
+    void p(const optional<float>& a, const char* label) {
+        if (a) print(" %s='%.2f'", label, a.value());
+    }
+    void operator()(bool close = true) {
+        VRET;
+        p(v.fill, "fill", "none");
+        p(v.stroke, "stroke");
+        p(v.swidth, "stroke-width");
+        p(v.text_anchor, "text-anchor");
+        p(v.dominant_baseline, "dominant-baseline");
+        if (v.desc_text) {
+            print(" data-txt='%s'", v.desc_text.value().c_str());
+        }
+        if (v.title) {
+            print("/></g>\n");
+            if (!close) {printf("Error! %s:%d\n", __FILE__, __LINE__); abort(); }
+        } else {
+            if (close) print("/>\n");
+        }
+    }
+    void pre() {
+        VRET;
+        if (v.title) {
+            print("<g><title>%s</title>", v.title.value().c_str());
+        }
+    }
+    Vopt fill(string s)            { Vopt res(*this); res.v.fill = s; return res; }
+    Vopt stroke(string s)          { Vopt res(*this); res.v.stroke = s; return res; }
+    Vopt swidth(float a)           { Vopt res(*this); res.v.swidth = a; return res; }
+    Vopt stroke(string s, float v) { return stroke(s).swidth(v); }
+
+    Vopt title(string s)           { Vopt res(*this); res.v.title = s; return res; } // 改行は &#x0D;
+    Vopt desc(string s)            { Vopt res(*this); res.v.desc_text = s; return res; } // 改行は<br>
+    template<typename T> optional<T>& over_write(optional<T>& a, const optional<T>& g) {
+        if (!a && g) a = g;
+        return a;
+    }
+};
+
+Vopt fill(string s) { Vopt op; return op.fill(s);}
+Vopt stroke(string s) { Vopt op; return op.stroke(s);}
+Vopt swidth(float a) { Vopt op; return op.swidth(a);}
+Vopt stroke(string s, float v) { Vopt op; return op.stroke(s, v);}
+
+
+string color(double val) { // [0,1]の値を、青→緑→赤のグラデーションに変換
+    val = std::clamp(val, 0.0, 1.0);
+    double r, g, b;
+    if (val < 0.5) {
+        double x = val * 2.0;
+        r = std::round(30.0 * (1.0 - x) + 144.0 * x);
+        g = std::round(144.0 * (1.0 - x) + 255.0 * x);
+        b = std::round(255.0 * (1.0 - x) + 30.0 * x);
+    } else {
+        double x = val * 2.0 - 1.0;
+        r = std::round(144.0 * (1.0 - x) + 255.0 * x);
+        g = std::round(255.0 * (1.0 - x) + 30.0 * x);
+        b = std::round(30.0 * (1.0 - x) + 70.0 * x);
+    }
+    char buffer[8]; // Buffer for the formatted string
+    std::sprintf(buffer, "#%02x%02x%02x", int(r),int(g),int(b));
+    return std::string(buffer);
 }
 
-inline void setSingleColor(int colorOrGray, int alpha = 255) {
-	sVisStream << colorOrGray;
-	if (alpha < 255) {
-		sVisStream << ", " << alpha;
-	}
+
+void circle(Point c, float r, Vopt op={}) { VRET;
+    print("<circle cx='%.2f' cy='%.2f' r='%.2f'", c.real(), c.imag(), r);
+    op();
 }
 
-inline void setRGBColor(int r, int g, int b, int alpha = 255) {
-	sVisStream << r << ", " << g << ", " << b;
-	if (alpha < 255) {
-		sVisStream << ", " << alpha;
-	}
+void circles(const vector<Point>& cs, float r, Vopt op={}) { VRET;
+    for(auto p : cs) circle(p, r, op);
 }
 
-// リファレンス https://p5js.org/reference/ 
-// Web上のエディタ https://editor.p5js.org/
-
-
-//---------- Shape : 2D Primitives ----------
-inline void arc(float x, float y, float w, float h, float start, float stop) {
-	sVisStream << "arc(" << x << ", " << y << ", " << w << ", " << h << ", " << start << ", " << stop << ");" << std::endl;
+void line(Point p1, Point p2, Vopt op={}) { VRET;
+    if (op.v.fill && !op.v.stroke && !op.v.swidth) {
+        op.v.stroke.swap(op.v.fill);
+        op.v.swidth = 1;
+    }
+    print("<line x1='%.2f' y1='%.2f' x2='%.2f' y2='%.2f' stroke-linecap='round' stroke-linejoin='round'", p1.real(), p1.imag(), p2.real(), p2.imag());
+    op();
 }
 
-inline void ellipse(float x, float y, float w, float h) {
-	sVisStream << "ellipse(" << x << ", " << y << ", " << w << ", " << h << ");" << std::endl;
+
+void rect(Point p, Point size, Vopt op={}) { VRET;
+    print("<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f'", p.real(), p.imag(), size.real(), size.imag());
+    op();
 }
 
-inline void circle(float x, float y, float d) {
-	sVisStream << "circle(" << x << ", " << y << ", " << d << ");" << std::endl;
+void rect2p(Point p, Point q, Vopt op={}) { VRET;
+    rect(p, q-p, op);
 }
 
-inline void line(float x1, float y1, float x2, float y2) {
-	sVisStream << "line(" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ");" << std::endl;
+void rectc(Point c, Point size, float deg = 0, Vopt op={}) { VRET;
+    const Point p = c - size * 0.5;
+    print("<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f' transform='rotate(%.2f %.2f %.2f)'", p.real(), p.imag(), size.real(), size.imag(), deg, c.real(), c.imag());
+    op();
 }
 
-inline void point(float x, float y) {
-	sVisStream << "point(" << x << ", " << y << ");" << std::endl;
+
+void polygon(const std::vector<Point>& ps, Vopt op={}) { VRET;
+    print("<polygon points='");
+    for (auto p : ps) print("%.2f,%.2f ", p.real(), p.imag());
+    print("' ");
+    op();
 }
 
-inline void quad(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
-	sVisStream << "quad(" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ", " << x3 << ", " << y3 << ", " << x4 << ", " << y4 << ");" << std::endl;
+void polyline(const std::vector<Point>& ps, Vopt op={}) { VRET;
+    op.pre();
+    print("<polyline points='");
+    for (auto p : ps) print("%.2f,%.2f ", p.real(), p.imag());
+    print("'");
+    op();
 }
 
-inline void rect(float x, float y, float w, float h) {
-	sVisStream << "rect(" << x << ", " << y << ", " << w << ", " << h << ");" << std::endl;
+void text(Point p, string str, float size, Vopt op={}) { VRET;
+    print("<text x='%.2f' y='%.2f' font-size='%.2f'", p.real(), p.imag(), size);
+
+    if (visualizer_internal_y_upper) {
+        print(" transform-origin='%.2f %.2f'", p.real(), p.imag());
+    }
+    
+    op(false);
+    print(">%s</text>\n", str.c_str());
 }
 
-inline void square(float x, float y, float s) {
-	sVisStream << "square(" << x << ", " << y << ", " << s << ");" << std::endl;
+void text(Point p, int num, float size, Vopt op={}) { VRET;
+    text(p, std::to_string(num), size, op);
+}
+void text(Point p, double num, float size, Vopt op={}) { VRET;
+    text(p, std::to_string(num), size, op);
 }
 
-inline void triangle(float x1, float y1, float x2, float y2, float x3, float y3) {
-	sVisStream << "triangle(" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ", " << x3 << ", " << y3 << ");" << std::endl;
+Vopt align(string align) { // LR, TBI
+    Vopt op;
+    if (align.find("R") != string::npos) {
+        op.v.text_anchor = "end"; // R
+    } else if (align.find("L") != string::npos) {
+        op.v.text_anchor = "start"; // L
+    } else {
+        op.v.text_anchor = "middle"; // C
+    }
+    if (align.find("T") != string::npos) {
+        op.v.dominant_baseline = "hanging "; // T
+    } else if (align.find("B") != string::npos) {
+        op.v.dominant_baseline = "text-bottom"; // B
+    } else if (align.find("I") != string::npos) {
+        op.v.dominant_baseline = "ideographic"; // Baseline より下
+    } else {
+        op.v.dominant_baseline = "middle"; // C
+    }
+    return op;
+}
+const Vopt alignC = align("");
+
+void vtime(int a = -1, int b = -1){ VRET;
+    if (b < 0) return print("<!--time=%d-->\n",a);
+    else       return print("<!--time=%d:%d-->\n",a,b);
 }
 
-//---------- Shape : Attributes ----------
-inline void ellipseMode(const std::string& mode) {
-	sVisStream << "ellipseMode(" << mode << ");" << std::endl;
-}
-
-inline void noSmooth() {
-	sVisStream << "noSmooth();" << std::endl;
-}
-
-inline void rectMode(const std::string& mode) {
-	sVisStream << "rectMode(" << mode << ");" << std::endl;
-}
-
-inline void smooth() {
-	sVisStream << "smooth();" << std::endl;
-}
-
-inline void strokeCap(const std::string& cap) {
-	sVisStream << "strokeCap(" << cap << ");" << std::endl;
-}
-
-inline void strokeJoin(const std::string& join) {
-	sVisStream << "strokeJoin(" << join << ");" << std::endl;
-}
-
-inline void strokeWeight(float weight) {
-	sVisStream << "strokeWeight(" << weight << ");" << std::endl;
-}
-
-//---------- Shape : Curves ----------
-inline void bezier(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
-	sVisStream << "bezier(" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ", "
-		<< x3 << ", " << y3 << ", " << x4 << ", " << y4 << ");" << std::endl;
-}
-
-inline void bezierDetail(int detail) {
-	sVisStream << "bezierDetail(" << detail << ");" << std::endl;
-}
-
-inline void bezierPoint(float a, float b, float c, float d, float t) {
-	sVisStream << "bezierPoint(" << a << ", " << b << ", " << c << ", " << d << ", " << t << ");" << std::endl;
-}
-
-inline void bezierTangent(float a, float b, float c, float d, float t) {
-	sVisStream << "bezierTangent(" << a << ", " << b << ", " << c << ", " << d << ", " << t << ");" << std::endl;
-}
-
-inline void curve(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
-	sVisStream << "curve(" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ", "
-		<< x3 << ", " << y3 << ", " << x4 << ", " << y4 << ");" << std::endl;
-}
-
-inline void curveDetail(int detail) {
-	sVisStream << "curveDetail(" << detail << ");" << std::endl;
-}
-
-inline void curveTightness(float tightness) {
-	sVisStream << "curveTightness(" << tightness << ");" << std::endl;
-}
-
-inline void curvePoint(float a, float b, float c, float d, float t) {
-	sVisStream << "curvePoint(" << a << ", " << b << ", " << c << ", " << d << ", " << t << ");" << std::endl;
-}
-
-inline void curveTangent(float a, float b, float c, float d, float t) {
-	sVisStream << "curveTangent(" << a << ", " << b << ", " << c << ", " << d << ", " << t << ");" << std::endl;
-}
-
-//---------- Shape : Vertex ----------
-inline void beginContour() {
-	sVisStream << "beginContour();" << std::endl;
-}
-
-inline void beginShape(const std::string& mode = "") {
-	if (!mode.empty()) {
-		sVisStream << "beginShape(\"" << mode << "\");" << std::endl;
-	} else {
-		sVisStream << "beginShape();" << std::endl;
-	}
-}
-
-inline void bezierVertex(float x1, float y1, float x2, float y2, float x3, float y3) {
-	sVisStream << "bezierVertex(" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ", " << x3 << ", " << y3 << ");" << std::endl;
-}
-
-inline void curveVertex(float x, float y) {
-	sVisStream << "curveVertex(" << x << ", " << y << ");" << std::endl;
-}
-
-inline void endContour() {
-	sVisStream << "endContour();" << std::endl;
-}
-
-inline void endShape(const std::string& mode = "") {
-	if (!mode.empty()) {
-		sVisStream << "endShape(\"" << mode << "\");" << std::endl;
-	} else {
-		sVisStream << "endShape();" << std::endl;
-	}
-}
-
-inline void quadraticVertex(float cx, float cy, float x, float y) {
-	sVisStream << "quadraticVertex(" << cx << ", " << cy << ", " << x << ", " << y << ");" << std::endl;
-}
-
-inline void vertex(float x, float y) {
-	sVisStream << "vertex(" << x << ", " << y << ");" << std::endl;
-}
-
-//---------- Color : Setting ----------
-inline void background(int gray, int alpha = 255) {
-	sVisStream << "background(";
-	setSingleColor(gray, alpha);
-	sVisStream << ");" << std::endl;
-}
-
-inline void background(int r, int g, int b, int alpha = 255) {
-	sVisStream << "background(";
-	setRGBColor(r, g, b, alpha);
-	sVisStream << ");" << std::endl;
-}
-
-inline void background(const std::string& value) {
-	sVisStream << "background(\"" << value << "\");" << std::endl;
-}
-
-inline void clear() {
-	sVisStream << "clear();" << std::endl;
-}
-
-inline void colorMode(const std::string& mode, int max1, int max2, int max3, int maxA) {
-	sVisStream << "colorMode(" << mode << ", " << max1 << ", " << max2 << ", " << max3 << ", " << maxA << ");" << std::endl;
-}
-
-inline void fill(int gray, int alpha = 255) {
-	sVisStream << "fill(";
-	setSingleColor(gray, alpha);
-	sVisStream << ");" << std::endl;
-}
-
-inline void fill(int r, int g, int b, int alpha = 255) {
-	sVisStream << "fill(";
-	setRGBColor(r, g, b, alpha);
-	sVisStream << ");" << std::endl;
-}
-
-inline void fill(const std::string& value) {
-	sVisStream << "fill(\"" << value << "\");" << std::endl;
-}
-
-inline void noFill() {
-	sVisStream << "noFill();" << std::endl;
-}
-
-inline void noStroke() {
-	sVisStream << "noStroke();" << std::endl;
-}
-
-inline void stroke(int gray, int alpha = 255) {
-	sVisStream << "stroke(";
-	setSingleColor(gray, alpha);
-	sVisStream << ");" << std::endl;
-}
-
-inline void stroke(int r, int g, int b, int alpha = 255) {
-	sVisStream << "stroke(";
-	setRGBColor(r, g, b, alpha);
-	sVisStream << ");" << std::endl;
-}
-
-inline void stroke(const std::string& value) {
-	sVisStream << "stroke(\"" << value << "\");" << std::endl;
-}
-
-inline void erase() {
-	sVisStream << "erase();" << std::endl;
-}
-
-inline void noErase() {
-	sVisStream << "noErase();" << std::endl;
-}
-
-//---------- Structure ----------
-inline void push() {
-	sVisStream << "push();" << std::endl;
-}
-
-inline void pop() {
-	sVisStream << "pop();" << std::endl;
-}
-
-//---------- Typography ----------
-inline void textAlign(const std::string& alignX, const std::string& alignY = "") {
-	if (alignY.empty()) {
-		sVisStream << "textAlign(" << alignX << ");" << std::endl;
-	} else {
-		sVisStream << "textAlign(" << alignX << ", " << alignY << ");" << std::endl;
-	}
-}
-
-inline void textLeading(float leading) {
-	sVisStream << "textLeading(" << leading << ");" << std::endl;
-}
-
-inline void textSize(float size) {
-	sVisStream << "textSize(" << size << ");" << std::endl;
-}
-
-inline void textStyle(const std::string& style) {
-	sVisStream << "textStyle(" << style << ");" << std::endl;
-}
-
-inline void textAscent() {
-	sVisStream << "textAscent();" << std::endl;
-}
-
-inline void textDescent() {
-	sVisStream << "textDescent();" << std::endl;
-}
-
-inline void textWrap(const std::string& wrap) {
-	sVisStream << "textWrap(\"" << wrap << "\");" << std::endl;
-}
-
-inline void text(const std::string& str, float x, float y) {
-	sVisStream << "text(\"" << str << "\", " << x << ", " << y << ");" << std::endl;
-}
-
-inline void textFont(const std::string& fontName) {
-	sVisStream << "textFont(\"" << fontName << "\");" << std::endl;
-}
-
-#else //  VISUALIZE
-
-inline void time(int t) {}
-inline void always() {}
-inline void setSingleColor(int, int = 255) {}
-inline void setRGBColor(int, int, int, int = 255) {}
-
-//---------- Shape : 2D Primitives ----------
-inline void arc(float, float, float, float, float, float) {}
-inline void ellipse(float, float, float, float) {}
-inline void circle(float, float, float) {}
-inline void line(float, float, float, float) {}
-inline void point(float, float) {}
-inline void quad(float, float, float, float, float, float, float, float) {}
-inline void rect(float, float, float, float) {}
-inline void square(float, float, float) {}
-inline void triangle(float, float, float, float, float, float) {}
-
-//---------- Shape : Attributes ----------
-inline void ellipseMode(const std::string&) {}
-inline void noSmooth() {}
-inline void rectMode(const std::string&) {}
-inline void smooth() {}
-inline void strokeCap(const std::string&) {}
-inline void strokeJoin(const std::string&) {}
-inline void strokeWeight(float) {}
-
-//---------- Shape : Curves ----------
-inline void bezier(float, float, float, float, float, float, float, float) {}
-inline void bezierDetail(int) {}
-inline void bezierPoint(float, float, float, float, float) {}
-inline void bezierTangent(float, float, float, float, float) {}
-inline void curve(float, float, float, float, float, float, float, float) {}
-inline void curveDetail(int) {}
-inline void curveTightness(float) {}
-inline void curvePoint(float, float, float, float, float) {}
-inline void curveTangent(float, float, float, float, float) {}
-
-//---------- Shape : Vertex ----------
-inline void beginContour() {}
-inline void beginShape(const std::string & = "") {}
-inline void bezierVertex(float, float, float, float, float, float) {}
-inline void curveVertex(float, float) {}
-inline void endContour() {}
-inline void endShape(const std::string & = "") {}
-inline void quadraticVertex(float, float, float, float) {}
-inline void vertex(float, float) {}
-
-//---------- Color : Setting ----------
-inline void background(int, int = 255) {}
-inline void background(int, int, int, int = 255) {}
-inline void background(const std::string&) {}
-inline void clear() {}
-inline void colorMode(const std::string&, int, int, int, int = 0) {}
-inline void fill(int, int = 255) {}
-inline void fill(int, int, int, int = 255) {}
-inline void fill(const std::string&) {}
-inline void noFill() {}
-inline void noStroke() {}
-inline void stroke(int, int = 255) {}
-inline void stroke(int, int, int, int = 255) {}
-inline void stroke(const std::string&) {}
-inline void erase() {}
-inline void noErase() {}
-
-//---------- Structure ----------
-inline void push() {}
-inline void pop() {}
-
-//---------- Typography ----------
-inline void textAlign(const std::string&, const std::string & = "") {}
-inline void textLeading(float) {}
-inline void textSize(float) {}
-inline void textStyle(const std::string&) {}
-inline void textAscent() {}
-inline void textDescent() {}
-inline void textWrap(const std::string&) {}
-inline void text(const std::string&, float, float) {}
-inline void textFont(const std::string&) {}
-#endif // VISUALIZE
-
-//----------- p5visualizerのマクロ（ここまで） -------------
+} // namespace visualizer

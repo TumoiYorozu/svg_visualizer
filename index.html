@@ -5,24 +5,54 @@
     <title>p5 visualizer</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script src='./gif.js'></script>
+    <script src='./jszip.min.js'></script>
 </head>
 <body>
+    <style>
+        .selectable:hover {
+          stroke: orange;
+          width: 3px;
+        }
+        .shown {
+          opacity: 1;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: #000;
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 18px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+    <div id="message-container">メッセージ</div>
     <div id="inputContainer">
-        <div id="fileControl">
-            <label for="fileInput" class="button">&#x1f4c4; ファイル</label>
-            <input type="file" id="fileInput" hidden>
+        <div class="row">
+          <select id="fileSelect"><option value="">Select a file</option></select>
+          <button id="refreshButton" class="button" onclick="fetch_svgs()">Refresh Lists</button>
+          <div id="load_time"></div>
+          <label><input type="checkbox" id="autoReloadCheckbox" checked> Auto Reload</label>
+          <button id="copy_png" class="button" title="クリップボードにコピー" onclick="copyToClipboard()">📋</button>
+          <button id="save_png" class="button" title="フレームを保存" onclick="saveFlame()">💾</button>
+          <button id="save_gif" class="button" title="GIF録画" onclick="recordGif()">📽️</button>
         </div>
-        <div class="slider-container">
+        <div class="row_align_center">
+          <button id="prev_flame" class="button">←</button>
+          <button id="next_flame" class="button">→</button>
+          <div class="slider-container">
             <input type="range" id="timeSlider" min="0" max="100" value="0">
             <input type="text" id="currentTimeInput" value="0" size="2">
             <span>/</span>
             <span id="maxTimeDisplay">---</span>
+          </div>
+          <button id="playButton" class="button">&#9654;</button>
+          <div class="speed-control">
+            速度 <input type="text" id="playSpeed" value="5" size="2">
+          </div>
         </div>
-        <button id="playButton" class="button">&#9654;</button>
-        <div class="speed-control">
-            速度 <input type="text" id="playSpeed" value="1" size="2">
-        </div>
-        <button id="recordGifButton" class="button">GIF録画</button>        
     </div>
     <div id="canvasContainer"></div>
     <script src="sketch.js"></script>
