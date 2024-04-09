@@ -1,5 +1,4 @@
-﻿
-#include <vector>
+﻿#include <vector>
 #include <string>
 #include <algorithm>
 #include <complex>
@@ -26,6 +25,7 @@ bool visualizer_internal_y_upper = false;
 #ifdef VISUALIZE
 #define VRET ;
 FILE* visFile = nullptr;
+
 struct visualizer_helper {
     visualizer_helper(Point size, Point origin = Point(), bool y_upper = false) {
         if (size.imag() <= 0) { size.imag(size.real());}
@@ -209,6 +209,8 @@ void text(Point p, string str, float size, Vopt op={}) { VRET;
         print(" transform-origin='%.2f %.2f'", p.real(), p.imag());
     }
     
+    // if (!op.v.text_anchor) op.v.text_anchor = "middle";
+    // if (!op.v.dominant_baseline) op.v.dominant_baseline = "middle";
     op(false);
     print(">%s</text>\n", str.c_str());
 }
@@ -246,5 +248,118 @@ void vtime(int a = -1, int b = -1){ VRET;
     if (b < 0) return print("<!--time=%d-->\n",a);
     else       return print("<!--time=%d:%d-->\n",a,b);
 }
+
+namespace internal {
+    struct Segment : public std::pair<Point, Point>{
+        Segment(const Point &p1, const Point &p2) : pair(p1, p2) {}
+    };
+    struct Box {
+        Point p, s;
+        Box(Point p, Point s) : p(p), s(s) {};
+        
+        Point center() const {
+            return p + s * 0.5;
+        }
+        operator Point() const { return center(); }
+
+        Point UpLeft() const {  return p; }
+        Point UpRight() const { return p + Point(s.real(), 0); }
+        Point BtLeft() const { return p + Point(0, s.imag()); }
+        Point BtRight() const  { return p + s; }
+        Segment segL()const { return Segment(UpLeft(), BtLeft()); }
+        Segment segR() const { return Segment(UpRight(), BtRight()); }
+        Segment segU() const { return Segment(UpLeft(), UpRight()); }
+        Segment segD() const { return Segment(BtLeft(), BtRight()); }
+    };
+    void line(const Segment& seg, Vopt op={}) { VRET;
+        line(seg.first, seg.second, op);
+    }
+    void line(const Box& box, Vopt op={}) { VRET;
+        line(box.UpLeft(), box.UpRight(), op);
+        line(box.UpRight(), box.BtRight(), op);
+        line(box.BtRight(), box.BtLeft(), op);
+        line(box.BtLeft(), box.UpLeft(), op);
+    }
+    void rect(const Box& box, Vopt op={}) { VRET;
+        rect(box.p, box.s, op);
+    }
+} // namespace internal
+
+struct Grid {
+    int W_num, H_num;
+    Point whole_size{-1,-1}, origin={};
+    double cell_w, cell_h;
+    Point cell_sz;
+    Grid(int WH_num) : W_num(WH_num), H_num(WH_num) { init(); }
+    Grid(int W_num, int H_num, Point whole_size={-1,-1}, Point origin={}) : W_num(W_num), H_num(H_num), whole_size(whole_size), origin(origin) {
+        init();
+    }
+    void init() {
+        if (whole_size.real() < 0) whole_size = visualizer_campus_size;
+        cell_w = whole_size.real() / W_num;
+        cell_h = whole_size.imag() / H_num;
+        cell_sz = {cell_w, cell_h};
+    }
+    double world_x(int col) const { return origin.real() + cell_w * col; }
+    double world_y(int row) const { return origin.imag() + cell_h * row; }
+    double world_top() const { return world_y(0); }
+    double world_bottom() const { return world_y(H_num); }
+    double world_left() const { return world_x(0); }
+    double world_right() const { return world_x(W_num); }
+
+    internal::Segment seg_horizontal(int y, int x, int len = 1) const {
+        return {
+            Point{world_x(x),  world_y(y)},
+            Point{world_x(x+len), world_y(y)}
+        };
+    }
+    internal::Segment seg_horizontal(int y) const {
+        return seg_horizontal(y, 0, W_num);
+    }
+    internal::Segment seg_vertical(int x, int y, int len = 1) const {
+        return {
+            Point{world_x(x), world_y(y)},
+            Point{world_x(x), world_y(y+len)}
+        };
+    }
+    internal::Segment seg_vertical(int x) const {
+        return seg_vertical(x, 0, H_num);
+    }
+    internal::Box _internal_cell(int x, int y, int w, int h) const {
+        return {Point(world_x(x), world_y(y)), Point(cell_w*w, cell_h*h) };
+    }
+    ///
+    internal::Box cell(int x, int y, int w, int h) const {
+        return _internal_cell(x, y, h, w);
+    }
+    internal::Box cell(int x, int y) const {
+        return _internal_cell(x, y, 1, 1);
+    }
+    internal::Box whole() const {
+        return _internal_cell(0, 0, W_num, H_num);
+    }
+    internal::Box operator()(int x, int y) const {
+        return cell(x, y);
+    }
+    internal::Box operator()() const {
+        return whole();
+    }
+    ///
+};
+
+void line(const Grid& grid, Vopt op={}) { VRET;
+    for (int y = 0; y <= grid.H_num; ++y) {
+        line(grid.seg_horizontal(y), op);
+    }
+    for (int x = 0; x <= grid.W_num; ++x) {
+        line(grid.seg_vertical(x), op);
+    }
+}
+void rect(const Grid& grid, Vopt op={}) { VRET;
+    rect(grid(), op);
+    op.v.fill.reset();
+    line(grid, op);
+}
+
 
 } // namespace visualizer

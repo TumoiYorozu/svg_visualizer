@@ -57,7 +57,7 @@ async def http_handler(request, path):
                     return web.FileResponse(svg_path)
         return web.Response(status=404, text="svgファイルが見つかりません", headers={'Cache-Control': 'no-store'})
         
-    file_path = "." + file_path
+    file_path = "http/" + file_path
     if os.path.isfile(file_path):
         return web.FileResponse(file_path, headers={'Cache-Control': 'no-store'})
     else:

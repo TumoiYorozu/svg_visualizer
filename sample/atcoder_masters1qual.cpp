@@ -378,8 +378,7 @@ void masters_qual() {
     int t, n;
     cin >> t >> n;
 
-    // visualizer_helper visualizer_helper(800);
-    visualizer_helper visualizer_helper(Point{n*10., n*10.});
+    visualizer_helper visualizer_helper(Point{n*10.0, n*10.0});
 
 
     Grid G(n);
