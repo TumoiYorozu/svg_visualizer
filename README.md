@@ -8,6 +8,7 @@
 * 提出コードの一時変数を表示させたいときに、直接描画できるので便利。
 * SVG に準拠しているので、それなりに機能も豊富。
 * 画像をクリップボードにコピー、ファイルに保存、GIF動画化して保存、に対応
+* プログラムを実行して svg が更新されたら、自動描画更新
 
 ### コードの例
 ![image](https://github.com/TumoiYorozu/svg_visualizer/assets/12813429/bab0f1e0-997b-4949-ade6-b1dfde7084f5)
@@ -32,6 +33,7 @@
 - svg を吐きますが、その管理は構造体では無く gloval 変数で行われます。
 - visualizer_helper を使うことで、関数を抜けるときに自動で svg を close できます（正常終了しなくてもビジュアライザ側で補完するので動きます）
 - `visualizer_helper visualizer_helper(Point{800, 600});` の様に呼ぶと、幅800, 高さ600 の仮想キャンパスが生成されます。最初に呼んで下さい
+- 描画順は、命令を呼び出した順で上に重なります。z 座標は svg がサポートしていないので対応していません。
 
 ### 時間命令
 svg にないオリジナルの命令です。ここで指定した時間は再変更するまで全ての描画で使用されます
@@ -63,7 +65,8 @@ SVG の fill, stroke, stroke-width 等を管理する構造体 `Vopt` があり�
 * circle(Point c, float r, Vopt)  
   c を中心に、半径 r の円
 * line(Point p1, Point p2, Vopt)  
-  p1 から p2 への線
+  p1 から p2 への線。line だけはオプションで "塗り色" のみが指定された場合、 "線色" だと思って解釈します。
+  つまり、`line(p, q, "red")` で、赤い線が引けます。
 * rect(Point p, Point size, Vopt)  
   pを左上に、size の四角
 * rect2p(Point p, Point q, Vopt)  
@@ -80,16 +83,46 @@ SVG の fill, stroke, stroke-width 等を管理する構造体 `Vopt` があり�
 `Grid G(W, H)` で W x H のグリッドを扱えるようになります。
 デフォルトでキャンパス全体を使用しますが、2個以上並べたいなどのときは、 `Grid(W, H, whole_size, origin)` でGridのキャンパス上の場所を指定できます。
 
-- line(G)
-  グリッドに線を引きます。`line(G, "#bbb")` 
-
-- Grid(int x, int y)
+- line(G)  
+  グリッドに線を引きます。`line(G, "#bbb")` で明るい灰色の線を引きます。
+  
+- rect(G)  
+  グリッド全体を塗ります。`rect(G, {"white", "#bbb", 3})` で、黄色背景で明るい灰色の線を引きます。
+  
+- G(int x, int y)  
   座標(x,y) のセル(後述)が取得できます。
-- 
+  
+- G(int x, int y, int w, int h)  
+  座標(x,y) を起点に、サイズ(w,h)のセルが取得できます。
+
+- G.seg_vertical(int x)  
+  x座標が x である、垂直な線分を取得できます。 `line(G.seg_vertical(3), "black")` で、線が引けます。
+  
+- G.seg_horizontal(int y)  
+  y座標が y である、水平な線分を取得できます。
+
+- G.seg_vertical(int x, int y, int len = 1)  
+  (x,y) を起点に、長さ len の垂直な線分を取得できます。
+
+- G.seg_horizontal(int y, int x, int len = 1)  
+  (x,y) を起点に、長さ len の水平な線分を取得できます。
+
+#### セル (internal::Box構造体)
+矩形領域を管理する構造体です。セルに対して line や rect を行ったり、  `.segL()` でセルの左側の線分を取得して、それに対して line などができます。
+
+セル (internal::Box） は、Point への暗黙のキャストが実装されています。このときセルの中心座標を返します。円やテキストを表示するのに便利です。
+
+例:
+- `line(G(x, y), {"black", 2});` (x,y) のセルの外周に線を引きます。
+- `line(G(x, y, 3, 3), {"black", 2});` (x,y) から (x+3, y+3) のセルの外周だけに線を引きます。
+- `rect(G(x, y), "red");` (x,y) のセルを赤く塗ります
+- `line(G(x, y).segR(), "black");` (x,y) のセルの右側に線を引きます。seg[LRUD] があります。
+
+- `circle(G(x, y), r, "red")` セル(x,y) の中心に、半径 r の円を描きます。
+- `text(G(x, y), "Hello", 5, alignC)` セル(x,y)の中心に「Hello」とテキストを表示します。
+- `line(G(x0, y0), G(x1, y1), "blue")` セル(x0, y0) から セル (x1, y1) へ、線を引きます。
 
 ## サンプル
 * TODO
-AHC009 ( https://atcoder.jp/contests/ahc009 ) に提出可能です。
-* ahc009_sample.cpp 提出コード
-* ahc009_VisCommands.txt 出力された描画コマンド
+
 
