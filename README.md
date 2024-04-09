@@ -108,7 +108,7 @@ SVG の fill, stroke, stroke-width 等を管理する構造体 `Vopt` があり�
   (x,y) を起点に、長さ len の垂直な線分を取得できます。
 
 - G.seg_horizontal(int y, int x, int len = 1)  
-  (x,y) を起点に、長さ len の水平な線分を取得できます。
+  (x,y) を起点に、長さ len の水平な線分を取得できます。引数の順番が y, x な点に注意。
 
 #### セル (internal::Box構造体)
 矩形領域を管理する構造体です。セルに対して line や rect を行ったり、  `.segL()` でセルの左側の線分を取得して、それに対して line などができます。
