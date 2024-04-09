@@ -52,6 +52,9 @@ SVG の fill, stroke, stroke-width 等を管理する構造体 `Vopt` があり�
 メソッドチェーンで `Vopt("塗色").stroke("線色").swidth(線サイズ)` の様にも書けます。  
 `Vopt fill(string s)` 関数なども用意されているので、単に `fill("塗色").stroke("線色").swidth(線サイズ)` の様にも書けます。  
 
+- desc オプション  
+  マウスをオーバーレイしたときに表示されるテキストを設定できます。`rect(p, cell_sz, Vopt("red").desc("score:123"));` の様に使えます。line などでもマウスを乗せれば表示されます。
+
 ### テキスト
 * text(Point p, string str, float size, Vopt op={})
 座標 p に、フォントサイズ size で str を描画します。string str の他に、int, double 版も定義されています。
