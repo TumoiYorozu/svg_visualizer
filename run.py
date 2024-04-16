@@ -21,7 +21,7 @@ class FileCloseHandler(FileSystemEventHandler):
         if not event.is_directory:
             if event.src_path.lower().endswith(".svg"):
                 now = time.time()
-                if now - self.prev_modified_time < 0.4:
+                if now - self.prev_modified_time < 0.25:
                     return
                 self.prev_modified_time = now
                 current_time = time.strftime("%H:%M:%S")

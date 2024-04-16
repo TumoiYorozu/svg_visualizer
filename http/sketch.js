@@ -99,10 +99,10 @@ function draw() {
     // clear();
     // background('white');
 
+    let timeSlider = document.getElementById('timeSlider');
     if (playing) {
         loop();
         // 描画コマンドの実行とその他の描画処理...
-        let timeSlider = document.getElementById('timeSlider');
         // let timeSlider = document.getElementById('currentTimeInput');
         const currentTime = parseFloat(timeSlider.value);
         // let nextTime = currentTime + playSpeed; // 次の時間を計算
@@ -117,6 +117,13 @@ function draw() {
         timeSlider.value = (nextTime); // スライダーの値を更新
         document.getElementById('currentTimeInput').value = nextTime; // テキストボックスも更新
    }
+
+   const time = parseInt(timeSlider.value);
+   
+   let commandsToExecute = Module.get_svg(time);;
+
+   const canvasContainer = document.getElementById('canvasContainer');
+   canvasContainer.innerHTML = commandsToExecute;
 }
 
 function readFile(file) {
@@ -135,16 +142,6 @@ function readFile(file) {
     };
 
     reader.readAsText(file);
-}
-
-function executeCommands() {
-    let timeSlider = document.getElementById('timeSlider');
-    const time = parseInt(timeSlider.value);
-    
-    let commandsToExecute = Module.get_svg(time);;
-
-    const canvasContainer = document.getElementById('canvasContainer');
-    canvasContainer.innerHTML = commandsToExecute;
 }
 ///////
 document.addEventListener('DOMContentLoaded', function() {
@@ -368,7 +365,7 @@ socket.addEventListener('message', (event) => {
             wait_time = 0;
             next_modified_id++;
         } else {
-            wait_time = 500;
+            wait_time = 700;
             next_modified_id++;
             modified_id = next_modified_id;
         }
@@ -435,10 +432,16 @@ function fetch_svg(filename, auto_reloaded=false) {
     fetch('/svg/' + filename)
         .then(response => response.text())
         .then(svgContent => {
+
+
             console.log("start parse");
+            const startTime = performance.now();
+            
             maxTime = Module.set_svg(svgContent);
 
+            console.log("Parse time:", (performance.now() - startTime)/1000);
             console.log("res maxTime:", maxTime);
+
             timeSlider.max = maxTime;
             document.getElementById('maxTimeDisplay').innerText = `${maxTime}`;
 

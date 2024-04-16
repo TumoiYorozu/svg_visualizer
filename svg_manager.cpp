@@ -2,6 +2,8 @@
 #include <emscripten/bind.h>
 /*
 em++ svg_manager.cpp -o http/svg_manager.js --bind -s MAXIMUM_MEMORY=2GB -sALLOW_MEMORY_GROWTH && sed -i "s$'requestPointerLock'$//'requestPointerLock'$" http/svg_manager.js
+
+em++ svg_manager.cpp -O3 -s ASSERTIONS=0 -s DISABLE_EXCEPTION_CATCHING=1 -o http/svg_manager.js --bind -s INITIAL_MEMORY=1GB -s MAXIMUM_MEMORY=3GB -sALLOW_MEMORY_GROWTH && sed -i "s$'requestPointerLock'$//'requestPointerLock'$" http/svg_manager.js
 */
 
 
@@ -11,14 +13,13 @@ using std::vector;
 
 struct svg_line {
     int line_num;
-    int begin_time;
-    int end_time;
-    string svg;
+    int16_t begin_time, end_time;
+    int start_p, len;
+    // string svg;
 };
 
 vector<svg_line> svg_lines;
-
-
+string internal_svg;
 
 int set_svg(const string &svg) {
     // internal_svg = svg;
@@ -27,8 +28,8 @@ int set_svg(const string &svg) {
     svg_lines.clear();
     string::size_type i = 0;
     int line_num = 0;
-    int begin_time = -1;
-    int end_time = -1;
+    int16_t begin_time = -1;
+    int16_t end_time = -1;
     int max_time = 0;
     for (;;) {
         string::size_type br = i;
@@ -68,26 +69,26 @@ int set_svg(const string &svg) {
                     max_time = std::max(max_time, end_time-1);
                 }
             } else {
-                string line = svg.substr(i, br - i);
-                svg_lines.push_back({line_num, begin_time, end_time, line});
+                // svg_lines.push_back({line_num, begin_time, end_time, svg.substr(i, br - i)});
+                svg_lines.push_back({line_num, begin_time, end_time, int(i), int(br - i)});
                 ++line_num;
             }
         }
         i = br;
         if (br >= svg.size()) break;
 
-        if (line_num >= 100) break;
+        // if (line_num >= 100) break;
     }
+    internal_svg = std::move(svg);
     return max_time;
 }
 
 string get_svg(int t) {
     string res;
     for (auto &line : svg_lines) {
-        // res += std::to_string(line.begin_time) + ":" + std::to_string(line.end_time) + line.svg; continue;
-
         if (line.begin_time < 0 || (line.begin_time <= t && t < line.end_time)) {
-            res += line.svg;
+            // res += line.svg;
+            res += internal_svg.substr(line.start_p, line.len);
         }
     }
     return res;
