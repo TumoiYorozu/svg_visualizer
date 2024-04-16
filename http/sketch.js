@@ -24,18 +24,6 @@ function setup() {
     
     noLoop();
 
-    // // ファイル入力処理
-    // document.getElementById('fileInput').addEventListener('change', function(e) {
-    //     if (e.target.files.length > 0) {
-    //         // ファイルが選択されたとき、そのファイルを保存
-    //         lastFile = e.target.files[0];
-    //         readFile(lastFile);
-    //     }
-    // });
-
-    // document.getElementById('fileInput').addEventListener('click', function(e) {
-    //     this.value = null;
-    // });
 
     // スライダーの設定部分
     // スライダーの値が変更されたときにテキストボックスを更新
@@ -55,6 +43,7 @@ function setup() {
             value = Math.min(Math.max(value, 0), maxTime); // 範囲内に収める
             timeSlider.value = value;
             if (!playing) {
+                console.log("redraw")
                 redraw(); // テキストボックスが手動で操作されたときに描画を更新
             }
         }
@@ -128,22 +117,6 @@ function draw() {
         timeSlider.value = (nextTime); // スライダーの値を更新
         document.getElementById('currentTimeInput').value = nextTime; // テキストボックスも更新
    }
-
-    // 描画コマンドの実行
-    executeCommands();
-
-    // 全描画コマンド数と表示描画コマンド数の表示
-    /*
-    fill(0); // テキストの色を黒に設定
-    textSize(12); // テキストサイズの設定
-    text(`描画コマンド数: ${numDrawCommands}/${commands.length}`, 10, height - 20);
-    */
-}   
-function loadSvgContent(svgContent) {
-    const canvasContainer = document.getElementById('canvasContainer');
-    canvasContainer.innerHTML = svgContent;
-    parseCommands(svgContent);
-    draw();
 }
 
 function readFile(file) {
@@ -164,92 +137,14 @@ function readFile(file) {
     reader.readAsText(file);
 }
 
-function parseCommands(fileContent) {
-    commands = []; // コマンドリストを初期化
-    maxTime = 0; // 最大time値をリセット
-
-    let beginTime = -1;
-    let endTime = -1;
-    const commandsArray = fileContent.replace(/\r\n?/g, '\n').split('\n');
-    commandsArray.forEach(commandString => {
-        const trimmedCommand = commandString.trim();
-        if (trimmedCommand === '') return;
-        if (trimmedCommand === '</svg>') return;
-        const timeMatch = trimmedCommand.match(/<!--time=(-?\d+(?::\d+)?)-->/);
-        if (timeMatch) {
-            if (timeMatch[1] == "-1") {
-                beginTime = -1;
-                endTime   = -1;
-            } else {
-                const time = timeMatch[1].split(':');
-                if (time.length == 1) {
-                    beginTime = parseInt(time[0]);
-                    endTime   = beginTime+1;
-                } else {
-                    beginTime = parseInt(time[0]);
-                    endTime   = parseInt(time[1]);
-                }
-                maxTime = Math.max(maxTime, endTime-1);
-            }
-        } else {
-            commands.push({ beginTime: beginTime, endTime: endTime, cmd: trimmedCommand });
-        }
-    });
-    // console.log(commands);
-    timeSlider.max = maxTime;
-    // 最大値を表示
-    document.getElementById('maxTimeDisplay').innerText = `${maxTime}`;
-}
-
 function executeCommands() {
     let timeSlider = document.getElementById('timeSlider');
     const time = parseInt(timeSlider.value);
-    // const startTime = currentTime;
-    // const endTime = currentTime;
+    
+    let commandsToExecute = Module.get_svg(time);;
 
-    // 時間の条件を満たすコマンド文字列を連結
-    let commandsToExecute = '';
-    numDrawCommands = 0;
-    // commands.forEach(({time, cmd}) => {
-    //     if ( (startTime <= time && time <= endTime) || time < 0) { // time = -1は常に描画
-    //         commandsToExecute += cmd + ';';
-    //         numDrawCommands += 1;
-    //     }
-    // });
-    commands.forEach(({beginTime, endTime, cmd}) => {
-        if (beginTime < 0 || (beginTime <= time && time < endTime)) { // time = -1は常に描画
-            commandsToExecute += cmd + '\n';
-            numDrawCommands += 1;
-        }
-    });
-    commandsToExecute += "\n</svg>"
-    // console.log(commandsToExecute);
     const canvasContainer = document.getElementById('canvasContainer');
     canvasContainer.innerHTML = commandsToExecute;
-    
-    if (commandsToExecute) {
-        // eval(commandsToExecute); // 連結されたコマンドをevalで1回だけ評価
-    }
-
-    // let selectableElements = document.querySelectorAll('[data-txt]');
-    // Array.from( selectableElements ).forEach(elem => {
-    // elem.addEventListener("mouseover", eve => {
-    //     // console.log("txt:", elem.dataset.txt);
-    //     hideTooltip();
-    //     showTooltip(elem.dataset.txt, eve);
-    // });
-    
-    // // elem.addEventListener("mouseover", eve => {
-    //     // hideTooltip();
-    // // });
-    // // elem.addEventListener("mouseleave", eve => {
-    // //   let textId = elem.id + "-text";
-    // //   let textElem = document.getElementById(textId);
-    // //   if( textElem != null ) {
-    // //     textElem.classList.remove("shown");
-    // //   }
-    // // });
-    // });
 }
 ///////
 document.addEventListener('DOMContentLoaded', function() {
@@ -451,6 +346,9 @@ function keyReleased() {
         ++now_repeat_id;
         LEFT_ARROW_PRESSED=0;
     }
+    if (key === ' ') {
+        document.getElementById('playButton').click();
+    }
 }
 
 const socket = new WebSocket(`ws://${window.location.host}/ws`);
@@ -537,7 +435,15 @@ function fetch_svg(filename, auto_reloaded=false) {
     fetch('/svg/' + filename)
         .then(response => response.text())
         .then(svgContent => {
-            loadSvgContent(svgContent);
+            console.log("start parse");
+            maxTime = Module.set_svg(svgContent);
+
+            console.log("res maxTime:", maxTime);
+            timeSlider.max = maxTime;
+            document.getElementById('maxTimeDisplay').innerText = `${maxTime}`;
+
+            draw();
+
             const loadTimeElement = document.getElementById('load_time');
             const currentTime = new Date();
             const hours = currentTime.getHours().toString().padStart(2, '0');
