@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <complex>
 #include <utility>
+#include <unordered_map>
 #include <optional>
 #include <cmath>
 
@@ -17,7 +18,7 @@ bool visualizer_internal_y_upper = false;
 
 #define VISUALIZE // 提出時にはここをコメントアウトすること。そうしないとTLEする。
 
-#if defined(ONLINE_JUDGE) || defined(ATCODER)
+#if (defined(ONLINE_JUDGE) || defined(ATCODER) || defined(NOVIS)) && defined(VISUALIZE)
 #undef VISUALIZE // 誤提出防止
 #endif
 
@@ -32,10 +33,10 @@ struct visualizer_helper {
         visualizer_campus_size = size;
         visFile = fopen("VisCommands.svg", "w");
 
-        fprintf(visFile, "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='800' viewBox='%f %f %f %f'", origin.real(), origin.imag(), size.real(), size.imag());
+        fprintf(visFile, "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='800' viewBox='%g %g %g %g'", origin.real(), origin.imag(), size.real(), size.imag());
         if (y_upper) {
             visualizer_internal_y_upper = true;
-            fprintf(visFile, " transform='scale(1, -1)' transform-origin='0 %f'", size.imag()/2);
+            fprintf(visFile, " transform='scale(1, -1)' transform-origin='0 %g'", size.imag()/2);
             fprintf(visFile, "><style>text {transform: scale(1, -1);}</style");
         }
         fprintf(visFile, ">\n");
@@ -45,13 +46,51 @@ struct visualizer_helper {
         fclose(visFile);
     }
 };
+
+
+#include <functional>
+
+
+
+namespace buf_internal {
+    constexpr int buf_len = 2048;
+    char buf[buf_len];
+    int buf_i = 0;
+    int line_number = 1;
+    std::size_t get_buf_hash() {
+        std::size_t hash = buf_i;
+        const char* str = buf;
+        while (*str) {
+            hash ^= static_cast<std::size_t>(*str++) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+        }
+        return hash;
+    }
+    std::unordered_map<std::size_t, int> compressor;
+}
+
 template<typename... Args>
 void print(const char* format, Args... args) {
     VRET;
+
+    using namespace buf_internal;
     if constexpr (sizeof...(args) > 0) {
-        fprintf(visFile, format, args...);
+        buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, format, args...);
     } else {
-        fprintf(visFile, "%s", format);
+        buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, "%s", format);
+    }
+
+    if (buf[buf_i-1] != '\n') return;
+    ++line_number;
+
+    bool ignore = (buf[0] == '<' && buf[1] == '!');
+    std::size_t hash = get_buf_hash();
+    buf_i = 0;
+    
+    if (ignore || compressor.count(hash) == 0) {
+        if (!ignore) compressor.emplace(hash, line_number);
+        fprintf(visFile, "%s", buf);
+    } else {
+        fprintf(visFile, "L%d\n", compressor[hash]);
     }
 }
 
@@ -88,7 +127,7 @@ struct Vopt {
         if (a) print(" %s='%s'", label, (a.value().size()?a.value():empty).c_str());
     }
     void p(const optional<float>& a, const char* label) {
-        if (a) print(" %s='%.2f'", label, a.value());
+        if (a) print(" %s='%g'", label, a.value());
     }
     void operator()(bool close = true) {
         VRET;
@@ -153,7 +192,7 @@ string color(double val) { // [0,1]の値を、青→緑→赤のグラデーシ
 
 
 void circle(Point c, float r, Vopt op={}) { VRET;
-    print("<circle cx='%.2f' cy='%.2f' r='%.2f'", c.real(), c.imag(), r);
+    print("<circle cx='%g' cy='%g' r='%g'", c.real(), c.imag(), r);
     op();
 }
 
@@ -166,13 +205,13 @@ void line(Point p1, Point p2, Vopt op={}) { VRET;
         op.v.stroke.swap(op.v.fill);
         op.v.swidth = 1;
     }
-    print("<line x1='%.2f' y1='%.2f' x2='%.2f' y2='%.2f' stroke-linecap='round' stroke-linejoin='round'", p1.real(), p1.imag(), p2.real(), p2.imag());
+    print("<line x1='%g' y1='%g' x2='%g' y2='%g' stroke-linecap='round' stroke-linejoin='round'", p1.real(), p1.imag(), p2.real(), p2.imag());
     op();
 }
 
 
 void rect(Point p, Point size, Vopt op={}) { VRET;
-    print("<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f'", p.real(), p.imag(), size.real(), size.imag());
+    print("<rect x='%g' y='%g' width='%g' height='%g'", p.real(), p.imag(), size.real(), size.imag());
     op();
 }
 
@@ -182,14 +221,14 @@ void rect2p(Point p, Point q, Vopt op={}) { VRET;
 
 void rectc(Point c, Point size, float deg = 0, Vopt op={}) { VRET;
     const Point p = c - size * 0.5;
-    print("<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f' transform='rotate(%.2f %.2f %.2f)'", p.real(), p.imag(), size.real(), size.imag(), deg, c.real(), c.imag());
+    print("<rect x='%g' y='%g' width='%g' height='%g' transform='rotate(%g %g %g)'", p.real(), p.imag(), size.real(), size.imag(), deg, c.real(), c.imag());
     op();
 }
 
 
 void polygon(const std::vector<Point>& ps, Vopt op={}) { VRET;
     print("<polygon points='");
-    for (auto p : ps) print("%.2f,%.2f ", p.real(), p.imag());
+    for (auto p : ps) print("%g,%g ", p.real(), p.imag());
     print("' ");
     op();
 }
@@ -197,16 +236,16 @@ void polygon(const std::vector<Point>& ps, Vopt op={}) { VRET;
 void polyline(const std::vector<Point>& ps, Vopt op={}) { VRET;
     op.pre();
     print("<polyline points='");
-    for (auto p : ps) print("%.2f,%.2f ", p.real(), p.imag());
+    for (auto p : ps) print("%g,%g ", p.real(), p.imag());
     print("'");
     op();
 }
 
 void text(Point p, string str, float size, Vopt op={}) { VRET;
-    print("<text x='%.2f' y='%.2f' font-size='%.2f'", p.real(), p.imag(), size);
+    print("<text x='%g' y='%g' font-size='%g'", p.real(), p.imag(), size);
 
     if (visualizer_internal_y_upper) {
-        print(" transform-origin='%.2f %.2f'", p.real(), p.imag());
+        print(" transform-origin='%g %g'", p.real(), p.imag());
     }
     
     // if (!op.v.text_anchor) op.v.text_anchor = "middle";
@@ -222,7 +261,7 @@ void text(Point p, double num, float size, Vopt op={}) { VRET;
     text(p, std::to_string(num), size, op);
 }
 
-Vopt align(string align) { // LR, TBI
+Vopt align(string align) { // LR, TBI(UD)
     Vopt op;
     if (align.find("R") != string::npos) {
         op.v.text_anchor = "end"; // R
@@ -231,9 +270,9 @@ Vopt align(string align) { // LR, TBI
     } else {
         op.v.text_anchor = "middle"; // C
     }
-    if (align.find("T") != string::npos) {
+    if (align.find("T") != string::npos || align.find("U") != string::npos) {
         op.v.dominant_baseline = "hanging "; // T
-    } else if (align.find("B") != string::npos) {
+    } else if (align.find("B") != string::npos || align.find("D") != string::npos) {
         op.v.dominant_baseline = "text-bottom"; // B
     } else if (align.find("I") != string::npos) {
         op.v.dominant_baseline = "ideographic"; // Baseline より下
@@ -270,6 +309,9 @@ namespace internal {
         Segment segR() const { return Segment(UpRight(), BtRight()); }
         Segment segU() const { return Segment(UpLeft(), UpRight()); }
         Segment segD() const { return Segment(BtLeft(), BtRight()); }
+        Box shrink(double v) const {
+            return {p + Point(v, v), s - Point(v*2, v*2)};
+        }
     };
     void line(const Segment& seg, Vopt op={}) { VRET;
         line(seg.first, seg.second, op);

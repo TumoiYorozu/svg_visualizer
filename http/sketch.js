@@ -120,10 +120,13 @@ function draw() {
 
    const time = parseInt(timeSlider.value);
    
-   let commandsToExecute = Module.get_svg(time);;
+   const startTime = performance.now();
+   let svg = Module.get_svg(time);
+   console.log("build svg time:", (performance.now() - startTime)/1000);
 
+//    console.log("got svg: ", svg);
    const canvasContainer = document.getElementById('canvasContainer');
-   canvasContainer.innerHTML = commandsToExecute;
+   canvasContainer.innerHTML = svg;
 }
 
 function readFile(file) {
@@ -323,6 +326,12 @@ function keyPressed() {
     }
     if (key == 'a') {
         const nextTime = 0;
+        document.getElementById('timeSlider').value = nextTime
+        document.getElementById('currentTimeInput').value = nextTime;
+        draw();
+    }
+    if (key == 'e') {
+        const nextTime = maxTime;
         document.getElementById('timeSlider').value = nextTime
         document.getElementById('currentTimeInput').value = nextTime;
         draw();

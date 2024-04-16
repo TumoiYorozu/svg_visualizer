@@ -1,14 +1,9 @@
-#include <iostream>
-
-using namespace std;
-#define rep(i,a) for(int i=0;i<(a);i++)
-
-
 #include <vector>
 #include <string>
 #include <algorithm>
 #include <complex>
 #include <utility>
+#include <unordered_map>
 #include <optional>
 #include <cmath>
 
@@ -23,7 +18,7 @@ bool visualizer_internal_y_upper = false;
 
 #define VISUALIZE // 提出時にはここをコメントアウトすること。そうしないとTLEする。
 
-#if defined(ONLINE_JUDGE) || defined(ATCODER)
+#if (defined(ONLINE_JUDGE) || defined(ATCODER) || defined(NOVIS)) && defined(VISUALIZE)
 #undef VISUALIZE // 誤提出防止
 #endif
 
@@ -38,10 +33,10 @@ struct visualizer_helper {
         visualizer_campus_size = size;
         visFile = fopen("VisCommands.svg", "w");
 
-        fprintf(visFile, "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='800' viewBox='%f %f %f %f'", origin.real(), origin.imag(), size.real(), size.imag());
+        fprintf(visFile, "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='800' viewBox='%g %g %g %g'", origin.real(), origin.imag(), size.real(), size.imag());
         if (y_upper) {
             visualizer_internal_y_upper = true;
-            fprintf(visFile, " transform='scale(1, -1)' transform-origin='0 %f'", size.imag()/2);
+            fprintf(visFile, " transform='scale(1, -1)' transform-origin='0 %g'", size.imag()/2);
             fprintf(visFile, "><style>text {transform: scale(1, -1);}</style");
         }
         fprintf(visFile, ">\n");
@@ -51,13 +46,51 @@ struct visualizer_helper {
         fclose(visFile);
     }
 };
+
+
+#include <functional>
+
+
+
+namespace buf_internal {
+    constexpr int buf_len = 2048;
+    char buf[buf_len];
+    int buf_i = 0;
+    int line_number = 1;
+    std::size_t get_buf_hash() {
+        std::size_t hash = buf_i;
+        const char* str = buf;
+        while (*str) {
+            hash ^= static_cast<std::size_t>(*str++) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+        }
+        return hash;
+    }
+    std::unordered_map<std::size_t, int> compressor;
+}
+
 template<typename... Args>
 void print(const char* format, Args... args) {
     VRET;
+
+    using namespace buf_internal;
     if constexpr (sizeof...(args) > 0) {
-        fprintf(visFile, format, args...);
+        buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, format, args...);
     } else {
-        fprintf(visFile, "%s", format);
+        buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, "%s", format);
+    }
+
+    if (buf[buf_i-1] != '\n') return;
+    ++line_number;
+
+    bool ignore = (buf[0] == '<' && buf[1] == '!');
+    std::size_t hash = get_buf_hash();
+    buf_i = 0;
+    
+    if (ignore || compressor.count(hash) == 0) {
+        if (!ignore) compressor.emplace(hash, line_number);
+        fprintf(visFile, "%s", buf);
+    } else {
+        fprintf(visFile, "L%d\n", compressor[hash]);
     }
 }
 
@@ -94,7 +127,7 @@ struct Vopt {
         if (a) print(" %s='%s'", label, (a.value().size()?a.value():empty).c_str());
     }
     void p(const optional<float>& a, const char* label) {
-        if (a) print(" %s='%.2f'", label, a.value());
+        if (a) print(" %s='%g'", label, a.value());
     }
     void operator()(bool close = true) {
         VRET;
@@ -159,7 +192,7 @@ string color(double val) { // [0,1]の値を、青→緑→赤のグラデーシ
 
 
 void circle(Point c, float r, Vopt op={}) { VRET;
-    print("<circle cx='%.2f' cy='%.2f' r='%.2f'", c.real(), c.imag(), r);
+    print("<circle cx='%g' cy='%g' r='%g'", c.real(), c.imag(), r);
     op();
 }
 
@@ -172,13 +205,13 @@ void line(Point p1, Point p2, Vopt op={}) { VRET;
         op.v.stroke.swap(op.v.fill);
         op.v.swidth = 1;
     }
-    print("<line x1='%.2f' y1='%.2f' x2='%.2f' y2='%.2f' stroke-linecap='round' stroke-linejoin='round'", p1.real(), p1.imag(), p2.real(), p2.imag());
+    print("<line x1='%g' y1='%g' x2='%g' y2='%g' stroke-linecap='round' stroke-linejoin='round'", p1.real(), p1.imag(), p2.real(), p2.imag());
     op();
 }
 
 
 void rect(Point p, Point size, Vopt op={}) { VRET;
-    print("<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f'", p.real(), p.imag(), size.real(), size.imag());
+    print("<rect x='%g' y='%g' width='%g' height='%g'", p.real(), p.imag(), size.real(), size.imag());
     op();
 }
 
@@ -188,14 +221,14 @@ void rect2p(Point p, Point q, Vopt op={}) { VRET;
 
 void rectc(Point c, Point size, float deg = 0, Vopt op={}) { VRET;
     const Point p = c - size * 0.5;
-    print("<rect x='%.2f' y='%.2f' width='%.2f' height='%.2f' transform='rotate(%.2f %.2f %.2f)'", p.real(), p.imag(), size.real(), size.imag(), deg, c.real(), c.imag());
+    print("<rect x='%g' y='%g' width='%g' height='%g' transform='rotate(%g %g %g)'", p.real(), p.imag(), size.real(), size.imag(), deg, c.real(), c.imag());
     op();
 }
 
 
 void polygon(const std::vector<Point>& ps, Vopt op={}) { VRET;
     print("<polygon points='");
-    for (auto p : ps) print("%.2f,%.2f ", p.real(), p.imag());
+    for (auto p : ps) print("%g,%g ", p.real(), p.imag());
     print("' ");
     op();
 }
@@ -203,16 +236,16 @@ void polygon(const std::vector<Point>& ps, Vopt op={}) { VRET;
 void polyline(const std::vector<Point>& ps, Vopt op={}) { VRET;
     op.pre();
     print("<polyline points='");
-    for (auto p : ps) print("%.2f,%.2f ", p.real(), p.imag());
+    for (auto p : ps) print("%g,%g ", p.real(), p.imag());
     print("'");
     op();
 }
 
 void text(Point p, string str, float size, Vopt op={}) { VRET;
-    print("<text x='%.2f' y='%.2f' font-size='%.2f'", p.real(), p.imag(), size);
+    print("<text x='%g' y='%g' font-size='%g'", p.real(), p.imag(), size);
 
     if (visualizer_internal_y_upper) {
-        print(" transform-origin='%.2f %.2f'", p.real(), p.imag());
+        print(" transform-origin='%g %g'", p.real(), p.imag());
     }
     
     // if (!op.v.text_anchor) op.v.text_anchor = "middle";
@@ -228,7 +261,7 @@ void text(Point p, double num, float size, Vopt op={}) { VRET;
     text(p, std::to_string(num), size, op);
 }
 
-Vopt align(string align) { // LR, TBI
+Vopt align(string align) { // LR, TBI(UD)
     Vopt op;
     if (align.find("R") != string::npos) {
         op.v.text_anchor = "end"; // R
@@ -237,9 +270,9 @@ Vopt align(string align) { // LR, TBI
     } else {
         op.v.text_anchor = "middle"; // C
     }
-    if (align.find("T") != string::npos) {
+    if (align.find("T") != string::npos || align.find("U") != string::npos) {
         op.v.dominant_baseline = "hanging "; // T
-    } else if (align.find("B") != string::npos) {
+    } else if (align.find("B") != string::npos || align.find("D") != string::npos) {
         op.v.dominant_baseline = "text-bottom"; // B
     } else if (align.find("I") != string::npos) {
         op.v.dominant_baseline = "ideographic"; // Baseline より下
@@ -276,6 +309,9 @@ namespace internal {
         Segment segR() const { return Segment(UpRight(), BtRight()); }
         Segment segU() const { return Segment(UpLeft(), UpRight()); }
         Segment segD() const { return Segment(BtLeft(), BtRight()); }
+        Box shrink(double v) const {
+            return {p + Point(v, v), s - Point(v*2, v*2)};
+        }
     };
     void line(const Segment& seg, Vopt op={}) { VRET;
         line(seg.first, seg.second, op);
@@ -371,34 +407,239 @@ void rect(const Grid& grid, Vopt op={}) { VRET;
 } // namespace visualizer
 
 
+// 上に macro.cpp
+
+#include <bits/stdc++.h>
+using namespace std;
 using namespace visualizer;
 
+#define rep(i,n) for(int i=0;i<(n);++i)
+#define reps(i,a,b) for(int i=(a);i<(b);++i)
+
+
+int T, N;
+
+
+void disp_num(const vector<vector<int>>& a, const Grid& G){
+    rep(i, a.size()) {
+        rep(j, a[i].size()) {
+            rect(G(j,i), color((a[i][j]-1.0)/(N*N)));
+
+            if (N <= 15) {
+                text(G(j,i), a[i][j], 5, alignC);
+            }
+        }
+    }
+}
+
+using Pi = pair<int,int>;
+#define fs first
+#define sc second
+template<typename T1, typename T2>
+std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& p) {
+    os << "(" << p.first << ", " << p.second << ")";
+    return os;
+}
+
+
+
+const int INF = (1e9) + 9;
+
+vector<pair<Pi, int>> calc_dists(Pi a, vector<string>& v, vector<string>& h, vector<vector<int>>& dists) {
+    int n = v.size();
+    vector<pair<Pi, int>> q;
+    q.emplace_back(a, 0);
+
+    dists[a.fs][a.sc] = 0;
+    const Pi moves[4] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    for (int qi = 0;; ++qi) {
+        Pi cur = q[qi].first;
+        int r = cur.first;
+        int c = cur.second;
+        int d = q[qi].second;
+        for (const auto& move : moves) {
+            int nr = r + move.first;
+            int nc = c + move.second;
+            if (nr < 0 || nr >= n || nc < 0 || nc >= n) continue;
+            if (move.fs == +1 && h[r][c] == '1') continue;
+            if (move.fs == -1 && h[nr][nc] == '1') continue;
+            if (move.sc == +1 && v[r][c] == '1') continue;
+            if (move.sc == -1 && v[nr][nc] == '1') continue;
+            if (dists[nr][nc] != INF) {
+                continue;
+            }
+            dists[nr][nc] = d + 1;
+            q.emplace_back(Pi{nr, nc}, d+1);
+            if (q.size() >= 25) return q;
+        }
+    }
+    return q;
+}
+
+template<typename T> T pow2(T a) { return a*a; }
+
+bool can_i_move(Pi p, Pi q, vector<string>& v, vector<string>& h) {
+    int s = 0;
+    Pi d = {q.fs - p.fs, q.sc - p.sc};
+
+    if (d.fs == -1 &&  p.fs > 0   && h[p.fs-1][p.sc] == '0') return true;
+    if (d.fs == +1 &&  p.fs < N-1 && h[p.fs][p.sc] == '0')   return true;
+    if (d.sc == -1 &&  p.sc > 0   && v[p.fs][p.sc-1] == '0') return true;
+    if (d.sc == +1 &&  p.sc < N-1 && v[p.fs][p.sc] == '0')   return true;
+    return false;
+}
+
+inline int calc_cell_score(Pi p, vector<vector<int>>& a, vector<string>& v, vector<string>& h) {
+    int s = 0;
+    if (p.fs > 0   && h[p.fs-1][p.sc] == '0') s += pow2(a[p.fs-1][p.sc] - a[p.fs][p.sc]); 
+    if (p.fs < N-1 && h[p.fs][p.sc] == '0') s += pow2(a[p.fs+1][p.sc] - a[p.fs][p.sc]);
+    if (p.sc > 0   && v[p.fs][p.sc-1] == '0') s += pow2(a[p.fs][p.sc-1] - a[p.fs][p.sc]); 
+    if (p.sc < N-1 && v[p.fs][p.sc] == '0') s += pow2(a[p.fs][p.sc+1] - a[p.fs][p.sc]); 
+    return s;
+}
+
+
+vector<Pi> gen_path(const vector<vector<int>>& dist, Pi p, Pi q, vector<string>& v, vector<string>& h) {
+    vector<Pi> path;
+    path.push_back(p);
+
+    const Pi moves[4] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    while(dist[p.fs][p.sc] > 0) {
+        for (const auto& move : moves) {
+            int nr = p.fs + move.fs;
+            int nc = p.sc + move.sc;
+            if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
+            if (can_i_move(Pi{nr, nc}, p, v,h) == false) continue;
+
+            if (dist[nr][nc] == dist[p.fs][p.sc] - 1) {
+                p = {nr, nc};
+                path.push_back(p);
+                break;
+            }
+        }
+    }
+    reverse(path.begin(), path.end());
+    return path;
+}
+
+char get_move_char(Pi a, Pi b) {
+    if (a.fs < b.fs) return 'D';
+    if (a.fs > b.fs) return 'U';
+    if (a.sc < b.sc) return 'R';
+    if (a.sc > b.sc) return 'L';
+    return '.';
+}
 
 void masters_qual() {
-    int t, n;
-    cin >> t >> n;
+    cin >> T >> N;
+    visualizer_helper visualizer_helper(Point{N*10.0, N*10.0});
 
-    visualizer_helper visualizer_helper(Point{n*10.0, n*10.0});
-
-
-    Grid G(n);
+    Grid G(N);
     line(G, "#bbb");
     
-    vector<string> v(n), h(n-1);
-    rep(i, n) {
-        cin >> v[i];
-    }
-    rep(i, n-1) {
-        cin >> h[i];
+    vector<string> v(N), h(N-1);
+    rep(i, N) cin >> v[i];
+    rep(i, N-1) cin >> h[i];
+
+    vector<vector<int>> a(N, vector<int>(N));
+    rep(i, N) {
+        rep(j, N) {
+            cin >> a[i][j];
+        }
     }
 
-    rep(i, n) {
-        rep(j, n-1) {
+    // disp_num(a, G);
+
+
+    int time = 0;
+    pair<int,int> A(0,0), B(N-1, N-1); // 高橋くん、青木くんの位置
+
+    printf("0 0 %d %d\n", N-1, N-1);
+
+
+    vector<vector<int>> adist(N, vector<int>(N, INF));
+    vector<vector<int>> bdist(N, vector<int>(N, INF));
+
+    for(;;) {
+        const auto aq = calc_dists(A, v, h, adist);
+        const auto bq = calc_dists(B, v, h, bdist);
+        
+        for (auto [p, d]: aq) {
+            // text(G(p.sc, p.fs).UpLeft(), d, 2, align("LT").fill("red"));
+        }
+        for (auto [p, d]: bq) {
+            // text(G(p.sc, p.fs).BtRight(), d, 2, align("RB").fill("blue"));
+        }
+
+        double max_ds = 0;
+        Pi m_ap, m_bp;
+
+        for (auto [ap, ad]: aq) {
+            int prev_a = calc_cell_score(ap, a, v, h);
+            for (auto [bp, bd]: bq) {
+                int prev_b = calc_cell_score(bp, a, v, h);
+
+                swap(a[ap.fs][ap.sc], a[bp.fs][bp.sc]);
+                int next_a = calc_cell_score(ap, a, v, h);
+                int next_b = calc_cell_score(bp, a, v, h);
+                double diff = next_a + next_b - prev_a - prev_b;
+
+                double ds = -diff / (max(ad, bd) + 1);
+                if (max_ds < ds) {
+                    max_ds = ds;
+                    m_ap = ap; m_bp = bp;
+                }
+                swap(a[ap.fs][ap.sc], a[bp.fs][bp.sc]);
+            }
+        }
+        if (max_ds <= 0) break;
+        const auto apath = gen_path(adist, m_ap, A, v, h);
+        const auto bpath = gen_path(bdist, m_bp, B, v, h);
+
+        // cerr << "max_ds " << max_ds << endl;
+        // cerr << "apath.size()" << apath.size() << endl;
+        // cerr << "bpath.size()" << bpath.size() << endl;
+
+        rep(i, max(apath.size(), bpath.size())-1) {
+            char am = (i >= apath.size()-1) ? '.' : ((A=apath[i]), get_move_char(apath[i], apath[i+1]));
+            char bm = (i >= bpath.size()-1) ? '.' : ((B=bpath[i]), get_move_char(bpath[i], bpath[i+1]));
+
+            vtime(time);
+            disp_num(a, G);
+            circle(G(A.sc, A.fs), 4, Vopt("", "red", 2));
+            circle(G(B.sc, B.fs), 4, Vopt("", "blue", 2));
+            printf("0 %c %c\n", am, bm);
+            ++time;
+            if (time >= 4 * N * N - 1) break;
+        }
+        if (time >= 4 * N * N - 1) break;
+
+        A = m_ap;
+        B = m_bp;
+
+        vtime(time);
+        ++time;
+        disp_num(a, G);
+        circle(G(A.sc, A.fs), 4, Vopt("", "red", 2));
+        circle(G(B.sc, B.fs), 4, Vopt("", "blue", 2));
+        printf("1 . .\n");
+
+        swap(a[A.fs][A.sc], a[B.fs][B.sc]);
+        
+
+        for (auto [p, d] : aq) adist[p.fs][p.sc] = INF;
+        for (auto [p, d] : bq) bdist[p.fs][p.sc] = INF;
+    }
+    cerr <<"fin" << endl;
+
+    vtime();
+    rep(i, N) {
+        rep(j, N-1) {
             if(v[i][j] == '1') line(G(j, i).segR(), {"black", 2});
         }
     }
-    rep(i, n-1) {
-        rep(j, n) {
+    rep(i, N-1) {
+        rep(j, N) {
             if(h[i][j] == '1') line(G(j, i).segD(), {"black", 2});
         }
     }
@@ -409,5 +650,3 @@ int main() {
     masters_qual();
     return 0;
 }
-
-
