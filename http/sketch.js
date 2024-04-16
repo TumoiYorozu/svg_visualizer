@@ -4,7 +4,7 @@ let numDrawCommands = 0; // 描画したコマンド数
 let lastFile; // 最後に選択されたファイルの内容を保存する変数
 let playButton, playSpeedInput;
 let playing = false; // 再生中かどうかのフラグ
-let playSpeed = 5; // 再生速度（スライダーのvalueを進める速度）
+let playSpeed = 20; // 再生速度（スライダーのvalueを進める速度）
 
 let final_score = null;
 let problem_param = null;
@@ -459,20 +459,36 @@ socket.addEventListener('open', () => {
     console.log('WebSocket connection established');
 });
 
+let next_modified_id = 0;
 socket.addEventListener('message', (event) => {
     const message = event.data;
     console.log('Received message:', message);
-    if (message.startsWith('close')) {
-        const autoReloadCheckbox = document.getElementById('autoReloadCheckbox');
-        if (autoReloadCheckbox.checked) {
-            const fileSelect = document.getElementById('fileSelect');
-            const selectedFile = fileSelect.value;
-            const closeFile = message.split(':')[1].trim();
-            if (selectedFile === closeFile) {
-                fetch_svg(selectedFile, true);
-                popup_message('自動更新されました');
-            }
+    if (message.startsWith('close') || message.startsWith('modified')) {
+        let wait_time = 0;
+        let modified_id = -1;
+        if (message.startsWith('close')) {
+            wait_time = 0;
+            next_modified_id++;
+        } else {
+            wait_time = 500;
+            next_modified_id++;
+            modified_id = next_modified_id;
         }
+        setTimeout(() => {
+            if (modified_id >= 0 && modified_id != next_modified_id) {
+                return;
+            }
+            const autoReloadCheckbox = document.getElementById('autoReloadCheckbox');
+            if (autoReloadCheckbox.checked) {
+                const fileSelect = document.getElementById('fileSelect');
+                const selectedFile = fileSelect.value;
+                const closeFile = message.split(':')[1].trim();
+                if (selectedFile === closeFile) {
+                    fetch_svg(selectedFile, true);
+                    popup_message('自動更新されました' + message);
+                }
+            }
+        }, wait_time);
     }
 });
 
