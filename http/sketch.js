@@ -244,8 +244,8 @@ function copyToClipboard(bairitsu = 1) {
     getSvg2Canvas(bairitsu).then(canvas => canvas.toBlob(blob => {
         const item = new ClipboardItem({ 'image/png': blob });
         navigator.clipboard.write([item]);
+        popup_message('クリップボードにコピーしました');
     }, 'image/png'));
-    popup_message('クリップボードにコピーしました');
 }
 
 

@@ -2,7 +2,7 @@
 #include <string>
 #include <emscripten/bind.h>
 /*
-em++ svg_manager.cpp -O3 -o http/svg_manager.js --bind -s ASSERTIONS=0 -s DISABLE_EXCEPTION_CATCHING=1 -s INITIAL_MEMORY=200MB -s MAXIMUM_MEMORY=3GB -sALLOW_MEMORY_GROWTH -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s EXPORTED_FUNCTIONS='["_get_svg", "_malloc", "_free"]'
+em++ svg_manager.cpp -O3 -o http/svg_manager.js --bind -s INITIAL_MEMORY=200MB -s MAXIMUM_MEMORY=3GB -sALLOW_MEMORY_GROWTH -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s EXPORTED_FUNCTIONS='["_get_svg", "_malloc", "_free"]'
 
 em++ svg_manager.cpp -o http/svg_manager.js --bind -s MAXIMUM_MEMORY=2GB -sALLOW_MEMORY_GROWTH && sed -i "s$'requestPointerLock'$//'requestPointerLock'$" http/svg_manager.js
 
