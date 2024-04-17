@@ -9,6 +9,8 @@ let playSpeed = 20; // 再生速度（スライダーのvalueを進める速度�
 let final_score = null;
 let problem_param = null;
 
+const get_svg = Module.cwrap('get_svg', 'string', ['number']);
+
 // スライダーの最大値を更新するグローバル関数
 window.updateMaxTime = function(maxTime) {
     document.getElementById('timeSlider').max = maxTime;
@@ -121,7 +123,7 @@ function draw() {
    const time = parseInt(timeSlider.value);
    
    const startTime = performance.now();
-   let svg = Module.get_svg(time);
+   let svg = get_svg(time);
    console.log("build svg time:", (performance.now() - startTime)/1000);
 
 //    console.log("got svg: ", svg);

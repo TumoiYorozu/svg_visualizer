@@ -2,6 +2,8 @@
 #include <string>
 #include <emscripten/bind.h>
 /*
+em++ svg_manager.cpp -O3 -o http/svg_manager.js --bind -s ASSERTIONS=0 -s DISABLE_EXCEPTION_CATCHING=1 -s INITIAL_MEMORY=200MB -s MAXIMUM_MEMORY=3GB -sALLOW_MEMORY_GROWTH -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s EXPORTED_FUNCTIONS='["_get_svg", "_malloc", "_free"]'
+
 em++ svg_manager.cpp -o http/svg_manager.js --bind -s MAXIMUM_MEMORY=2GB -sALLOW_MEMORY_GROWTH && sed -i "s$'requestPointerLock'$//'requestPointerLock'$" http/svg_manager.js
 
 em++ svg_manager.cpp -O3 -s ASSERTIONS=0 -s DISABLE_EXCEPTION_CATCHING=1 -o http/svg_manager.js --bind -s INITIAL_MEMORY=1GB -s MAXIMUM_MEMORY=3GB -sALLOW_MEMORY_GROWTH && sed -i "s$'requestPointerLock'$//'requestPointerLock'$" http/svg_manager.js
@@ -26,9 +28,6 @@ vector<vector<svg_line>> turn_svgs;
 vector<svg_line>         gloval_svgs;
 
 int set_svg(const string &svg) {
-    // internal_svg = svg;
-    // return svg.length();
-
     svg_lines.clear();
     gloval_svgs.clear();
     turn_svgs.clear();
@@ -115,8 +114,11 @@ int set_svg(const string &svg) {
     return max_time;
 }
 
-string get_svg(int t) {
-    string res;
+
+extern "C" {
+string get_svg_res;
+char* get_svg(int t) {
+    get_svg_res.clear();
     int ti = 0;
     int gi = 0;
     while (ti < turn_svgs[t].size() && gi < gloval_svgs.size()) {
@@ -125,22 +127,22 @@ string get_svg(int t) {
             continue;
         }
         if (turn_svgs[t][ti].line_num < gloval_svgs[gi].line_num) {
-            res += internal_svg.substr(turn_svgs[t][ti].start_p, turn_svgs[t][ti].len);
+            get_svg_res += internal_svg.substr(turn_svgs[t][ti].start_p, turn_svgs[t][ti].len);
             ++ti;
         } else {
-            res += internal_svg.substr(gloval_svgs[gi].start_p, gloval_svgs[gi].len);
+            get_svg_res += internal_svg.substr(gloval_svgs[gi].start_p, gloval_svgs[gi].len);
             ++gi;
         }
     }
     for (; ti < turn_svgs[t].size(); ++ti) {
-        res += internal_svg.substr(turn_svgs[t][ti].start_p, turn_svgs[t][ti].len);
+        get_svg_res += internal_svg.substr(turn_svgs[t][ti].start_p, turn_svgs[t][ti].len);
     }
     for (; gi < gloval_svgs.size(); ++gi) {
         if (gloval_svgs[gi].begin_time != -1 && (t < gloval_svgs[gi].begin_time || gloval_svgs[gi].end_time < t)) {
             ++gi;
             continue;
         }
-        res += internal_svg.substr(gloval_svgs[gi].start_p, gloval_svgs[gi].len);
+        get_svg_res += internal_svg.substr(gloval_svgs[gi].start_p, gloval_svgs[gi].len);
     }
     // for (auto &line : svg_lines) {
     //     if (line.begin_time == -1 || (line.begin_time <= t && t <= line.end_time)) {
@@ -148,11 +150,12 @@ string get_svg(int t) {
     //         res += internal_svg.substr(line.start_p, line.len);
     //     }
     // }
-    return res;
+    return const_cast<char*>(get_svg_res.c_str());
+}
 }
 
 // Emscriptenのバインディング
 EMSCRIPTEN_BINDINGS(my_module) {
     emscripten::function("set_svg", &set_svg);
-    emscripten::function("get_svg", &get_svg);
+    // emscripten::function("get_svg", &get_svg);
 }
