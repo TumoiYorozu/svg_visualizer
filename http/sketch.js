@@ -213,8 +213,9 @@ function getSvg2Canvas (bairitsu = 1) {
         const ctx = canvas.getContext('2d');
         const img = new Image();
         img.onload = function() {
-            canvas.width = img.width * bairitsu;
-            canvas.height = img.height * bairitsu;
+            const BoundingClientRect = svgElement.getBoundingClientRect();
+            canvas.width = Math.round(BoundingClientRect.width) * bairitsu;
+            canvas.height = Math.round(BoundingClientRect.height) * bairitsu;
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             resolve(canvas);
         }
