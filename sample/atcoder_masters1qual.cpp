@@ -5,7 +5,12 @@
 #include <utility>
 #include <unordered_map>
 #include <optional>
+#include <functional>
+#include <deque>
 #include <cmath>
+
+#include <iostream>
+
 
 namespace visualizer {
 using std::string;
@@ -27,6 +32,86 @@ bool visualizer_internal_y_upper = false;
 #define VRET ;
 FILE* visFile = nullptr;
 
+
+namespace buf_internal {
+    constexpr int MAX_HIST_LEN = 100*100*3;
+    std::deque<std::size_t> hash_hist;
+    constexpr int buf_len = 2048;
+    char buf[buf_len];
+    int buf_i = 0;
+    int line_number = 1;
+    std::size_t get_buf_hash() {
+        std::size_t hash = buf_i;
+        const char* str = buf;
+        while (*str) {
+            hash ^= static_cast<std::size_t>(*str++) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+        }
+        return hash;
+    }
+    std::unordered_map<std::size_t, int> compressor;
+    int start_same_line = -1;
+    int last_same_line = -1;
+    inline void pop_line_combo() {
+        if (start_same_line == -1) return;
+        if (start_same_line == last_same_line) {
+            fprintf(visFile, "L%d\n", start_same_line);
+        } else {
+            fprintf(visFile, "L%d:%d\n", start_same_line, last_same_line-start_same_line+1);
+        }
+        start_same_line = last_same_line = -1;
+    }
+}
+
+template<typename... Args>
+void print(const char* format, Args... args) {
+    VRET;
+    using namespace buf_internal;
+    if constexpr (sizeof...(args) > 0) {
+        buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, format, args...);
+    } else {
+        buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, "%s", format);
+    }
+
+    if (buf[buf_i-1] != '\n') return;
+    ++line_number;
+
+    bool ignore = (buf[0] == '<' && buf[1] == '!');
+
+    if (ignore) {
+        buf_internal::pop_line_combo();
+        fprintf(visFile, "%s", buf);
+    } else {
+        std::size_t hash = get_buf_hash();
+        auto it = compressor.find(hash);
+        if (it == compressor.end()) {
+            compressor.emplace(hash, line_number);
+            hash_hist.emplace_back(hash);
+            buf_internal::pop_line_combo();
+            fprintf(visFile, "%s", buf);
+        } else {
+            if (start_same_line == -1) {
+                start_same_line = last_same_line = it->second;
+            } else if (last_same_line + 1 == it->second) {
+                last_same_line = it->second;
+            } else {
+                buf_internal::pop_line_combo();
+                start_same_line = last_same_line = it->second;
+            }
+            it->second = line_number;
+            hash_hist.emplace_back(hash);
+        }
+        if (hash_hist.size() >= MAX_HIST_LEN) {
+            std::size_t old_hash = hash_hist.front(); hash_hist.pop_front();
+            auto it = compressor.find(old_hash);
+            if (line_number - it->second >= MAX_HIST_LEN) {
+                compressor.erase(it);
+            }
+        }
+    }
+    buf_i = 0;
+}
+
+
 struct visualizer_helper {
     visualizer_helper(Point size, Point origin = Point(), bool y_upper = false) {
         if (size.imag() <= 0) { size.imag(size.real());}
@@ -42,61 +127,11 @@ struct visualizer_helper {
         fprintf(visFile, ">\n");
     }
     ~visualizer_helper(){
-        fprintf(visFile, "</svg>\n");
+        print("</svg>\n");
         fclose(visFile);
     }
 };
 
-
-#include <functional>
-
-
-
-namespace buf_internal {
-    constexpr int buf_len = 2048;
-    char buf[buf_len];
-    int buf_i = 0;
-    int line_number = 1;
-    std::size_t get_buf_hash() {
-        std::size_t hash = buf_i;
-        const char* str = buf;
-        while (*str) {
-            hash ^= static_cast<std::size_t>(*str++) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
-        }
-        return hash;
-    }
-    std::unordered_map<std::size_t, int> compressor;
-}
-
-template<typename... Args>
-void print(const char* format, Args... args) {
-    VRET;
-
-    using namespace buf_internal;
-    if constexpr (sizeof...(args) > 0) {
-        buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, format, args...);
-    } else {
-        buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, "%s", format);
-    }
-
-    if (buf[buf_i-1] != '\n') return;
-    ++line_number;
-
-    bool ignore = (buf[0] == '<' && buf[1] == '!');
-
-    if (ignore) {
-        fprintf(visFile, "%s", buf);
-    } else {
-        std::size_t hash = get_buf_hash();
-        if (compressor.count(hash) == 0) {
-            compressor.emplace(hash, line_number);
-            fprintf(visFile, "%s", buf);
-        } else {
-            fprintf(visFile, "L%d\n", compressor[hash]);
-        }
-    }
-    buf_i = 0;
-}
 
 #else
 #define VRET return;
@@ -487,7 +522,7 @@ vector<pair<Pi, int>> calc_dists(Pi a, vector<string>& v, vector<string>& h, vec
             }
             dists[nr][nc] = d + 1;
             q.emplace_back(Pi{nr, nc}, d+1);
-            if (q.size() >= 25) return q;
+            if (q.size() >= 30) return q;
         }
     }
     return q;

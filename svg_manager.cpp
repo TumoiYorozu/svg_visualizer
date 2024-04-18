@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <string>
+#include <deque>
 #include <emscripten/bind.h>
 /*
 em++ svg_manager.cpp -O3 -o http/svg_manager.js --bind -s INITIAL_MEMORY=200MB -s MAXIMUM_MEMORY=4GB -sALLOW_MEMORY_GROWTH -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s EXPORTED_FUNCTIONS='["_get_svg", "_malloc", "_free"]'
@@ -9,9 +10,12 @@ em++ svg_manager.cpp -o http/svg_manager.js --bind -s MAXIMUM_MEMORY=2GB -sALLOW
 em++ svg_manager.cpp -O3 -s ASSERTIONS=0 -s DISABLE_EXCEPTION_CATCHING=1 -o http/svg_manager.js --bind -s INITIAL_MEMORY=1GB -s MAXIMUM_MEMORY=3GB -sALLOW_MEMORY_GROWTH && sed -i "s$'requestPointerLock'$//'requestPointerLock'$" http/svg_manager.js
 */
 
+constexpr int MAX_HIST_LEN = 100*100*3;
+
 
 using std::string;
 using std::vector;
+using std::deque;
 
 
 struct svg_line {
@@ -30,7 +34,9 @@ vector<svg_line>         gloval_svgs;
 int svg_max_time = 0;
 
 int set_svg(const string &svg) {
-    vector<svg_line> svg_lines;
+    deque<svg_line> svg_lines;
+    int svg_lines_offset = 0;
+
     gloval_svgs.clear();
     turn_svgs.clear();
 
@@ -65,7 +71,7 @@ int set_svg(const string &svg) {
                     }
                 }
                 for (int k = 0; k < rep; ++k) {
-                    auto tmp = svg_lines[ln + k];
+                    auto tmp = svg_lines[ln + k - svg_lines_offset];
                     tmp.line_num = line_num;
                     tmp.begin_time = begin_time;
                     tmp.end_time = end_time;
@@ -126,10 +132,13 @@ int set_svg(const string &svg) {
                 (begin_time>=0&&begin_time == end_time ? turn_svgs[begin_time] : gloval_svgs).emplace_back(tmp);
             }
             ++line_num;
+            if (svg_lines.size() > MAX_HIST_LEN) {
+                svg_lines_offset += svg_lines.size() - MAX_HIST_LEN;
+                svg_lines.erase(svg_lines.begin(), svg_lines.begin() + svg_lines.size() - MAX_HIST_LEN);
+            }
         }
         i = br;
         if (br >= svg.size()) break;
-        // if (line_num >= 100) break;
     }
     internal_svg = std::move(svg);
     svg_max_time = max_time;

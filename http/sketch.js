@@ -124,7 +124,7 @@ function draw() {
    
    const startTime = performance.now();
    let svg = get_svg(time);
-   console.log("svg", svg);
+//    console.log("svg", svg);
    console.log("build svg time:", (performance.now() - startTime)/1000);
 
 //    console.log("got svg: ", svg);

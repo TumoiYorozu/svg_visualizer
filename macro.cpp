@@ -5,7 +5,12 @@
 #include <utility>
 #include <unordered_map>
 #include <optional>
+#include <functional>
+#include <deque>
 #include <cmath>
+
+#include <iostream>
+
 
 namespace visualizer {
 using std::string;
@@ -27,32 +32,10 @@ bool visualizer_internal_y_upper = false;
 #define VRET ;
 FILE* visFile = nullptr;
 
-struct visualizer_helper {
-    visualizer_helper(Point size, Point origin = Point(), bool y_upper = false) {
-        if (size.imag() <= 0) { size.imag(size.real());}
-        visualizer_campus_size = size;
-        visFile = fopen("VisCommands.svg", "w");
-
-        fprintf(visFile, "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='800' viewBox='%g %g %g %g'", origin.real(), origin.imag(), size.real(), size.imag());
-        if (y_upper) {
-            visualizer_internal_y_upper = true;
-            fprintf(visFile, " transform='scale(1, -1)' transform-origin='0 %g'", size.imag()/2);
-            fprintf(visFile, "><style>text {transform: scale(1, -1);}</style");
-        }
-        fprintf(visFile, ">\n");
-    }
-    ~visualizer_helper(){
-        fprintf(visFile, "</svg>\n");
-        fclose(visFile);
-    }
-};
-
-
-#include <functional>
-
-
 
 namespace buf_internal {
+    constexpr int MAX_HIST_LEN = 100*100*3;
+    std::deque<std::size_t> hash_hist;
     constexpr int buf_len = 2048;
     char buf[buf_len];
     int buf_i = 0;
@@ -82,7 +65,6 @@ namespace buf_internal {
 template<typename... Args>
 void print(const char* format, Args... args) {
     VRET;
-
     using namespace buf_internal;
     if constexpr (sizeof...(args) > 0) {
         buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, format, args...);
@@ -103,6 +85,7 @@ void print(const char* format, Args... args) {
         auto it = compressor.find(hash);
         if (it == compressor.end()) {
             compressor.emplace(hash, line_number);
+            hash_hist.emplace_back(hash);
             buf_internal::pop_line_combo();
             fprintf(visFile, "%s", buf);
         } else {
@@ -115,10 +98,40 @@ void print(const char* format, Args... args) {
                 start_same_line = last_same_line = it->second;
             }
             it->second = line_number;
+            hash_hist.emplace_back(hash);
+        }
+        if (hash_hist.size() >= MAX_HIST_LEN) {
+            std::size_t old_hash = hash_hist.front(); hash_hist.pop_front();
+            auto it = compressor.find(old_hash);
+            if (line_number - it->second >= MAX_HIST_LEN) {
+                compressor.erase(it);
+            }
         }
     }
     buf_i = 0;
 }
+
+
+struct visualizer_helper {
+    visualizer_helper(Point size, Point origin = Point(), bool y_upper = false) {
+        if (size.imag() <= 0) { size.imag(size.real());}
+        visualizer_campus_size = size;
+        visFile = fopen("VisCommands.svg", "w");
+
+        fprintf(visFile, "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='800' viewBox='%g %g %g %g'", origin.real(), origin.imag(), size.real(), size.imag());
+        if (y_upper) {
+            visualizer_internal_y_upper = true;
+            fprintf(visFile, " transform='scale(1, -1)' transform-origin='0 %g'", size.imag()/2);
+            fprintf(visFile, "><style>text {transform: scale(1, -1);}</style");
+        }
+        fprintf(visFile, ">\n");
+    }
+    ~visualizer_helper(){
+        print("</svg>\n");
+        fclose(visFile);
+    }
+};
+
 
 #else
 #define VRET return;
