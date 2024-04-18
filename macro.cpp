@@ -24,11 +24,13 @@ bool visualizer_internal_y_upper = false;
 #define VISUALIZE // 提出時にはここをコメントアウトすること。そうしないとTLEする。
 
 #if (defined(ONLINE_JUDGE) || defined(ATCODER) || defined(NOVIS)) && defined(VISUALIZE)
+constexpr bool DO_NOT_VISUALIZE = 1;
 #undef VISUALIZE // 誤提出防止
 #endif
 
 
 #ifdef VISUALIZE
+constexpr bool DO_NOT_VISUALIZE = 0;
 #define VRET ;
 FILE* visFile = nullptr;
 
@@ -39,7 +41,7 @@ namespace buf_internal {
     constexpr int buf_len = 2048;
     char buf[buf_len];
     int buf_i = 0;
-    int line_number = 1;
+    long long line_number = 1;
     std::size_t get_buf_hash() {
         std::size_t hash = buf_i;
         const char* str = buf;
@@ -48,15 +50,15 @@ namespace buf_internal {
         }
         return hash;
     }
-    std::unordered_map<std::size_t, int> compressor;
-    int start_same_line = -1;
-    int last_same_line = -1;
+    std::unordered_map<std::size_t, long long> compressor;
+    long long start_same_line = -1;
+    long long last_same_line = -1;
     inline void pop_line_combo() {
         if (start_same_line == -1) return;
         if (start_same_line == last_same_line) {
-            fprintf(visFile, "L%d\n", start_same_line);
+            fprintf(visFile, "L%lld\n", start_same_line);
         } else {
-            fprintf(visFile, "L%d:%d\n", start_same_line, last_same_line-start_same_line+1);
+            fprintf(visFile, "L%lld:%lld\n", start_same_line, last_same_line-start_same_line+1);
         }
         start_same_line = last_same_line = -1;
     }
@@ -218,6 +220,7 @@ Vopt stroke(string s, float v) { Vopt op; return op.stroke(s, v);}
 
 
 string color(double val) { // [0,1]の値を、青→緑→赤のグラデーションに変換
+    if constexpr (DO_NOT_VISUALIZE) return "";
     val = std::clamp(val, 0.0, 1.0);
     double r, g, b;
     if (val < 0.5) {
@@ -315,6 +318,7 @@ void text(Point p, double num, float size, Vopt op={}) { VRET;
 
 Vopt align(string align) { // LR, TBI(UD)
     Vopt op;
+    if constexpr (DO_NOT_VISUALIZE) return op;
     if (align.find("R") != string::npos) {
         op.v.text_anchor = "end"; // R
     } else if (align.find("L") != string::npos) {
@@ -380,15 +384,15 @@ namespace internal {
 } // namespace internal
 
 struct Grid {
-    int W_num, H_num;
+    int W_num=0, H_num=0;
     Point whole_size{-1,-1}, origin={};
-    double cell_w, cell_h;
-    Point cell_sz;
+    double cell_w=0, cell_h=0;
+    Point cell_sz{};
     Grid(int WH_num) : W_num(WH_num), H_num(WH_num) { init(); }
     Grid(int W_num, int H_num, Point whole_size={-1,-1}, Point origin={}) : W_num(W_num), H_num(H_num), whole_size(whole_size), origin(origin) {
         init();
     }
-    void init() {
+    void init() { VRET;
         if (whole_size.real() < 0) whole_size = visualizer_campus_size;
         cell_w = whole_size.real() / W_num;
         cell_h = whole_size.imag() / H_num;
