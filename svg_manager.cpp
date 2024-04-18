@@ -98,6 +98,8 @@ int set_svg(const string &svg) {
                     turn_svgs.resize(max_time + 1);
                 }
                 svg_lines.emplace_back(dummy);
+            } else if (svg.substr(i, 6) == "</svg>") {
+                break;
             } else {
                 // svg_lines.push_back({line_num, begin_time, end_time, svg.substr(i, br - i)});
                 svg_line tmp{line_num, begin_time, end_time, int(i), int(br - i)};
@@ -144,6 +146,7 @@ char* get_svg(int t) {
         }
         get_svg_res += internal_svg.substr(gloval_svgs[gi].start_p, gloval_svgs[gi].len);
     }
+    get_svg_res += "</svg>\n";
     // for (auto &line : svg_lines) {
     //     if (line.begin_time == -1 || (line.begin_time <= t && t <= line.end_time)) {
     //         // res += line.svg;
