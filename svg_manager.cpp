@@ -23,7 +23,6 @@ struct svg_line {
     // string svg;
 };
 
-vector<svg_line> svg_lines;
 string internal_svg;
 
 vector<vector<svg_line>> turn_svgs;
@@ -31,7 +30,7 @@ vector<svg_line>         gloval_svgs;
 int svg_max_time = 0;
 
 int set_svg(const string &svg) {
-    svg_lines.clear();
+    vector<svg_line> svg_lines;
     gloval_svgs.clear();
     turn_svgs.clear();
 
@@ -54,21 +53,27 @@ int set_svg(const string &svg) {
         }
         if (br - i > 1) {
             if (svg[i] == 'L') {
-                int ln = 0;
-                for (int j = i+1; j < br; ++j) {
-                    char c = svg[j];
-                    if ('0' <= c && c <= '9') {
-                        ln = ln * 10 + (c - '0');
-                    } else {
-                        break;
+                int ln = 0, rep = 1;
+                char c;
+                for (++i; (c=svg[i], '0' <= c && c <= '9'); ++i) {
+                    ln = ln * 10 + (c - '0');
+                }
+                if (svg[i] == ':') {
+                    rep = 0;
+                    for (++i; (c=svg[i], '0' <= c && c <= '9'); ++i) {
+                        rep = rep * 10 + (c - '0');
                     }
                 }
-                auto tmp = svg_lines[ln];
-                tmp.line_num = line_num;
-                tmp.begin_time = begin_time;
-                tmp.end_time = end_time;
-                svg_lines.emplace_back(tmp);
-                (begin_time>=0&&begin_time == end_time ? turn_svgs[begin_time] : gloval_svgs).emplace_back(tmp);
+                for (int k = 0; k < rep; ++k) {
+                    auto tmp = svg_lines[ln + k];
+                    tmp.line_num = line_num;
+                    tmp.begin_time = begin_time;
+                    tmp.end_time = end_time;
+                    svg_lines.emplace_back(tmp);
+                    (begin_time>=0&&begin_time == end_time ? turn_svgs[begin_time] : gloval_svgs).emplace_back(tmp);
+                    ++line_num;
+                }
+                --line_num;
             } else if (svg.substr(i, 9) == "<!--time=") {
                 if (svg[i+9] == '-') {
                     begin_time = end_time = -1;

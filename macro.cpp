@@ -66,6 +66,17 @@ namespace buf_internal {
         return hash;
     }
     std::unordered_map<std::size_t, int> compressor;
+    int start_same_line = -1;
+    int last_same_line = -1;
+    inline void pop_line_combo() {
+        if (start_same_line == -1) return;
+        if (start_same_line == last_same_line) {
+            fprintf(visFile, "L%d\n", start_same_line);
+        } else {
+            fprintf(visFile, "L%d:%d\n", start_same_line, last_same_line-start_same_line+1);
+        }
+        start_same_line = last_same_line = -1;
+    }
 }
 
 template<typename... Args>
@@ -85,14 +96,25 @@ void print(const char* format, Args... args) {
     bool ignore = (buf[0] == '<' && buf[1] == '!');
 
     if (ignore) {
+        buf_internal::pop_line_combo();
         fprintf(visFile, "%s", buf);
     } else {
         std::size_t hash = get_buf_hash();
-        if (compressor.count(hash) == 0) {
+        auto it = compressor.find(hash);
+        if (it == compressor.end()) {
             compressor.emplace(hash, line_number);
+            buf_internal::pop_line_combo();
             fprintf(visFile, "%s", buf);
         } else {
-            fprintf(visFile, "L%d\n", compressor[hash]);
+            if (start_same_line == -1) {
+                start_same_line = last_same_line = it->second;
+            } else if (last_same_line + 1 == it->second) {
+                last_same_line = it->second;
+            } else {
+                buf_internal::pop_line_combo();
+                start_same_line = last_same_line = it->second;
+            }
+            it->second = line_number;
         }
     }
     buf_i = 0;
