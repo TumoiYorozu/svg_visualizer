@@ -2,7 +2,7 @@
 #include <string>
 #include <emscripten/bind.h>
 /*
-em++ svg_manager.cpp -O3 -o http/svg_manager.js --bind -s INITIAL_MEMORY=200MB -s MAXIMUM_MEMORY=3GB -sALLOW_MEMORY_GROWTH -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s EXPORTED_FUNCTIONS='["_get_svg", "_malloc", "_free"]'
+em++ svg_manager.cpp -O3 -o http/svg_manager.js --bind -s INITIAL_MEMORY=200MB -s MAXIMUM_MEMORY=4GB -sALLOW_MEMORY_GROWTH -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s EXPORTED_FUNCTIONS='["_get_svg", "_malloc", "_free"]'
 
 em++ svg_manager.cpp -o http/svg_manager.js --bind -s MAXIMUM_MEMORY=2GB -sALLOW_MEMORY_GROWTH && sed -i "s$'requestPointerLock'$//'requestPointerLock'$" http/svg_manager.js
 
@@ -17,7 +17,9 @@ using std::vector;
 struct svg_line {
     int line_num;
     int16_t begin_time, end_time;
-    int start_p, len;
+    int start_p;
+    uint16_t len;
+    int16_t z;
     // string svg;
 };
 
@@ -26,6 +28,7 @@ string internal_svg;
 
 vector<vector<svg_line>> turn_svgs;
 vector<svg_line>         gloval_svgs;
+int svg_max_time = 0;
 
 int set_svg(const string &svg) {
     svg_lines.clear();
@@ -61,6 +64,7 @@ int set_svg(const string &svg) {
                     }
                 }
                 auto tmp = svg_lines[ln];
+                tmp.line_num = line_num;
                 tmp.begin_time = begin_time;
                 tmp.end_time = end_time;
                 svg_lines.emplace_back(tmp);
@@ -101,8 +105,18 @@ int set_svg(const string &svg) {
             } else if (svg.substr(i, 6) == "</svg>") {
                 break;
             } else {
-                // svg_lines.push_back({line_num, begin_time, end_time, svg.substr(i, br - i)});
-                svg_line tmp{line_num, begin_time, end_time, int(i), int(br - i)};
+                int16_t z = 0;
+                if (svg[i] == 'z') {
+                    ++i;
+                    const bool is_minus = (svg[i] == '-');
+                    if (is_minus) ++i;
+                    while('0' <= svg[i] && svg[i] <= '9') {
+                        z = z * 10 + (svg[i] - '0');
+                        ++i;
+                    }
+                    if (is_minus) z = -z;
+                }
+                svg_line tmp{line_num, begin_time, end_time, int(i), uint16_t(br - i), z};
                 svg_lines.emplace_back(tmp);
                 (begin_time>=0&&begin_time == end_time ? turn_svgs[begin_time] : gloval_svgs).emplace_back(tmp);
             }
@@ -113,46 +127,41 @@ int set_svg(const string &svg) {
         // if (line_num >= 100) break;
     }
     internal_svg = std::move(svg);
+    svg_max_time = max_time;
     return max_time;
 }
+
 
 
 extern "C" {
 string get_svg_res;
 char* get_svg(int t) {
+    t = std::clamp(t, 0, svg_max_time);
+
     get_svg_res.clear();
-    int ti = 0;
-    int gi = 0;
-    while (ti < turn_svgs[t].size() && gi < gloval_svgs.size()) {
-        if (gloval_svgs[gi].begin_time != -1 && (t < gloval_svgs[gi].begin_time || gloval_svgs[gi].end_time < t)) {
-            ++gi;
-            continue;
-        }
-        if (turn_svgs[t][ti].line_num < gloval_svgs[gi].line_num) {
-            get_svg_res += internal_svg.substr(turn_svgs[t][ti].start_p, turn_svgs[t][ti].len);
-            ++ti;
-        } else {
-            get_svg_res += internal_svg.substr(gloval_svgs[gi].start_p, gloval_svgs[gi].len);
-            ++gi;
+
+    vector<svg_line> slines;
+    slines.reserve(gloval_svgs.size() + turn_svgs[t].size());
+
+    for (const auto &line : gloval_svgs) {
+        if (line.begin_time == -1 || (line.begin_time <= t && t <= line.end_time)) {
+            slines.emplace_back(line);
         }
     }
-    for (; ti < turn_svgs[t].size(); ++ti) {
-        get_svg_res += internal_svg.substr(turn_svgs[t][ti].start_p, turn_svgs[t][ti].len);
+    slines.reserve(slines.size() + turn_svgs[t].size());
+    for (const auto &line : turn_svgs[t]) {
+        slines.emplace_back(line);
     }
-    for (; gi < gloval_svgs.size(); ++gi) {
-        if (gloval_svgs[gi].begin_time != -1 && (t < gloval_svgs[gi].begin_time || gloval_svgs[gi].end_time < t)) {
-            ++gi;
-            continue;
-        }
-        get_svg_res += internal_svg.substr(gloval_svgs[gi].start_p, gloval_svgs[gi].len);
+    std::sort(slines.begin(), slines.end(), [](const svg_line &a, const svg_line &b) {
+        if (a.z != b.z) return a.z < b.z;
+        return a.line_num < b.line_num;
+    });
+
+    for (const auto line : slines) {
+        get_svg_res += internal_svg.substr(line.start_p, line.len);
     }
+
     get_svg_res += "</svg>\n";
-    // for (auto &line : svg_lines) {
-    //     if (line.begin_time == -1 || (line.begin_time <= t && t <= line.end_time)) {
-    //         // res += line.svg;
-    //         res += internal_svg.substr(line.start_p, line.len);
-    //     }
-    // }
     return const_cast<char*>(get_svg_res.c_str());
 }
 }

@@ -83,15 +83,19 @@ void print(const char* format, Args... args) {
     ++line_number;
 
     bool ignore = (buf[0] == '<' && buf[1] == '!');
-    std::size_t hash = get_buf_hash();
-    buf_i = 0;
-    
-    if (ignore || compressor.count(hash) == 0) {
-        if (!ignore) compressor.emplace(hash, line_number);
+
+    if (ignore) {
         fprintf(visFile, "%s", buf);
     } else {
-        fprintf(visFile, "L%d\n", compressor[hash]);
+        std::size_t hash = get_buf_hash();
+        if (compressor.count(hash) == 0) {
+            compressor.emplace(hash, line_number);
+            fprintf(visFile, "%s", buf);
+        } else {
+            fprintf(visFile, "L%d\n", compressor[hash]);
+        }
     }
+    buf_i = 0;
 }
 
 #else
@@ -112,6 +116,8 @@ struct Vopt {
         optional<string> dominant_baseline = nullopt;
         optional<string> title = nullopt;
         optional<string> desc_text = nullopt;
+
+        optional<int16_t> z = nullopt;
     } v;
     Vopt(){};
     Vopt(const Vopt& op) : v{op.v} {};
@@ -148,6 +154,9 @@ struct Vopt {
     }
     void pre() {
         VRET;
+        if (v.z) {
+            print("z%d", v.z.value());
+        }
         if (v.title) {
             print("<g><title>%s</title>", v.title.value().c_str());
         }
@@ -159,6 +168,8 @@ struct Vopt {
 
     Vopt title(string s)           { Vopt res(*this); res.v.title = s; return res; } // 改行は &#x0D;
     Vopt desc(string s)            { Vopt res(*this); res.v.desc_text = s; return res; } // 改行は<br>
+    
+    Vopt z(int16_t z)              { Vopt res(*this); res.v.z = z; return res; } // 大きいのが手前
     template<typename T> optional<T>& over_write(optional<T>& a, const optional<T>& g) {
         if (!a && g) a = g;
         return a;
@@ -192,6 +203,7 @@ string color(double val) { // [0,1]の値を、青→緑→赤のグラデーシ
 
 
 void circle(Point c, float r, Vopt op={}) { VRET;
+    op.pre();
     print("<circle cx='%g' cy='%g' r='%g'", c.real(), c.imag(), r);
     op();
 }
@@ -201,6 +213,7 @@ void circles(const vector<Point>& cs, float r, Vopt op={}) { VRET;
 }
 
 void line(Point p1, Point p2, Vopt op={}) { VRET;
+    op.pre();
     if (op.v.fill && !op.v.stroke && !op.v.swidth) {
         op.v.stroke.swap(op.v.fill);
         op.v.swidth = 1;
@@ -211,6 +224,7 @@ void line(Point p1, Point p2, Vopt op={}) { VRET;
 
 
 void rect(Point p, Point size, Vopt op={}) { VRET;
+    op.pre();
     print("<rect x='%g' y='%g' width='%g' height='%g'", p.real(), p.imag(), size.real(), size.imag());
     op();
 }
@@ -221,12 +235,14 @@ void rect2p(Point p, Point q, Vopt op={}) { VRET;
 
 void rectc(Point c, Point size, float deg = 0, Vopt op={}) { VRET;
     const Point p = c - size * 0.5;
+    op.pre();
     print("<rect x='%g' y='%g' width='%g' height='%g' transform='rotate(%g %g %g)'", p.real(), p.imag(), size.real(), size.imag(), deg, c.real(), c.imag());
     op();
 }
 
 
 void polygon(const std::vector<Point>& ps, Vopt op={}) { VRET;
+    op.pre();
     print("<polygon points='");
     for (auto p : ps) print("%g,%g ", p.real(), p.imag());
     print("' ");
@@ -242,6 +258,7 @@ void polyline(const std::vector<Point>& ps, Vopt op={}) { VRET;
 }
 
 void text(Point p, string str, float size, Vopt op={}) { VRET;
+    op.pre();
     print("<text x='%g' y='%g' font-size='%g'", p.real(), p.imag(), size);
 
     if (visualizer_internal_y_upper) {
@@ -536,6 +553,7 @@ void masters_qual() {
 
     Grid G(N);
     line(G, "#bbb");
+
     
     vector<string> v(N), h(N-1);
     rep(i, N) cin >> v[i];
@@ -545,6 +563,17 @@ void masters_qual() {
     rep(i, N) {
         rep(j, N) {
             cin >> a[i][j];
+        }
+    }
+
+    rep(i, N) {
+        rep(j, N-1) {
+            if(v[i][j] == '1') line(G(j, i).segR(), Vopt("black", 2).z(1));
+        }
+    }
+    rep(i, N-1) {
+        rep(j, N) {
+            if(h[i][j] == '1') line(G(j, i).segD(), Vopt("black", 2).z(1));
         }
     }
 
@@ -631,18 +660,6 @@ void masters_qual() {
         for (auto [p, d] : bq) bdist[p.fs][p.sc] = INF;
     }
     cerr <<"fin" << endl;
-
-    vtime();
-    rep(i, N) {
-        rep(j, N-1) {
-            if(v[i][j] == '1') line(G(j, i).segR(), {"black", 2});
-        }
-    }
-    rep(i, N-1) {
-        rep(j, N) {
-            if(h[i][j] == '1') line(G(j, i).segD(), {"black", 2});
-        }
-    }
 }
 
 
