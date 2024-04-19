@@ -18,8 +18,6 @@ using std::vector;
 using std::optional;
 using std::nullopt;
 using Point = std::complex<double>;
-Point visualizer_campus_size;
-bool visualizer_internal_y_upper = false;
 
 #define VISUALIZE // 提出時にはここをコメントアウトすること。そうしないとTLEする。
 
@@ -28,14 +26,10 @@ constexpr bool DO_NOT_VISUALIZE = 1;
 #undef VISUALIZE // 誤提出防止
 #endif
 
-
-#ifdef VISUALIZE
-constexpr bool DO_NOT_VISUALIZE = 0;
-#define VRET ;
-FILE* visFile = nullptr;
-
-
-namespace buf_internal {
+namespace vis_internal {
+    FILE* visFile = nullptr;
+    Point visualizer_campus_size;
+    bool visualizer_internal_y_upper = false;
     constexpr int MAX_HIST_LEN = 100*100*3;
     std::deque<std::size_t> hash_hist;
     constexpr int buf_len = 2048;
@@ -64,10 +58,17 @@ namespace buf_internal {
     }
 }
 
+#ifdef VISUALIZE
+constexpr bool DO_NOT_VISUALIZE = 0;
+#define VRET ;
+
+
+
+
 template<typename... Args>
 void print(const char* format, Args... args) {
     VRET;
-    using namespace buf_internal;
+    using namespace vis_internal;
     if constexpr (sizeof...(args) > 0) {
         buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, format, args...);
     } else {
@@ -80,7 +81,7 @@ void print(const char* format, Args... args) {
     bool ignore = (buf[0] == '<' && buf[1] == '!');
 
     if (ignore) {
-        buf_internal::pop_line_combo();
+        pop_line_combo();
         fprintf(visFile, "%s", buf);
     } else {
         std::size_t hash = get_buf_hash();
@@ -88,7 +89,7 @@ void print(const char* format, Args... args) {
         if (it == compressor.end()) {
             compressor.emplace(hash, line_number);
             hash_hist.emplace_back(hash);
-            buf_internal::pop_line_combo();
+            pop_line_combo();
             fprintf(visFile, "%s", buf);
         } else {
             if (start_same_line == -1) {
@@ -96,7 +97,7 @@ void print(const char* format, Args... args) {
             } else if (last_same_line + 1 == it->second) {
                 last_same_line = it->second;
             } else {
-                buf_internal::pop_line_combo();
+                pop_line_combo();
                 start_same_line = last_same_line = it->second;
             }
             it->second = line_number;
@@ -116,6 +117,7 @@ void print(const char* format, Args... args) {
 
 struct visualizer_helper {
     visualizer_helper(Point size, Point origin = Point(), bool y_upper = false) {
+        using namespace vis_internal;
         if (size.imag() <= 0) { size.imag(size.real());}
         visualizer_campus_size = size;
         visFile = fopen("VisCommands.svg", "w");
@@ -130,7 +132,7 @@ struct visualizer_helper {
     }
     ~visualizer_helper(){
         print("</svg>\n");
-        fclose(visFile);
+        fclose(vis_internal::visFile);
     }
 };
 
@@ -299,7 +301,7 @@ void text(Point p, string str, float size, Vopt op={}) { VRET;
     op.pre();
     print("<text x='%g' y='%g' font-size='%g'", p.real(), p.imag(), size);
 
-    if (visualizer_internal_y_upper) {
+    if (vis_internal::visualizer_internal_y_upper) {
         print(" transform-origin='%g %g'", p.real(), p.imag());
     }
     
@@ -393,7 +395,7 @@ struct Grid {
         init();
     }
     void init() { VRET;
-        if (whole_size.real() < 0) whole_size = visualizer_campus_size;
+        if (whole_size.real() < 0) whole_size = vis_internal::visualizer_campus_size;
         cell_w = whole_size.real() / W_num;
         cell_h = whole_size.imag() / H_num;
         cell_sz = {cell_w, cell_h};
@@ -477,6 +479,7 @@ int T, N;
 
 
 inline void disp_num(const vector<vector<int>>& a, const Grid& G){
+    VRET;
     rep(i, a.size()) {
         rep(j, a[i].size()) {
             rect(G(j,i), color((a[i][j]-1.0)/(N*N)));
@@ -526,7 +529,7 @@ vector<pair<Pi, int>> calc_dists(Pi a, vector<string>& v, vector<string>& h, vec
             }
             dists[nr][nc] = d + 1;
             q.emplace_back(Pi{nr, nc}, d+1);
-            if (q.size() >= 70) return q;
+            if (q.size() >= 90) return q;
         }
     }
     return q;
