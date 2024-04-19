@@ -1,3 +1,4 @@
+#include <initializer_list>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -56,6 +57,13 @@ namespace vis_internal {
         }
         start_same_line = last_same_line = -1;
     }
+    int max_vtime = 0;
+    bool vis_time_enable = true;
+    int vis_time_interval = 1; // 何個ごとに vtime を受理するか。1は通常。2は1個飛ばし
+}
+
+void set_vis_time_interval(int interval = 1) {
+    vis_internal::vis_time_interval = interval;
 }
 
 #ifdef VISUALIZE
@@ -63,12 +71,13 @@ constexpr bool DO_NOT_VISUALIZE = 0;
 #define VRET ;
 
 
-
-
 template<typename... Args>
 void print(const char* format, Args... args) {
     VRET;
     using namespace vis_internal;
+    if (vis_time_enable == false) {
+        return;
+    }
     if constexpr (sizeof...(args) > 0) {
         buf_i += std::snprintf(buf + buf_i, buf_len - buf_i, format, args...);
     } else {
@@ -79,6 +88,14 @@ void print(const char* format, Args... args) {
     ++line_number;
 
     bool ignore = (buf[0] == '<' && buf[1] == '!');
+
+    static bool warned = false;
+    if (line_number >= 0x7fff'ffff && !warned) [[unlikely]] {
+        fprintf(stderr, "SVG command number exceeds INT32_MAX. Please use 'vis_internal::vis_time_interval'. Max vtime is %d\n", max_vtime);
+        std::fflush(stderr);
+        warned = true;
+        return;
+    }
 
     if (ignore) {
         pop_line_combo();
@@ -115,12 +132,30 @@ void print(const char* format, Args... args) {
 }
 
 
+
 struct visualizer_helper {
+    struct StringLike {
+        string str;
+        StringLike(const char* str) : str(str){};
+        StringLike(string str) : str(str){};
+        template<typename... Args> StringLike(Args... args) {
+            size_t size = snprintf(nullptr, 0, args...) + 1; // Extra space for '\0'
+            vector<char> buf(size);
+            snprintf(buf.data(), size, args...);
+            str = string(buf.data(), buf.data() + size - 1);
+        }
+    };
+    visualizer_helper(StringLike filename, Point size, Point origin = Point(), bool y_upper = false) {
+        init(filename.str, size, origin, y_upper);
+    }
     visualizer_helper(Point size, Point origin = Point(), bool y_upper = false) {
+        init("VisCommands.svg", size, origin, y_upper);
+    }
+    void init(string filename, Point size, Point origin = Point(), bool y_upper = false) {
         using namespace vis_internal;
         if (size.imag() <= 0) { size.imag(size.real());}
         visualizer_campus_size = size;
-        visFile = fopen("VisCommands.svg", "w");
+        visFile = fopen(filename.c_str(), "w");
 
         fprintf(visFile, "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='800' viewBox='%g %g %g %g'", origin.real(), origin.imag(), size.real(), size.imag());
         if (y_upper) {
@@ -342,8 +377,35 @@ Vopt align(string align) { // LR, TBI(UD)
 const Vopt alignC = align("");
 
 void vtime(int a = -1, int b = -1){ VRET;
-    if (b < 0) return print("<!--time=%d-->\n",a);
-    else       return print("<!--time=%d:%d-->\n",a,b);
+    using namespace vis_internal;
+    max_vtime = std::max(std::max(max_vtime, a), b);
+    if (vis_time_interval == 1 || a == -1) {
+        vis_time_enable = true;
+        if (b < 0) return print("<!--time=%d-->\n",a);
+        else       return print("<!--time=%d:%d-->\n",a,b);
+    } else if (b == -1){
+        if (a % vis_time_interval == 0) {
+            a /= vis_time_interval;
+            vis_time_enable = true;
+            return print("<!--time=%d-->\n",a);
+        } else {
+            vis_time_enable = false;
+        }
+    } else {
+        a = (a + vis_time_interval) / vis_time_interval;
+        b /= vis_time_interval;
+
+        // interval:2 : [1,1] -> [0.5, 0.5]   [2,2] -> [1,1]
+        if (a > b) {
+            vis_time_enable = false;
+            return;
+        } else if (a == b) {
+            print("<!--time=%d-->\n",a);
+        } else {
+            print("<!--time=%d:%d-->\n",a,b);
+        }
+        vis_time_enable = true;
+    }
 }
 
 namespace internal {
@@ -591,7 +653,11 @@ char get_move_char(Pi a, Pi b) {
 
 void masters_qual() {
     cin >> T >> N;
-    visualizer_helper visualizer_helper(Point{N*10.0, N*10.0});
+    // visualizer_helper visualizer_helper("VisCommandsHoge.svg", Point{N*10.0, N*10.0});
+    visualizer_helper visualizer_helper({"VisCommands%02d.svg", T}, Point{N*10.0, N*10.0});
+
+    vis_internal::vis_time_interval = (T == 19 ? 2 : 1);
+
 
     Grid G(N);
     line(G, "#bbb");
