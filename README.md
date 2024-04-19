@@ -33,7 +33,27 @@
 - svg を吐きますが、その管理は構造体では無く gloval 変数で行われます。
 - visualizer_helper を使うことで、関数を抜けるときに自動で svg を close できます（正常終了しなくてもビジュアライザ側で補完するので動きます）
 - `visualizer_helper visualizer_helper(Point{800, 600});` の様に呼ぶと、幅800, 高さ600 の仮想キャンパスが生成されます。最初に呼んで下さい
-- 描画順は、命令を呼び出した順で上に重なります。z 座標は svg がサポートしていないので対応していません。
+- 描画順は、命令を呼び出した順で上に重なります。本来 svg は z 座標に対応していませんが **Z オプションで重なり順を指定できます。**
+
+### 初期化（使用する前に）
+`visualizer_helper visualizer_helper(Point{800, 600});` の様に、最初に宣言してください。この例では横800、縦600の仮想キャンパスを作成します。この構造体のスコープが終わった段階で、svgがcloseされます。
+N x N のグリッドの問題で、1マス10x10 にしたい場合は、
+```
+visualizer_helper visualizer_helper(Point{N*10.0, N*10.0});
+```
+と書くと良いでしょう。
+
+先頭にファイル名を指示することが出来ます。
+```
+visualizer_helper visualizer_helper("VisCommandsTest.svg", Point{N*10.0, N*10.0});
+```
+の様に string を指定したり、
+```
+visualizer_helper visualizer_helper({"VisCommands%02d.svg", T}, Point{N*10.0, N*10.0});
+```
+の様に、`{"format", arg1, arg2 }` の様に指定して printf ライクに変数を使用したファイル名も作成できます。
+
+
 
 ### 時間命令
 svg にないオリジナルの命令です。ここで指定した時間は再変更するまで全ての描画で使用されます
@@ -124,6 +144,25 @@ SVG の fill, stroke, stroke-width 等を管理する構造体 `Vopt` があり�
 - `circle(G(x, y), r, "red")` セル(x,y) の中心に、半径 r の円を描きます。
 - `text(G(x, y), "Hello", 5, alignC)` セル(x,y)の中心に「Hello」とテキストを表示します。
 - `line(G(x0, y0), G(x1, y1), "blue")` セル(x0, y0) から セル (x1, y1) へ、線を引きます。
+
+### Tips
+- ビジュアライズのための補助関数が、提出モードでも遅いとき
+```
+inline void disp_num(const vector<vector<int>>& a, const Grid& G){
+    VRET;
+    rep(i, a.size()) rep(j, a[i].size()) {
+        rect(G(j,i), color((a[i][j]-1.0)/(N*N)));
+}
+```
+例はマップの内容を渡すと自動でセルに色をつける関数です。rect 命令自体は提出モードのときは無を行う関数になるのでほぼ0コストなのですが、コンパイラによっては rect の引数の color は計算が行われてしまい、実行が遅くなる場合があります。そのときは、ビジュアライズのための関数の先頭に `VRET` と書いておくと、提出モードのときは return; になり、早期リターンされます。
+
+- vis_time_interval
+描画命令数が多いとき、例えば 10^8 くらい命令を発行すると、ビジュアライザがクラッシュします。set_vis_time_interval を設定すると、例えば N にすると、mod N = 0 の time のみ描画命令が実行されます。つまり 1 だと全フレーム、2だと1フレーム飛ばしで描画されます。
+```
+vis_internal::vis_time_interval = (T == 19 ? 4 : 1);
+```
+の様に、大きいケースのときはフレームを間引く様にすると良いです。
+
 
 ## サンプル
 * TODO
