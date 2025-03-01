@@ -1,4 +1,5 @@
-﻿#include <vector>
+#include <initializer_list>
+#include <vector>
 #include <string>
 #include <algorithm>
 #include <complex>
@@ -68,8 +69,6 @@ void set_vis_time_interval(int interval = 1) {
 #ifdef VISUALIZE
 constexpr bool DO_NOT_VISUALIZE = 0;
 #define VRET ;
-
-
 
 
 template<typename... Args>
@@ -526,3 +525,253 @@ void rect(const Grid& grid, Vopt op={}) { VRET;
 
 
 } // namespace visualizer
+
+
+// 上に macro.cpp
+
+#include <bits/stdc++.h>
+using namespace std;
+using namespace visualizer;
+
+#define rep(i,n) for(int i=0;i<(n);++i)
+#define reps(i,a,b) for(int i=(a);i<(b);++i)
+
+
+int T, N;
+
+
+inline void disp_num(const vector<vector<int>>& a, const Grid& G){
+    VRET;
+    rep(i, a.size()) {
+        rep(j, a[i].size()) {
+            rect(G(j,i), color((a[i][j]-1.0)/(N*N)));
+
+            if (N <= 15) {
+                text(G(j,i), a[i][j], 5, alignC);
+            }
+        }
+    }
+}
+
+using Pi = pair<int,int>;
+#define fs first
+#define sc second
+template<typename T1, typename T2>
+std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& p) {
+    os << "(" << p.first << ", " << p.second << ")";
+    return os;
+}
+
+
+
+const int INF = (1e9) + 9;
+
+vector<pair<Pi, int>> calc_dists(Pi a, vector<string>& v, vector<string>& h, vector<vector<int>>& dists) {
+    int n = v.size();
+    vector<pair<Pi, int>> q;
+    q.emplace_back(a, 0);
+
+    dists[a.fs][a.sc] = 0;
+    const Pi moves[4] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    for (int qi = 0;; ++qi) {
+        Pi cur = q[qi].first;
+        int r = cur.first;
+        int c = cur.second;
+        int d = q[qi].second;
+        for (const auto& move : moves) {
+            int nr = r + move.first;
+            int nc = c + move.second;
+            if (nr < 0 || nr >= n || nc < 0 || nc >= n) continue;
+            if (move.fs == +1 && h[r][c] == '1') continue;
+            if (move.fs == -1 && h[nr][nc] == '1') continue;
+            if (move.sc == +1 && v[r][c] == '1') continue;
+            if (move.sc == -1 && v[nr][nc] == '1') continue;
+            if (dists[nr][nc] != INF) {
+                continue;
+            }
+            dists[nr][nc] = d + 1;
+            q.emplace_back(Pi{nr, nc}, d+1);
+            if (q.size() >= 90) return q;
+        }
+    }
+    return q;
+}
+
+template<typename T> T pow2(T a) { return a*a; }
+
+bool can_i_move(Pi p, Pi q, vector<string>& v, vector<string>& h) {
+    int s = 0;
+    Pi d = {q.fs - p.fs, q.sc - p.sc};
+
+    if (d.fs == -1 &&  p.fs > 0   && h[p.fs-1][p.sc] == '0') return true;
+    if (d.fs == +1 &&  p.fs < N-1 && h[p.fs][p.sc] == '0')   return true;
+    if (d.sc == -1 &&  p.sc > 0   && v[p.fs][p.sc-1] == '0') return true;
+    if (d.sc == +1 &&  p.sc < N-1 && v[p.fs][p.sc] == '0')   return true;
+    return false;
+}
+
+inline int calc_cell_score(Pi p, vector<vector<int>>& a, vector<string>& v, vector<string>& h) {
+    int s = 0;
+    if (p.fs > 0   && h[p.fs-1][p.sc] == '0') s += pow2(a[p.fs-1][p.sc] - a[p.fs][p.sc]); 
+    if (p.fs < N-1 && h[p.fs][p.sc] == '0') s += pow2(a[p.fs+1][p.sc] - a[p.fs][p.sc]);
+    if (p.sc > 0   && v[p.fs][p.sc-1] == '0') s += pow2(a[p.fs][p.sc-1] - a[p.fs][p.sc]); 
+    if (p.sc < N-1 && v[p.fs][p.sc] == '0') s += pow2(a[p.fs][p.sc+1] - a[p.fs][p.sc]); 
+    return s;
+}
+
+
+vector<Pi> gen_path(const vector<vector<int>>& dist, Pi p, Pi q, vector<string>& v, vector<string>& h) {
+    vector<Pi> path;
+    path.push_back(p);
+
+    const Pi moves[4] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    while(dist[p.fs][p.sc] > 0) {
+        for (const auto& move : moves) {
+            int nr = p.fs + move.fs;
+            int nc = p.sc + move.sc;
+            if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
+            if (can_i_move(Pi{nr, nc}, p, v,h) == false) continue;
+
+            if (dist[nr][nc] == dist[p.fs][p.sc] - 1) {
+                p = {nr, nc};
+                path.push_back(p);
+                break;
+            }
+        }
+    }
+    reverse(path.begin(), path.end());
+    return path;
+}
+
+char get_move_char(Pi a, Pi b) {
+    if (a.fs < b.fs) return 'D';
+    if (a.fs > b.fs) return 'U';
+    if (a.sc < b.sc) return 'R';
+    if (a.sc > b.sc) return 'L';
+    return '.';
+}
+
+void masters_qual() {
+    cin >> T >> N;
+    // visualizer_helper visualizer_helper("VisCommandsHoge.svg", Point{N*10.0, N*10.0});
+    visualizer_helper visualizer_helper({"VisCommands%02d.svg", T}, Point{N*10.0, N*10.0});
+
+    vis_internal::vis_time_interval = (T == 19 ? 2 : 1);
+
+
+    Grid G(N);
+    line(G, "#bbb");
+
+    
+    vector<string> v(N), h(N-1);
+    rep(i, N) cin >> v[i];
+    rep(i, N-1) cin >> h[i];
+
+    vector<vector<int>> a(N, vector<int>(N));
+    rep(i, N) {
+        rep(j, N) {
+            cin >> a[i][j];
+        }
+    }
+
+    rep(i, N) {
+        rep(j, N-1) {
+            if(v[i][j] == '1') line(G(j, i).segR(), Vopt("black", 2).z(1));
+        }
+    }
+    rep(i, N-1) {
+        rep(j, N) {
+            if(h[i][j] == '1') line(G(j, i).segD(), Vopt("black", 2).z(1));
+        }
+    }
+
+    // disp_num(a, G);
+
+
+    int time = 0;
+    pair<int,int> A(0,0), B(N-1, N-1); // 高橋くん、青木くんの位置
+
+    printf("0 0 %d %d\n", N-1, N-1);
+
+
+    vector<vector<int>> adist(N, vector<int>(N, INF));
+    vector<vector<int>> bdist(N, vector<int>(N, INF));
+
+    for(;;) {
+        const auto aq = calc_dists(A, v, h, adist);
+        const auto bq = calc_dists(B, v, h, bdist);
+        
+        for (auto [p, d]: aq) {
+            // text(G(p.sc, p.fs).UpLeft(), d, 2, align("LT").fill("red"));
+        }
+        for (auto [p, d]: bq) {
+            // text(G(p.sc, p.fs).BtRight(), d, 2, align("RB").fill("blue"));
+        }
+
+        double max_ds = 0;
+        Pi m_ap, m_bp;
+
+        for (auto [ap, ad]: aq) {
+            int prev_a = calc_cell_score(ap, a, v, h);
+            for (auto [bp, bd]: bq) {
+                int prev_b = calc_cell_score(bp, a, v, h);
+
+                swap(a[ap.fs][ap.sc], a[bp.fs][bp.sc]);
+                int next_a = calc_cell_score(ap, a, v, h);
+                int next_b = calc_cell_score(bp, a, v, h);
+                double diff = next_a + next_b - prev_a - prev_b;
+
+                double ds = -diff / (max(ad, bd) + 1);
+                if (max_ds < ds) {
+                    max_ds = ds;
+                    m_ap = ap; m_bp = bp;
+                }
+                swap(a[ap.fs][ap.sc], a[bp.fs][bp.sc]);
+            }
+        }
+        if (max_ds <= 0) break;
+        const auto apath = gen_path(adist, m_ap, A, v, h);
+        const auto bpath = gen_path(bdist, m_bp, B, v, h);
+
+        // cerr << "max_ds " << max_ds << endl;
+        // cerr << "apath.size()" << apath.size() << endl;
+        // cerr << "bpath.size()" << bpath.size() << endl;
+
+        rep(i, max(apath.size(), bpath.size())-1) {
+            char am = (i >= apath.size()-1) ? '.' : ((A=apath[i]), get_move_char(apath[i], apath[i+1]));
+            char bm = (i >= bpath.size()-1) ? '.' : ((B=bpath[i]), get_move_char(bpath[i], bpath[i+1]));
+
+            vtime(time);
+            disp_num(a, G);
+            circle(G(A.sc, A.fs), 4, Vopt("", "red", 2));
+            circle(G(B.sc, B.fs), 4, Vopt("", "blue", 2));
+            printf("0 %c %c\n", am, bm);
+            ++time;
+            if (time >= 4 * N * N - 1) break;
+        }
+        if (time >= 4 * N * N - 1) break;
+
+        A = m_ap;
+        B = m_bp;
+
+        vtime(time);
+        ++time;
+        disp_num(a, G);
+        circle(G(A.sc, A.fs), 4, Vopt("", "red", 2));
+        circle(G(B.sc, B.fs), 4, Vopt("", "blue", 2));
+        printf("1 . .\n");
+
+        swap(a[A.fs][A.sc], a[B.fs][B.sc]);
+        
+
+        for (auto [p, d] : aq) adist[p.fs][p.sc] = INF;
+        for (auto [p, d] : bq) bdist[p.fs][p.sc] = INF;
+    }
+    cerr <<"fin" << endl;
+}
+
+
+int main() {
+    masters_qual();
+    return 0;
+}

@@ -4,10 +4,12 @@ let numDrawCommands = 0; // 描画したコマンド数
 let lastFile; // 最後に選択されたファイルの内容を保存する変数
 let playButton, playSpeedInput;
 let playing = false; // 再生中かどうかのフラグ
-let playSpeed = 5; // 再生速度（スライダーのvalueを進める速度）
+let playSpeed = 20; // 再生速度（スライダーのvalueを進める速度）
 
 let final_score = null;
 let problem_param = null;
+
+const get_svg = Module.cwrap('get_svg', 'string', ['number']);
 
 // スライダーの最大値を更新するグローバル関数
 window.updateMaxTime = function(maxTime) {
@@ -24,18 +26,6 @@ function setup() {
     
     noLoop();
 
-    // // ファイル入力処理
-    // document.getElementById('fileInput').addEventListener('change', function(e) {
-    //     if (e.target.files.length > 0) {
-    //         // ファイルが選択されたとき、そのファイルを保存
-    //         lastFile = e.target.files[0];
-    //         readFile(lastFile);
-    //     }
-    // });
-
-    // document.getElementById('fileInput').addEventListener('click', function(e) {
-    //     this.value = null;
-    // });
 
     // スライダーの設定部分
     // スライダーの値が変更されたときにテキストボックスを更新
@@ -55,6 +45,7 @@ function setup() {
             value = Math.min(Math.max(value, 0), maxTime); // 範囲内に収める
             timeSlider.value = value;
             if (!playing) {
+                console.log("redraw")
                 redraw(); // テキストボックスが手動で操作されたときに描画を更新
             }
         }
@@ -110,10 +101,10 @@ function draw() {
     // clear();
     // background('white');
 
+    let timeSlider = document.getElementById('timeSlider');
     if (playing) {
         loop();
         // 描画コマンドの実行とその他の描画処理...
-        let timeSlider = document.getElementById('timeSlider');
         // let timeSlider = document.getElementById('currentTimeInput');
         const currentTime = parseFloat(timeSlider.value);
         // let nextTime = currentTime + playSpeed; // 次の時間を計算
@@ -129,21 +120,16 @@ function draw() {
         document.getElementById('currentTimeInput').value = nextTime; // テキストボックスも更新
    }
 
-    // 描画コマンドの実行
-    executeCommands();
+   const time = parseInt(timeSlider.value);
+   
+   const startTime = performance.now();
+   let svg = get_svg(time);
+//    console.log("svg", svg);
+//    console.log("build svg time:", (performance.now() - startTime)/1000);
 
-    // 全描画コマンド数と表示描画コマンド数の表示
-    /*
-    fill(0); // テキストの色を黒に設定
-    textSize(12); // テキストサイズの設定
-    text(`描画コマンド数: ${numDrawCommands}/${commands.length}`, 10, height - 20);
-    */
-}   
-function loadSvgContent(svgContent) {
-    const canvasContainer = document.getElementById('canvasContainer');
-    canvasContainer.innerHTML = svgContent;
-    parseCommands(svgContent);
-    draw();
+//    console.log("got svg: ", svg);
+   const canvasContainer = document.getElementById('canvasContainer');
+   canvasContainer.innerHTML = svg;
 }
 
 function readFile(file) {
@@ -162,94 +148,6 @@ function readFile(file) {
     };
 
     reader.readAsText(file);
-}
-
-function parseCommands(fileContent) {
-    commands = []; // コマンドリストを初期化
-    maxTime = 0; // 最大time値をリセット
-
-    let beginTime = -1;
-    let endTime = -1;
-    const commandsArray = fileContent.replace(/\r\n?/g, '\n').split('\n');
-    commandsArray.forEach(commandString => {
-        const trimmedCommand = commandString.trim();
-        if (trimmedCommand === '') return;
-        if (trimmedCommand === '</svg>') return;
-        const timeMatch = trimmedCommand.match(/<!--time=(-?\d+(?::\d+)?)-->/);
-        if (timeMatch) {
-            if (timeMatch[1] == "-1") {
-                beginTime = -1;
-                endTime   = -1;
-            } else {
-                const time = timeMatch[1].split(':');
-                if (time.length == 1) {
-                    beginTime = parseInt(time[0]);
-                    endTime   = beginTime+1;
-                } else {
-                    beginTime = parseInt(time[0]);
-                    endTime   = parseInt(time[1]);
-                }
-                maxTime = Math.max(maxTime, endTime-1);
-            }
-        } else {
-            commands.push({ beginTime: beginTime, endTime: endTime, cmd: trimmedCommand });
-        }
-    });
-    // console.log(commands);
-    timeSlider.max = maxTime;
-    // 最大値を表示
-    document.getElementById('maxTimeDisplay').innerText = `${maxTime}`;
-}
-
-function executeCommands() {
-    let timeSlider = document.getElementById('timeSlider');
-    const time = parseInt(timeSlider.value);
-    // const startTime = currentTime;
-    // const endTime = currentTime;
-
-    // 時間の条件を満たすコマンド文字列を連結
-    let commandsToExecute = '';
-    numDrawCommands = 0;
-    // commands.forEach(({time, cmd}) => {
-    //     if ( (startTime <= time && time <= endTime) || time < 0) { // time = -1は常に描画
-    //         commandsToExecute += cmd + ';';
-    //         numDrawCommands += 1;
-    //     }
-    // });
-    commands.forEach(({beginTime, endTime, cmd}) => {
-        if (beginTime < 0 || (beginTime <= time && time < endTime)) { // time = -1は常に描画
-            commandsToExecute += cmd + '\n';
-            numDrawCommands += 1;
-        }
-    });
-    commandsToExecute += "\n</svg>"
-    // console.log(commandsToExecute);
-    const canvasContainer = document.getElementById('canvasContainer');
-    canvasContainer.innerHTML = commandsToExecute;
-    
-    if (commandsToExecute) {
-        // eval(commandsToExecute); // 連結されたコマンドをevalで1回だけ評価
-    }
-
-    // let selectableElements = document.querySelectorAll('[data-txt]');
-    // Array.from( selectableElements ).forEach(elem => {
-    // elem.addEventListener("mouseover", eve => {
-    //     // console.log("txt:", elem.dataset.txt);
-    //     hideTooltip();
-    //     showTooltip(elem.dataset.txt, eve);
-    // });
-    
-    // // elem.addEventListener("mouseover", eve => {
-    //     // hideTooltip();
-    // // });
-    // // elem.addEventListener("mouseleave", eve => {
-    // //   let textId = elem.id + "-text";
-    // //   let textElem = document.getElementById(textId);
-    // //   if( textElem != null ) {
-    // //     textElem.classList.remove("shown");
-    // //   }
-    // // });
-    // });
 }
 ///////
 document.addEventListener('DOMContentLoaded', function() {
@@ -316,8 +214,9 @@ function getSvg2Canvas (bairitsu = 1) {
         const ctx = canvas.getContext('2d');
         const img = new Image();
         img.onload = function() {
-            canvas.width = img.width * bairitsu;
-            canvas.height = img.height * bairitsu;
+            const BoundingClientRect = svgElement.getBoundingClientRect();
+            canvas.width = Math.round(BoundingClientRect.width) * bairitsu;
+            canvas.height = Math.round(BoundingClientRect.height) * bairitsu;
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             resolve(canvas);
         }
@@ -347,8 +246,8 @@ function copyToClipboard(bairitsu = 1) {
     getSvg2Canvas(bairitsu).then(canvas => canvas.toBlob(blob => {
         const item = new ClipboardItem({ 'image/png': blob });
         navigator.clipboard.write([item]);
+        popup_message('クリップボードにコピーしました');
     }, 'image/png'));
-    popup_message('クリップボードにコピーしました');
 }
 
 
@@ -435,6 +334,12 @@ function keyPressed() {
         document.getElementById('currentTimeInput').value = nextTime;
         draw();
     }
+    if (key == 'e') {
+        const nextTime = maxTime;
+        document.getElementById('timeSlider').value = nextTime
+        document.getElementById('currentTimeInput').value = nextTime;
+        draw();
+    }
     if (key == 'R') {
         // load_default_svg();
     }
@@ -451,6 +356,9 @@ function keyReleased() {
         ++now_repeat_id;
         LEFT_ARROW_PRESSED=0;
     }
+    if (key === ' ') {
+        document.getElementById('playButton').click();
+    }
 }
 
 const socket = new WebSocket(`ws://${window.location.host}/ws`);
@@ -459,20 +367,36 @@ socket.addEventListener('open', () => {
     console.log('WebSocket connection established');
 });
 
+let next_modified_id = 0;
 socket.addEventListener('message', (event) => {
     const message = event.data;
     console.log('Received message:', message);
-    if (message.startsWith('close')) {
-        const autoReloadCheckbox = document.getElementById('autoReloadCheckbox');
-        if (autoReloadCheckbox.checked) {
-            const fileSelect = document.getElementById('fileSelect');
-            const selectedFile = fileSelect.value;
-            const closeFile = message.split(':')[1].trim();
-            if (selectedFile === closeFile) {
-                fetch_svg(selectedFile, true);
-                popup_message('自動更新されました');
-            }
+    if (message.startsWith('close') || message.startsWith('modified')) {
+        let wait_time = 0;
+        let modified_id = -1;
+        if (message.startsWith('close')) {
+            wait_time = 0;
+            next_modified_id++;
+        } else {
+            wait_time = 700;
+            next_modified_id++;
+            modified_id = next_modified_id;
         }
+        setTimeout(() => {
+            if (modified_id >= 0 && modified_id != next_modified_id) {
+                return;
+            }
+            const autoReloadCheckbox = document.getElementById('autoReloadCheckbox');
+            if (autoReloadCheckbox.checked) {
+                const fileSelect = document.getElementById('fileSelect');
+                const selectedFile = fileSelect.value;
+                const closeFile = message.split(':')[1].trim();
+                if (selectedFile === closeFile) {
+                    fetch_svg(selectedFile, true);
+                    popup_message('自動更新されました' + message);
+                }
+            }
+        }, wait_time);
     }
 });
 
@@ -521,7 +445,21 @@ function fetch_svg(filename, auto_reloaded=false) {
     fetch('/svg/' + filename)
         .then(response => response.text())
         .then(svgContent => {
-            loadSvgContent(svgContent);
+
+
+            console.log("start parse");
+            const startTime = performance.now();
+            
+            maxTime = Module.set_svg(svgContent);
+
+            console.log("Parse time:", (performance.now() - startTime)/1000);
+            console.log("res maxTime:", maxTime);
+
+            timeSlider.max = maxTime;
+            document.getElementById('maxTimeDisplay').innerText = `${maxTime}`;
+
+            draw();
+
             const loadTimeElement = document.getElementById('load_time');
             const currentTime = new Date();
             const hours = currentTime.getHours().toString().padStart(2, '0');

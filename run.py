@@ -15,13 +15,19 @@ from watchdog.events import FileSystemEventHandler
 class FileCloseHandler(FileSystemEventHandler):
     def __init__(self, ws_clients):
         self.ws_clients = ws_clients
+        self.prev_modified_time = 0
+        
     def on_modified(self, event):
         if not event.is_directory:
             if event.src_path.lower().endswith(".svg"):
+                now = time.time()
+                if now - self.prev_modified_time < 0.25:
+                    return
+                self.prev_modified_time = now
                 current_time = time.strftime("%H:%M:%S")
                 message = f"{current_time} - SVGファイルが変更されました: {event.src_path}"
                 print(message)
-                self.notify_clients(f"close svg:{os.path.basename(event.src_path)}")
+                self.notify_clients(f"modified svg:{os.path.basename(event.src_path)}")
     # mac だと closed が来ない
     def on_closed(self, event):
         if not event.is_directory:
@@ -57,7 +63,7 @@ async def http_handler(request, path):
                     return web.FileResponse(svg_path)
         return web.Response(status=404, text="svgファイルが見つかりません", headers={'Cache-Control': 'no-store'})
         
-    file_path = "." + file_path
+    file_path = "http/" + file_path
     if os.path.isfile(file_path):
         return web.FileResponse(file_path, headers={'Cache-Control': 'no-store'})
     else:

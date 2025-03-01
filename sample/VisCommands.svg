@@ -1,0 +1,2222 @@
+<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='800' viewBox='0 0 100 100'>
+<line x1='0' y1='0' x2='100' y2='0' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='10' x2='100' y2='10' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='20' x2='100' y2='20' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='30' x2='100' y2='30' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='40' x2='100' y2='40' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='50' x2='100' y2='50' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='60' x2='100' y2='60' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='70' x2='100' y2='70' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='80' x2='100' y2='80' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='90' x2='100' y2='90' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='100' x2='100' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='0' y1='0' x2='0' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='10' y1='0' x2='10' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='20' y1='0' x2='20' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='30' y1='0' x2='30' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='40' y1='0' x2='40' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='50' y1='0' x2='50' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='60' y1='0' x2='60' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='70' y1='0' x2='70' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='80' y1='0' x2='80' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='90' y1='0' x2='90' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+<line x1='100' y1='0' x2='100' y2='100' stroke-linecap='round' stroke-linejoin='round' stroke='#bbb' stroke-width='1'/>
+z1<line x1='40' y1='0' x2='40' y2='10' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='90' y1='0' x2='90' y2='10' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='40' y1='10' x2='40' y2='20' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='90' y1='10' x2='90' y2='20' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='40' y1='20' x2='40' y2='30' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='90' y1='20' x2='90' y2='30' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='40' y1='30' x2='40' y2='40' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='30' y1='40' x2='30' y2='50' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='80' y1='40' x2='80' y2='50' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='30' y1='50' x2='30' y2='60' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='80' y1='50' x2='80' y2='60' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='30' y1='60' x2='30' y2='70' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='80' y1='60' x2='80' y2='70' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='30' y1='70' x2='30' y2='80' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='10' y1='10' x2='20' y2='10' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='20' y1='10' x2='30' y2='10' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='30' y1='10' x2='40' y2='10' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='40' y1='10' x2='50' y2='10' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='50' y1='10' x2='60' y2='10' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='60' y1='10' x2='70' y2='10' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='70' y1='10' x2='80' y2='10' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='0' y1='20' x2='10' y2='20' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='10' y1='20' x2='20' y2='20' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='0' y1='40' x2='10' y2='40' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='10' y1='40' x2='20' y2='40' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='20' y1='40' x2='30' y2='40' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='70' y1='50' x2='80' y2='50' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='80' y1='50' x2='90' y2='50' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='90' y1='50' x2='100' y2='50' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='40' y1='70' x2='50' y2='70' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='50' y1='70' x2='60' y2='70' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='60' y1='70' x2='70' y2='70' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+z1<line x1='70' y1='70' x2='80' y2='70' stroke-linecap='round' stroke-linejoin='round' fill='none' stroke='black' stroke-width='2'/>
+<!--time=0-->
+<rect x='0' y='0' width='10' height='10' fill='#2092fb'/>
+<text x='5' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>2</text>
+<rect x='10' y='0' width='10' height='10' fill='#87f630'/>
+<text x='15' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>47</text>
+<rect x='20' y='0' width='10' height='10' fill='#a4d725'/>
+<text x='25' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>60</text>
+<rect x='30' y='0' width='10' height='10' fill='#299be9'/>
+<text x='35' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>6</text>
+<rect x='40' y='0' width='10' height='10' fill='#c88f32'/>
+<text x='45' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>76</text>
+<rect x='50' y='0' width='10' height='10' fill='#bfa12f'/>
+<text x='55' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>72</text>
+<rect x='60' y='0' width='10' height='10' fill='#92fb1f'/>
+<text x='65' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>52</text>
+<rect x='70' y='0' width='10' height='10' fill='#e7503d'/>
+<text x='75' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>90</text>
+<rect x='80' y='0' width='10' height='10' fill='#47b8ae'/>
+<text x='85' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>19</text>
+<rect x='90' y='0' width='10' height='10' fill='#ca8a33'/>
+<text x='95' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>77</text>
+<rect x='0' y='10' width='10' height='10' fill='#7beb47'/>
+<text x='5' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>42</text>
+<rect x='10' y='10' width='10' height='10' fill='#a2db24'/>
+<text x='15' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>59</text>
+<rect x='20' y='10' width='10' height='10' fill='#2c9de4'/>
+<text x='25' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>7</text>
+<rect x='30' y='10' width='10' height='10' fill='#82f239'/>
+<text x='35' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>45</text>
+<rect x='40' y='10' width='10' height='10' fill='#42b4b7'/>
+<text x='45' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>17</text>
+<rect x='50' y='10' width='10' height='10' fill='#d07c35'/>
+<text x='55' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>80</text>
+<rect x='60' y='10' width='10' height='10' fill='#bca52e'/>
+<text x='65' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>71</text>
+<rect x='70' y='10' width='10' height='10' fill='#99ed21'/>
+<text x='75' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>55</text>
+<rect x='80' y='10' width='10' height='10' fill='#afc029'/>
+<text x='85' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>65</text>
+<rect x='90' y='10' width='10' height='10' fill='#c59331'/>
+<text x='95' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>75</text>
+<rect x='0' y='20' width='10' height='10' fill='#40b1bc'/>
+<text x='5' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>16</text>
+<rect x='10' y='20' width='10' height='10' fill='#4cbca5'/>
+<text x='15' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>21</text>
+<rect x='20' y='20' width='10' height='10' fill='#6cdb66'/>
+<text x='25' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>35</text>
+<rect x='30' y='20' width='10' height='10' fill='#30a2db'/>
+<text x='35' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>9</text>
+<rect x='40' y='20' width='10' height='10' fill='#3eafc0'/>
+<text x='45' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>15</text>
+<rect x='50' y='20' width='10' height='10' fill='#f23941'/>
+<text x='55' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>95</text>
+<rect x='60' y='20' width='10' height='10' fill='#8efd23'/>
+<text x='65' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>50</text>
+<rect x='70' y='20' width='10' height='10' fill='#e94b3e'/>
+<text x='75' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>91</text>
+<rect x='80' y='20' width='10' height='10' fill='#97f220'/>
+<text x='85' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>54</text>
+<rect x='90' y='20' width='10' height='10' fill='#49baaa'/>
+<text x='95' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>20</text>
+<rect x='0' y='30' width='10' height='10' fill='#69d96a'/>
+<text x='5' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>34</text>
+<rect x='10' y='30' width='10' height='10' fill='#75e454'/>
+<text x='15' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>39</text>
+<rect x='20' y='30' width='10' height='10' fill='#33a4d7'/>
+<text x='25' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>10</text>
+<rect x='30' y='30' width='10' height='10' fill='#72e259'/>
+<text x='35' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>38</text>
+<rect x='40' y='30' width='10' height='10' fill='#b8ae2c'/>
+<text x='45' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>69</text>
+<rect x='50' y='30' width='10' height='10' fill='#fb2744'/>
+<text x='55' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>99</text>
+<rect x='60' y='30' width='10' height='10' fill='#abc928'/>
+<text x='65' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>63</text>
+<rect x='70' y='30' width='10' height='10' fill='#eb463f'/>
+<text x='75' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>92</text>
+<rect x='80' y='30' width='10' height='10' fill='#3cadc5'/>
+<text x='85' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>14</text>
+<rect x='90' y='30' width='10' height='10' fill='#e05d3b'/>
+<text x='95' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>87</text>
+<rect x='0' y='40' width='10' height='10' fill='#6ede62'/>
+<text x='5' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>36</text>
+<rect x='10' y='40' width='10' height='10' fill='#e4543c'/>
+<text x='15' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>89</text>
+<rect x='20' y='40' width='10' height='10' fill='#79e94b'/>
+<text x='25' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>41</text>
+<rect x='30' y='40' width='10' height='10' fill='#d37836'/>
+<text x='35' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>81</text>
+<rect x='40' y='40' width='10' height='10' fill='#f63043'/>
+<text x='45' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>97</text>
+<rect x='50' y='40' width='10' height='10' fill='#cc8634'/>
+<text x='55' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>78</text>
+<rect x='60' y='40' width='10' height='10' fill='#9be822'/>
+<text x='65' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>56</text>
+<rect x='70' y='40' width='10' height='10' fill='#60d07d'/>
+<text x='75' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>30</text>
+<rect x='80' y='40' width='10' height='10' fill='#b6b22c'/>
+<text x='85' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>68</text>
+<rect x='90' y='40' width='10' height='10' fill='#f82c44'/>
+<text x='95' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>98</text>
+<rect x='0' y='50' width='10' height='10' fill='#d57337'/>
+<text x='5' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>82</text>
+<rect x='10' y='50' width='10' height='10' fill='#b4b72b'/>
+<text x='15' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>67</text>
+<rect x='20' y='50' width='10' height='10' fill='#77e750'/>
+<text x='25' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>40</text>
+<rect x='30' y='50' width='10' height='10' fill='#c19c30'/>
+<text x='35' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>73</text>
+<rect x='40' y='50' width='10' height='10' fill='#a0e024'/>
+<text x='45' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>58</text>
+<rect x='50' y='50' width='10' height='10' fill='#57c88f'/>
+<text x='55' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>26</text>
+<rect x='60' y='50' width='10' height='10' fill='#94f620'/>
+<text x='65' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>53</text>
+<rect x='70' y='50' width='10' height='10' fill='#67d76f'/>
+<text x='75' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>33</text>
+<rect x='80' y='50' width='10' height='10' fill='#fd2345'/>
+<text x='85' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>100</text>
+<rect x='90' y='50' width='10' height='10' fill='#c39830'/>
+<text x='95' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>74</text>
+<rect x='0' y='60' width='10' height='10' fill='#2597f2'/>
+<text x='5' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>4</text>
+<rect x='10' y='60' width='10' height='10' fill='#37a8ce'/>
+<text x='15' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>12</text>
+<rect x='20' y='60' width='10' height='10' fill='#5ccc86'/>
+<text x='25' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>28</text>
+<rect x='30' y='60' width='10' height='10' fill='#adc528'/>
+<text x='35' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>64</text>
+<rect x='40' y='60' width='10' height='10' fill='#62d378'/>
+<text x='45' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>31</text>
+<rect x='50' y='60' width='10' height='10' fill='#70e05d'/>
+<text x='55' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>37</text>
+<rect x='60' y='60' width='10' height='10' fill='#a8ce27'/>
+<text x='65' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>62</text>
+<rect x='70' y='60' width='10' height='10' fill='#52c398'/>
+<text x='75' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>24</text>
+<rect x='80' y='60' width='10' height='10' fill='#baaa2d'/>
+<text x='85' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>70</text>
+<rect x='90' y='60' width='10' height='10' fill='#ed4240'/>
+<text x='95' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>93</text>
+<rect x='0' y='70' width='10' height='10' fill='#59ca8a'/>
+<text x='5' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>27</text>
+<rect x='10' y='70' width='10' height='10' fill='#a6d226'/>
+<text x='15' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>61</text>
+<rect x='20' y='70' width='10' height='10' fill='#d76f38'/>
+<text x='25' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>83</text>
+<rect x='30' y='70' width='10' height='10' fill='#ef3d40'/>
+<text x='35' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>94</text>
+<rect x='40' y='70' width='10' height='10' fill='#55c593'/>
+<text x='45' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>25</text>
+<rect x='50' y='70' width='10' height='10' fill='#65d574'/>
+<text x='55' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>32</text>
+<rect x='60' y='70' width='10' height='10' fill='#2799ed'/>
+<text x='65' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>5</text>
+<rect x='70' y='70' width='10' height='10' fill='#e2593c'/>
+<text x='75' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>88</text>
+<rect x='80' y='70' width='10' height='10' fill='#db6639'/>
+<text x='85' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>85</text>
+<rect x='90' y='70' width='10' height='10' fill='#85f434'/>
+<text x='95' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>46</text>
+<rect x='0' y='80' width='10' height='10' fill='#5ece81'/>
+<text x='5' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>29</text>
+<rect x='10' y='80' width='10' height='10' fill='#39abc9'/>
+<text x='15' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>13</text>
+<rect x='20' y='80' width='10' height='10' fill='#2ea0e0'/>
+<text x='25' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>8</text>
+<rect x='30' y='80' width='10' height='10' fill='#de623a'/>
+<text x='35' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>86</text>
+<rect x='40' y='80' width='10' height='10' fill='#b1bc2a'/>
+<text x='45' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>66</text>
+<rect x='50' y='80' width='10' height='10' fill='#9de423'/>
+<text x='55' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>57</text>
+<rect x='60' y='80' width='10' height='10' fill='#80ef3e'/>
+<text x='65' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>44</text>
+<rect x='70' y='80' width='10' height='10' fill='#50c19c'/>
+<text x='75' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>23</text>
+<rect x='80' y='80' width='10' height='10' fill='#89f82c'/>
+<text x='85' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>48</text>
+<rect x='90' y='80' width='10' height='10' fill='#35a6d2'/>
+<text x='95' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>11</text>
+<rect x='0' y='90' width='10' height='10' fill='#4ebfa1'/>
+<text x='5' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>22</text>
+<rect x='10' y='90' width='10' height='10' fill='#8bfb27'/>
+<text x='15' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>49</text>
+<rect x='20' y='90' width='10' height='10' fill='#d96b38'/>
+<text x='25' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>84</text>
+<rect x='30' y='90' width='10' height='10' fill='#45b6b2'/>
+<text x='35' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>18</text>
+<rect x='40' y='90' width='10' height='10' fill='#ce8134'/>
+<text x='45' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>79</text>
+<rect x='50' y='90' width='10' height='10' fill='#1e90ff'/>
+<text x='55' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>1</text>
+<rect x='60' y='90' width='10' height='10' fill='#f43542'/>
+<text x='65' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>96</text>
+<rect x='70' y='90' width='10' height='10' fill='#7eed42'/>
+<text x='75' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>43</text>
+<rect x='80' y='90' width='10' height='10' fill='#2394f6'/>
+<text x='85' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>3</text>
+<rect x='90' y='90' width='10' height='10' fill='#90ff1e'/>
+<text x='95' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>51</text>
+<circle cx='5' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='95' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=1-->
+<rect x='0' y='0' width='10' height='10' fill='#90ff1e'/>
+<text x='5' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>51</text>
+L60:196
+<rect x='90' y='90' width='10' height='10' fill='#2092fb'/>
+<text x='95' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>2</text>
+L258:2
+<!--time=2-->
+L261:200
+<circle cx='5' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='85' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=3-->
+L464:201
+<circle cx='75' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=4-->
+L667:201
+<circle cx='65' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=5-->
+L870:200
+<circle cx='15' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='55' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=6-->
+L1073:22
+<rect x='10' y='10' width='10' height='10' fill='#1e90ff'/>
+<text x='15' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>1</text>
+L1097:166
+<rect x='50' y='90' width='10' height='10' fill='#a2db24'/>
+<text x='55' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>59</text>
+L1265:10
+<!--time=7-->
+L1276:200
+<circle cx='25' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='45' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=8-->
+L1479:200
+<circle cx='35' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='35' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=9-->
+L1682:26
+<rect x='30' y='10' width='10' height='10' fill='#45b6b2'/>
+<text x='35' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>18</text>
+L1710:158
+<rect x='30' y='90' width='10' height='10' fill='#82f239'/>
+<text x='35' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>45</text>
+L1870:14
+<!--time=10-->
+L1885:200
+L1679
+<circle cx='25' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=11-->
+L2088:200
+<circle cx='25' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='25' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=12-->
+L2291:44
+<rect x='20' y='20' width='10' height='10' fill='#2ea0e0'/>
+<text x='25' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>8</text>
+L2337:118
+<rect x='20' y='80' width='10' height='10' fill='#6cdb66'/>
+<text x='25' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>35</text>
+L2457:36
+<!--time=13-->
+L2494:200
+<circle cx='15' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+L2695
+<!--time=14-->
+L2697:200
+<circle cx='15' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='15' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=15-->
+L2900:62
+<rect x='10' y='30' width='10' height='10' fill='#39abc9'/>
+<text x='15' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>13</text>
+L2964:98
+<rect x='10' y='80' width='10' height='10' fill='#75e454'/>
+<text x='15' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>39</text>
+L3064:38
+<!--time=16-->
+L3103:200
+<circle cx='25' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='5' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=17-->
+L3306:200
+<circle cx='35' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='5' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=18-->
+L3509:200
+<circle cx='35' cy='45' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='5' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=19-->
+L3712:200
+<circle cx='45' cy='45' r='4' fill='none' stroke='red' stroke-width='2'/>
+L3913
+<!--time=20-->
+L3915:200
+<circle cx='45' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+L4116
+<!--time=21-->
+L4118:200
+<circle cx='45' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='5' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=22-->
+L4321:48
+<rect x='40' y='20' width='10' height='10' fill='#d57337'/>
+<text x='45' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>82</text>
+L4371:50
+<rect x='0' y='50' width='10' height='10' fill='#3eafc0'/>
+<text x='5' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>15</text>
+L4423:100
+<!--time=23-->
+L4524:200
+<circle cx='45' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='15' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=24-->
+L4727:28
+<rect x='40' y='10' width='10' height='10' fill='#b4b72b'/>
+<text x='45' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>67</text>
+L4757:72
+<rect x='10' y='50' width='10' height='10' fill='#42b4b7'/>
+<text x='15' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>17</text>
+L4831:98
+<!--time=25-->
+L4930:201
+<circle cx='15' cy='45' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=26-->
+L5133:28
+<rect x='40' y='10' width='10' height='10' fill='#e4543c'/>
+<text x='45' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>89</text>
+L5163:52
+<rect x='10' y='40' width='10' height='10' fill='#b4b72b'/>
+<text x='15' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>67</text>
+L5217:118
+<!--time=27-->
+L5336:200
+<circle cx='55' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='25' cy='45' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=28-->
+L5539:200
+<circle cx='65' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='25' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=29-->
+L5742:200
+<circle cx='75' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='25' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=30-->
+L5945:200
+<circle cx='75' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='25' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=31-->
+L6148:200
+<circle cx='75' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+L2898
+<!--time=32-->
+L6351:74
+<rect x='70' y='30' width='10' height='10' fill='#6cdb66'/>
+<text x='75' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>35</text>
+L6427:88
+<rect x='20' y='80' width='10' height='10' fill='#eb463f'/>
+<text x='25' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>92</text>
+L6517:36
+<!--time=33-->
+L6554:201
+<circle cx='35' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=34-->
+L6757:200
+L6348
+L2086
+<!--time=35-->
+L6960:54
+<rect x='70' y='20' width='10' height='10' fill='#82f239'/>
+<text x='75' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>45</text>
+L7016:130
+<rect x='30' y='90' width='10' height='10' fill='#e94b3e'/>
+<text x='35' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>91</text>
+L7148:14
+<!--time=36-->
+L7163:200
+<circle cx='85' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+L1680
+<!--time=37-->
+L7366:200
+<circle cx='85' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+L1477
+<!--time=38-->
+L7569:200
+<circle cx='85' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+L1071
+<!--time=39-->
+L7772:16
+<rect x='80' y='0' width='10' height='10' fill='#f43542'/>
+<text x='85' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>96</text>
+L7790:174
+<rect x='60' y='90' width='10' height='10' fill='#47b8ae'/>
+<text x='65' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>19</text>
+L7966:8
+<!--time=40-->
+L7975:200
+L7769
+L868
+<!--time=41-->
+L8178:200
+L7566
+<circle cx='75' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=42-->
+L8381:200
+<circle cx='85' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='75' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=43-->
+L8584:76
+<rect x='80' y='30' width='10' height='10' fill='#e2593c'/>
+<text x='85' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>88</text>
+L8662:76
+<rect x='70' y='70' width='10' height='10' fill='#3cadc5'/>
+<text x='75' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>14</text>
+L8740:46
+<!--time=44-->
+L8787:200
+<circle cx='95' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+L8988
+<!--time=45-->
+L8990:200
+<circle cx='95' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='85' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=46-->
+L9193:58
+<rect x='90' y='20' width='10' height='10' fill='#db6639'/>
+<text x='95' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>85</text>
+L9253:96
+<rect x='80' y='70' width='10' height='10' fill='#49baaa'/>
+<text x='85' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>20</text>
+L9351:44
+<!--time=47-->
+L9396:200
+L9190
+L9597
+<!--time=48-->
+L9599:200
+L8987
+L9800
+<!--time=49-->
+L9802:200
+L6957
+<circle cx='85' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=50-->
+L10005:74
+<rect x='70' y='30' width='10' height='10' fill='#89f82c'/>
+<text x='75' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>48</text>
+L10081:100
+<rect x='80' y='80' width='10' height='10' fill='#6cdb66'/>
+<text x='85' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>35</text>
+L10183:24
+<!--time=51-->
+L10208:200
+<circle cx='65' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='95' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=52-->
+L10411:200
+<circle cx='55' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='95' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=53-->
+L10614:200
+L4318
+<circle cx='95' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=54-->
+L10817:68
+<rect x='40' y='30' width='10' height='10' fill='#ed4240'/>
+<text x='45' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>93</text>
+L10887:68
+<rect x='90' y='60' width='10' height='10' fill='#b8ae2c'/>
+<text x='95' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>69</text>
+L10957:62
+<!--time=55-->
+L11020:200
+L10814
+L11221
+<!--time=56-->
+L11223:200
+<circle cx='55' cy='45' r='4' fill='none' stroke='red' stroke-width='2'/>
+L11424
+<!--time=57-->
+L11426:200
+<circle cx='55' cy='55' r='4' fill='none' stroke='red' stroke-width='2'/>
+L10815
+<!--time=58-->
+L11629:110
+<rect x='50' y='50' width='10' height='10' fill='#85f434'/>
+<text x='55' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>46</text>
+L11741:46
+<rect x='90' y='70' width='10' height='10' fill='#57c88f'/>
+<text x='95' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>26</text>
+L11789:42
+<!--time=59-->
+L11832:200
+<circle cx='65' cy='55' r='4' fill='none' stroke='red' stroke-width='2'/>
+L10003
+<!--time=60-->
+L12035:201
+L9191
+<!--time=61-->
+L12238:201
+<circle cx='65' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=62-->
+L12441:201
+<circle cx='55' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=63-->
+L12644:200
+<circle cx='65' cy='65' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='45' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=64-->
+L12847:132
+<rect x='60' y='60' width='10' height='10' fill='#55c593'/>
+<text x='65' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>25</text>
+L12981:14
+<rect x='40' y='70' width='10' height='10' fill='#a8ce27'/>
+<text x='45' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>62</text>
+L12997:52
+<!--time=65-->
+L13050:200
+<circle cx='55' cy='65' r='4' fill='none' stroke='red' stroke-width='2'/>
+L12845
+<!--time=66-->
+L13253:201
+L12642
+<!--time=67-->
+L13456:200
+<circle cx='45' cy='65' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='65' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=68-->
+L13659:128
+<rect x='40' y='60' width='10' height='10' fill='#80ef3e'/>
+<text x='45' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>44</text>
+L13789:42
+<rect x='60' y='80' width='10' height='10' fill='#62d378'/>
+<text x='65' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>31</text>
+L13833:28
+<!--time=69-->
+L13862:200
+L13656
+L8582
+<!--time=70-->
+L14065:200
+L13250
+L8379
+<!--time=71-->
+L14268:132
+<rect x='60' y='60' width='10' height='10' fill='#7eed42'/>
+<text x='65' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>43</text>
+L14402:60
+<rect x='70' y='90' width='10' height='10' fill='#55c593'/>
+<text x='75' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>25</text>
+L14464:6
+<!--time=72-->
+L14471:201
+L665
+<!--time=73-->
+L14674:200
+<circle cx='75' cy='65' r='4' fill='none' stroke='red' stroke-width='2'/>
+L10409
+<!--time=74-->
+L14877:134
+<rect x='70' y='60' width='10' height='10' fill='#6cdb66'/>
+<text x='75' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>35</text>
+L15013:40
+<rect x='80' y='80' width='10' height='10' fill='#52c398'/>
+<text x='85' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>24</text>
+L15055:24
+<!--time=75-->
+L15080:200
+L14874
+L10612
+<!--time=76-->
+L15283:200
+L12844
+L12033
+<!--time=77-->
+L15486:200
+<circle cx='65' cy='45' r='4' fill='none' stroke='red' stroke-width='2'/>
+L11627
+<!--time=78-->
+L15689:200
+<circle cx='75' cy='45' r='4' fill='none' stroke='red' stroke-width='2'/>
+L15890
+<!--time=79-->
+L15892:200
+L10408
+L16093
+<!--time=80-->
+L16095:200
+L10002
+<circle cx='95' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=81-->
+L16298:76
+<rect x='80' y='30' width='10' height='10' fill='#c39830'/>
+<text x='85' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>74</text>
+L16376:40
+<rect x='90' y='50' width='10' height='10' fill='#e2593c'/>
+<text x='95' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>88</text>
+L16418:82
+<!--time=82-->
+L16501:200
+<circle cx='85' cy='45' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='85' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=83-->
+L16704:96
+<rect x='80' y='40' width='10' height='10' fill='#fd2345'/>
+<text x='85' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>100</text>
+L16802:18
+<rect x='80' y='50' width='10' height='10' fill='#b6b22c'/>
+<text x='85' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>68</text>
+L16822:84
+<!--time=84-->
+L16907:200
+L16701
+L17108
+<!--time=85-->
+L17110:200
+L16295
+L17311
+<!--time=86-->
+L17313:200
+L10611
+L17514
+<!--time=87-->
+L17516:200
+<circle cx='65' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='85' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=88-->
+L17719:52
+<rect x='60' y='20' width='10' height='10' fill='#baaa2d'/>
+<text x='65' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>70</text>
+L17773:82
+<rect x='80' y='60' width='10' height='10' fill='#8efd23'/>
+<text x='85' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>50</text>
+L17857:64
+<!--time=89-->
+L17922:200
+L17716
+L16296
+<!--time=90-->
+L18125:72
+<rect x='60' y='30' width='10' height='10' fill='#b8ae2c'/>
+<text x='65' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>69</text>
+L18199:64
+<rect x='90' y='60' width='10' height='10' fill='#abc928'/>
+<text x='95' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>63</text>
+L18265:62
+<!--time=91-->
+L18328:200
+L11423
+L18123
+<!--time=92-->
+L18531:200
+L11220
+L12236
+<!--time=93-->
+L18734:201
+L12439
+<!--time=94-->
+L18937:201
+L13657
+<!--time=95-->
+L19140:201
+L13454
+<!--time=96-->
+L19343:201
+L13251
+<!--time=97-->
+L19546:200
+L4724
+<circle cx='35' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=98-->
+L19749:48
+<rect x='40' y='20' width='10' height='10' fill='#ef3d40'/>
+<text x='45' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>94</text>
+L19799:96
+<rect x='30' y='70' width='10' height='10' fill='#d57337'/>
+<text x='35' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>82</text>
+L19897:54
+<!--time=99-->
+L19952:200
+<circle cx='55' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+L6958
+<!--time=100-->
+L20155:200
+L18122
+L6755
+<!--time=101-->
+L20358:201
+L3304
+<!--time=102-->
+L20561:200
+L7363
+<circle cx='15' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=103-->
+L20764:54
+<rect x='70' y='20' width='10' height='10' fill='#a6d226'/>
+<text x='75' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>61</text>
+L20820:86
+<rect x='10' y='70' width='10' height='10' fill='#82f239'/>
+<text x='15' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>45</text>
+L20908:58
+<!--time=104-->
+L20967:200
+L17513
+<circle cx='15' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=105-->
+L21170:201
+L5131
+<!--time=106-->
+L21373:200
+L16092
+L5537
+<!--time=107-->
+L21576:82
+<rect x='10' y='40' width='10' height='10' fill='#60d07d'/>
+<text x='15' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>30</text>
+L21660:10
+<rect x='70' y='40' width='10' height='10' fill='#b4b72b'/>
+<text x='75' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>67</text>
+L21672:106
+<!--time=108-->
+L21779:201
+L5740
+<!--time=109-->
+L21982:201
+L5943
+<!--time=110-->
+L22185:201
+L6146
+<!--time=111-->
+L22388:200
+L21573
+L6349
+<!--time=112-->
+L22591:74
+<rect x='70' y='30' width='10' height='10' fill='#d76f38'/>
+<text x='75' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>83</text>
+L22667:68
+<rect x='20' y='70' width='10' height='10' fill='#89f82c'/>
+<text x='25' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>48</text>
+L22737:56
+<!--time=113-->
+L22794:200
+L17310
+L20559
+<!--time=114-->
+L22997:76
+<rect x='80' y='30' width='10' height='10' fill='#eb463f'/>
+<text x='85' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>92</text>
+L23075:86
+<rect x='20' y='80' width='10' height='10' fill='#c39830'/>
+<text x='25' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>74</text>
+L23163:36
+<!--time=115-->
+L23200:200
+L8581
+L23401
+<!--time=116-->
+L23403:56
+<rect x='80' y='20' width='10' height='10' fill='#c39830'/>
+<text x='85' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>74</text>
+L23461:106
+<rect x='20' y='80' width='10' height='10' fill='#97f220'/>
+<text x='25' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>54</text>
+L23569:36
+<!--time=117-->
+L23606:200
+L8378
+L2289
+<!--time=118-->
+L23809:36
+<rect x='80' y='10' width='10' height='10' fill='#d96b38'/>
+<text x='85' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>84</text>
+L23847:146
+<rect x='20' y='90' width='10' height='10' fill='#afc029'/>
+<text x='25' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>65</text>
+L23995:16
+<!--time=119-->
+L24012:200
+L8175
+L7364
+<!--time=120-->
+L24215:200
+<circle cx='75' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+L20356
+<!--time=121-->
+L24418:200
+<circle cx='65' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+L20153
+<!--time=122-->
+L24621:12
+<rect x='60' y='0' width='10' height='10' fill='#d57337'/>
+<text x='65' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>82</text>
+L24635:132
+<rect x='30' y='70' width='10' height='10' fill='#92fb1f'/>
+<text x='35' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>52</text>
+L24769:54
+<!--time=123-->
+L24824:200
+<circle cx='55' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+L24619
+<!--time=124-->
+L25027:10
+<rect x='50' y='0' width='10' height='10' fill='#de623a'/>
+<text x='55' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>86</text>
+L25039:154
+<rect x='30' y='80' width='10' height='10' fill='#bfa12f'/>
+<text x='35' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>72</text>
+L25195:34
+<!--time=125-->
+L25230:200
+<circle cx='45' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+L24416
+<!--time=126-->
+L25433:8
+<rect x='40' y='0' width='10' height='10' fill='#e94b3e'/>
+<text x='45' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>91</text>
+L25443:176
+<rect x='30' y='90' width='10' height='10' fill='#c88f32'/>
+<text x='35' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>76</text>
+L25621:14
+<!--time=127-->
+L25636:200
+L25430
+L25837
+<!--time=128-->
+L25839:200
+L25024
+L26040
+<!--time=129-->
+L26042:200
+L24618
+L26243
+<!--time=130-->
+L26245:200
+L24415
+L26446
+<!--time=131-->
+L26448:200
+L24212
+L26649
+<!--time=132-->
+L26651:200
+L6145
+L25431
+<!--time=133-->
+L26854:34
+<rect x='70' y='10' width='10' height='10' fill='#bfa12f'/>
+<text x='75' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>72</text>
+L26890:130
+<rect x='30' y='80' width='10' height='10' fill='#99ed21'/>
+<text x='35' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>55</text>
+L27022:34
+<!--time=134-->
+L27057:200
+L21167
+L26852
+<!--time=135-->
+L27260:54
+<rect x='70' y='20' width='10' height='10' fill='#c88f32'/>
+<text x='75' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>76</text>
+L27316:130
+<rect x='30' y='90' width='10' height='10' fill='#a6d226'/>
+<text x='35' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>61</text>
+L27448:14
+<!--time=136-->
+L27463:200
+L20761
+L7567
+<!--time=137-->
+L27666:52
+<rect x='60' y='20' width='10' height='10' fill='#ce8134'/>
+<text x='65' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>79</text>
+L27720:134
+<rect x='40' y='90' width='10' height='10' fill='#baaa2d'/>
+<text x='45' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>70</text>
+L27856:12
+<!--time=138-->
+L27869:200
+L18528
+L27664
+<!--time=139-->
+L28072:200
+L15889
+L24213
+<!--time=140-->
+L28275:92
+<rect x='60' y='40' width='10' height='10' fill='#afc029'/>
+<text x='65' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>65</text>
+L28369:90
+<rect x='20' y='90' width='10' height='10' fill='#9be822'/>
+<text x='25' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>56</text>
+L28461:16
+<!--time=141-->
+L28478:200
+L15686
+<circle cx='15' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=142-->
+L28681:201
+L20762
+<!--time=143-->
+L28884:200
+<circle cx='75' cy='55' r='4' fill='none' stroke='red' stroke-width='2'/>
+L21168
+<!--time=144-->
+L29087:114
+<rect x='70' y='50' width='10' height='10' fill='#82f239'/>
+<text x='75' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>45</text>
+L29203:26
+<rect x='10' y='70' width='10' height='10' fill='#67d76f'/>
+<text x='15' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>33</text>
+L29231:58
+<!--time=145-->
+L29290:200
+L15280
+L22995
+<!--time=146-->
+L29493:134
+<rect x='70' y='60' width='10' height='10' fill='#89f82c'/>
+<text x='75' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>48</text>
+L29629:8
+<rect x='20' y='70' width='10' height='10' fill='#6cdb66'/>
+<text x='25' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>35</text>
+L29639:56
+<!--time=147-->
+L29696:200
+L15483
+L23807
+<!--time=148-->
+L29899:200
+L14265
+L27258
+<!--time=149-->
+L30102:201
+<circle cx='45' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=150-->
+L30305:200
+L12032
+<circle cx='55' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=151-->
+L30508:110
+<rect x='50' y='50' width='10' height='10' fill='#9de423'/>
+<text x='55' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>57</text>
+L30620:58
+<rect x='50' y='80' width='10' height='10' fill='#85f434'/>
+<text x='55' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>46</text>
+L30680:30
+<!--time=152-->
+L30711:200
+<circle cx='45' cy='55' r='4' fill='none' stroke='red' stroke-width='2'/>
+L30506
+<!--time=153-->
+L30914:108
+<rect x='40' y='50' width='10' height='10' fill='#b1bc2a'/>
+<text x='45' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>66</text>
+L31024:58
+<rect x='40' y='80' width='10' height='10' fill='#a0e024'/>
+<text x='45' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>58</text>
+L31084:32
+<!--time=154-->
+L31117:200
+L14062
+L19747
+<!--time=155-->
+L31320:128
+<rect x='40' y='60' width='10' height='10' fill='#a8ce27'/>
+<text x='45' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>62</text>
+L31450:18
+<rect x='40' y='70' width='10' height='10' fill='#80ef3e'/>
+<text x='45' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>44</text>
+L31470:52
+<!--time=156-->
+L31523:201
+L19544
+<!--time=157-->
+L31726:201
+L30912
+<!--time=158-->
+L31929:200
+L30505
+L7770
+<!--time=159-->
+L32132:130
+<rect x='50' y='60' width='10' height='10' fill='#a2db24'/>
+<text x='55' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>59</text>
+L32264:58
+<rect x='50' y='90' width='10' height='10' fill='#70e05d'/>
+<text x='55' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>37</text>
+L32324:10
+<!--time=160-->
+L32335:200
+L30911
+L28070
+<!--time=161-->
+L32538:110
+<rect x='50' y='50' width='10' height='10' fill='#baaa2d'/>
+<text x='55' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>70</text>
+L32650:76
+<rect x='40' y='90' width='10' height='10' fill='#9de423'/>
+<text x='45' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>57</text>
+L32728:12
+<!--time=162-->
+L32741:200
+L29084
+L28273
+<!--time=163-->
+L32944:201
+L28679
+<!--time=164-->
+L33147:200
+L30099:2
+<!--time=165-->
+L33350:132
+<rect x='60' y='60' width='10' height='10' fill='#97f220'/>
+<text x='65' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>54</text>
+L33484:30
+<rect x='20' y='80' width='10' height='10' fill='#7eed42'/>
+<text x='25' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>43</text>
+L33516:36
+<!--time=166-->
+L33553:201
+L30303
+<!--time=167-->
+L33756:200
+L33347
+L31318
+<!--time=168-->
+L33959:112
+<rect x='60' y='50' width='10' height='10' fill='#a0e024'/>
+<text x='65' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>58</text>
+L34073:54
+<rect x='40' y='80' width='10' height='10' fill='#94f620'/>
+<text x='45' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>53</text>
+L34129:32
+<!--time=169-->
+L34162:200
+L28678
+L33957
+<!--time=170-->
+L34365:201
+L25025
+<!--time=171-->
+L34568:201
+<circle cx='35' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=172-->
+L34771:201
+<circle cx='35' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=173-->
+L34974:200
+L28272
+<circle cx='35' cy='45' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=174-->
+L35177:72
+<rect x='60' y='30' width='10' height='10' fill='#d37836'/>
+<text x='65' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>81</text>
+L35251:12
+<rect x='30' y='40' width='10' height='10' fill='#b8ae2c'/>
+<text x='35' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>69</text>
+L35265:114
+<!--time=175-->
+L35380:200
+L22994
+L35581
+<!--time=176-->
+L35583:200
+L23400
+L35784
+<!--time=177-->
+L35786:200
+L23806
+<circle cx='45' cy='45' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=178-->
+L35989:56
+<rect x='80' y='20' width='10' height='10' fill='#f63043'/>
+<text x='85' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>97</text>
+L36047:30
+<rect x='40' y='40' width='10' height='10' fill='#c39830'/>
+<text x='45' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>74</text>
+L36079:112
+<!--time=179-->
+L36192:200
+L35986
+<circle cx='55' cy='45' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=180-->
+L36395:200
+L9799
+<circle cx='55' cy='35' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=181-->
+L36598:70
+<rect x='50' y='30' width='10' height='10' fill='#e05d3b'/>
+<text x='55' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>87</text>
+L36670:6
+<rect x='90' y='30' width='10' height='10' fill='#fb2744'/>
+<text x='95' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>99</text>
+L36678:122
+<!--time=182-->
+L36801:200
+L9596
+<circle cx='55' cy='25' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=183-->
+L37004:50
+<rect x='50' y='20' width='10' height='10' fill='#db6639'/>
+<text x='55' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>85</text>
+L37056:6
+<rect x='90' y='20' width='10' height='10' fill='#f23941'/>
+<text x='95' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>95</text>
+L37064:142
+<!--time=184-->
+L37207:200
+L37001
+<circle cx='65' cy='25' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=185-->
+L37410:201
+<circle cx='75' cy='25' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=186-->
+L37613:200
+L36595
+<circle cx='85' cy='25' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=187-->
+L37816:56
+<rect x='80' y='20' width='10' height='10' fill='#eb463f'/>
+<text x='85' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>92</text>
+L37874:18
+<rect x='80' y='30' width='10' height='10' fill='#f63043'/>
+<text x='85' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>97</text>
+L37894:124
+<!--time=188-->
+L38019:200
+L37813:2
+<!--time=189-->
+L38222:200
+L37407
+L37611
+<!--time=190-->
+L38425:200
+<circle cx='95' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='65' cy='35' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=191-->
+L38628:38
+<rect x='90' y='10' width='10' height='10' fill='#d37836'/>
+<text x='95' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>81</text>
+L38668:32
+<rect x='60' y='30' width='10' height='10' fill='#c59331'/>
+<text x='65' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>75</text>
+L38702:128
+<!--time=192-->
+L38831:201
+L37002
+<!--time=193-->
+L39034:38
+<rect x='90' y='10' width='10' height='10' fill='#e05d3b'/>
+<text x='95' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>87</text>
+L39074:30
+<rect x='50' y='30' width='10' height='10' fill='#d37836'/>
+<text x='55' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>81</text>
+L39106:130
+<!--time=194-->
+L39237:200
+<circle cx='95' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='45' cy='35' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=195-->
+L39440:18
+<rect x='90' y='0' width='10' height='10' fill='#ed4240'/>
+<text x='95' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>93</text>
+L39460:48
+<rect x='40' y='30' width='10' height='10' fill='#ca8a33'/>
+<text x='45' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>77</text>
+L39510:132
+<!--time=196-->
+L39643:200
+L39437
+<circle cx='45' cy='25' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=197-->
+L39846:38
+<rect x='90' y='10' width='10' height='10' fill='#ef3d40'/>
+<text x='95' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>94</text>
+L39886:8
+<rect x='40' y='20' width='10' height='10' fill='#e05d3b'/>
+<text x='45' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>87</text>
+L39896:152
+<!--time=198-->
+L40049:200
+L38625
+L39844
+<!--time=199-->
+L40252:200
+L38422
+L36393
+<!--time=200-->
+L40455:200
+L38219
+L35987
+<!--time=201-->
+L40658:200
+L35783
+L40859
+<!--time=202-->
+L40861:200
+L22588
+L35175
+<!--time=203-->
+L41064:94
+<rect x='70' y='40' width='10' height='10' fill='#c19c30'/>
+<text x='75' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>73</text>
+L41160:10
+<rect x='30' y='50' width='10' height='10' fill='#b4b72b'/>
+<text x='35' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>67</text>
+L41172:94
+<!--time=204-->
+L41267:200
+L35174
+L41062
+<!--time=205-->
+L41470:86
+<rect x='30' y='40' width='10' height='10' fill='#afc029'/>
+<text x='35' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>65</text>
+L41558:4
+<rect x='60' y='40' width='10' height='10' fill='#b8ae2c'/>
+<text x='65' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>69</text>
+L41564:108
+<!--time=206-->
+L41673:200
+L35580
+L40656
+<!--time=207-->
+L41876:200
+L28069
+L42077
+<!--time=208-->
+L42079:200
+<circle cx='65' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+L36596
+<!--time=209-->
+L42282:32
+<rect x='60' y='10' width='10' height='10' fill='#cc8634'/>
+<text x='65' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>78</text>
+L42316:56
+<rect x='50' y='40' width='10' height='10' fill='#bca52e'/>
+<text x='55' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>71</text>
+L42374:110
+<!--time=210-->
+L42485:200
+L27257
+L42280
+<!--time=211-->
+L42688:34
+<rect x='70' y='10' width='10' height='10' fill='#c39830'/>
+<text x='75' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>74</text>
+L42724:52
+<rect x='40' y='40' width='10' height='10' fill='#bfa12f'/>
+<text x='45' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>72</text>
+L42778:112
+<!--time=212-->
+L42891:201
+L42686
+<!--time=213-->
+L43094:200
+L27663
+L39438
+<!--time=214-->
+L43297:54
+<rect x='70' y='20' width='10' height='10' fill='#d37836'/>
+<text x='75' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>81</text>
+L43353:14
+<rect x='50' y='30' width='10' height='10' fill='#c88f32'/>
+<text x='55' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>76</text>
+L43369:130
+<!--time=215-->
+L43500:200
+L42279
+L37408
+<!--time=216-->
+L43703:200
+L20355
+<circle cx='55' cy='15' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=217-->
+L43906:30
+<rect x='50' y='10' width='10' height='10' fill='#db6639'/>
+<text x='55' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>85</text>
+L43938:18
+<rect x='50' y='20' width='10' height='10' fill='#d07c35'/>
+<text x='55' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>80</text>
+L43958:150
+<!--time=218-->
+L44109:201
+<circle cx='65' cy='15' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=219-->
+L44312:201
+<circle cx='75' cy='15' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=220-->
+L44515:200
+L20152
+<circle cx='85' cy='15' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=221-->
+L44718:36
+<rect x='80' y='10' width='10' height='10' fill='#e05d3b'/>
+<text x='85' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>87</text>
+L44756:10
+<rect x='40' y='20' width='10' height='10' fill='#d96b38'/>
+<text x='45' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>84</text>
+L44768:152
+<!--time=222-->
+L44921:200
+L19746
+L44716
+<!--time=223-->
+L45124:34
+<rect x='70' y='10' width='10' height='10' fill='#ca8a33'/>
+<text x='75' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>77</text>
+L45160:32
+<rect x='40' y='30' width='10' height='10' fill='#c39830'/>
+<text x='45' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>74</text>
+L45194:132
+<!--time=224-->
+L45327:200
+L45121
+L45528
+<!--time=225-->
+L45530:34
+<rect x='70' y='10' width='10' height='10' fill='#d96b38'/>
+<text x='75' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>84</text>
+L45566:12
+<rect x='40' y='20' width='10' height='10' fill='#ca8a33'/>
+<text x='45' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>77</text>
+L45580:152
+<!--time=226-->
+L45733:200
+<circle cx='45' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+L38423
+<!--time=227-->
+L45936:28
+<rect x='40' y='10' width='10' height='10' fill='#d37836'/>
+<text x='45' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>81</text>
+L45966:24
+<rect x='70' y='20' width='10' height='10' fill='#e4543c'/>
+<text x='75' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>89</text>
+L45992:146
+<!--time=228-->
+L46139:200
+<circle cx='55' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='75' cy='35' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=229-->
+L46342:30
+<rect x='50' y='10' width='10' height='10' fill='#d76f38'/>
+<text x='55' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>83</text>
+L46374:42
+<rect x='70' y='30' width='10' height='10' fill='#db6639'/>
+<text x='75' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>85</text>
+L46418:126
+<!--time=230-->
+L46545:200
+L42685
+<circle cx='85' cy='35' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=231-->
+L46748:200
+L43294
+L38220
+<!--time=232-->
+L46951:200
+L43700
+L45122
+<!--time=233-->
+L47154:36
+<rect x='80' y='10' width='10' height='10' fill='#e4543c'/>
+<text x='85' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>89</text>
+L47192:16
+<rect x='70' y='20' width='10' height='10' fill='#e05d3b'/>
+<text x='75' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>87</text>
+L47210:146
+<!--time=234-->
+L47357:201
+<circle cx='85' cy='5' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=235-->
+L47560:201
+<circle cx='75' cy='5' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=236-->
+L47763:200
+L41061
+<circle cx='65' cy='5' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=237-->
+L47966:12
+<rect x='60' y='0' width='10' height='10' fill='#db6639'/>
+<text x='65' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>85</text>
+L47980:60
+<rect x='70' y='30' width='10' height='10' fill='#d57337'/>
+<text x='75' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>82</text>
+L48042:126
+<!--time=238-->
+L48169:200
+L47963
+L48370
+<!--time=239-->
+L48372:12
+<rect x='60' y='0' width='10' height='10' fill='#e05d3b'/>
+<text x='65' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>87</text>
+L48386:40
+<rect x='70' y='20' width='10' height='10' fill='#db6639'/>
+<text x='75' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>85</text>
+L48428:146
+<!--time=240-->
+L48575:200
+L36392
+<circle cx='55' cy='5' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=241-->
+L48778:200
+L26851
+<circle cx='45' cy='5' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=242-->
+L48981:8
+<rect x='40' y='0' width='10' height='10' fill='#e4543c'/>
+<text x='45' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>89</text>
+L48991:26
+<rect x='80' y='10' width='10' height='10' fill='#e94b3e'/>
+<text x='85' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>91</text>
+L49019:164
+<!--time=243-->
+L49184:200
+L48978:2
+<!--time=244-->
+L49387:200
+L40858
+L48776
+<!--time=245-->
+L49590:200
+L40655
+L47964
+<!--time=246-->
+L49793:200
+L40452
+L49994
+<!--time=247-->
+L49996:200
+L40249
+L50197
+<!--time=248-->
+L50199:200
+L39843
+L47761
+<!--time=249-->
+L50402:16
+<rect x='80' y='0' width='10' height='10' fill='#ed4240'/>
+<text x='85' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>93</text>
+<rect x='90' y='0' width='10' height='10' fill='#f43542'/>
+<text x='95' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>96</text>
+L50422:182
+<!--time=250-->
+L50605:201
+L47558
+<!--time=251-->
+L50808:201
+L47152
+<!--time=252-->
+L51011:200
+L50399
+L46949
+<!--time=253-->
+L51214:38
+<rect x='90' y='10' width='10' height='10' fill='#f63043'/>
+<text x='95' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>97</text>
+L51254:36
+<rect x='80' y='30' width='10' height='10' fill='#ef3d40'/>
+<text x='85' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>94</text>
+L51292:124
+<!--time=254-->
+L51417:200
+L50196
+<circle cx='85' cy='45' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=255-->
+L51620:58
+<rect x='90' y='20' width='10' height='10' fill='#fd2345'/>
+<text x='95' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>100</text>
+L51680:36
+<rect x='80' y='40' width='10' height='10' fill='#f23941'/>
+<text x='85' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>95</text>
+L51718:104
+<!--time=256-->
+L51823:200
+L49993
+L51618
+<!--time=257-->
+L52026:200
+L49790
+L46746
+<!--time=258-->
+L52229:200
+L48369
+L39032
+<!--time=259-->
+L52432:200
+L42076
+L43701
+<!--time=260-->
+L52635:201
+L43295
+<!--time=261-->
+L52838:200
+L41873
+<circle cx='55' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=262-->
+L53041:92
+<rect x='60' y='40' width='10' height='10' fill='#baaa2d'/>
+<text x='65' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>70</text>
+L53135:16
+<rect x='50' y='50' width='10' height='10' fill='#b8ae2c'/>
+<text x='55' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>69</text>
+L53153:90
+<!--time=263-->
+L53244:200
+<circle cx='55' cy='45' r='4' fill='none' stroke='red' stroke-width='2'/>
+L53445
+<!--time=264-->
+L53447:200
+L32941
+<circle cx='45' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=265-->
+L53650:108
+<rect x='40' y='50' width='10' height='10' fill='#b8ae2c'/>
+<text x='45' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>69</text>
+<rect x='50' y='50' width='10' height='10' fill='#b1bc2a'/>
+<text x='55' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>66</text>
+L53762:90
+<!--time=266-->
+L53853:200
+L31317
+L41468
+<!--time=267-->
+L54056:200
+L32129
+L41874
+<!--time=268-->
+L54259:86
+<rect x='30' y='40' width='10' height='10' fill='#a8ce27'/>
+<text x='35' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>62</text>
+L54347:40
+<rect x='40' y='60' width='10' height='10' fill='#afc029'/>
+<text x='45' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>65</text>
+L54389:72
+<!--time=269-->
+L54462:200
+<circle cx='35' cy='65' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='35' cy='35' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=270-->
+L54665:200
+<circle cx='35' cy='55' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='25' cy='35' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=271-->
+L54868:200
+<circle cx='35' cy='45' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='15' cy='35' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=272-->
+L55071:200
+<circle cx='35' cy='35' r='4' fill='none' stroke='red' stroke-width='2'/>
+L55272
+<!--time=273-->
+L55274:200
+<circle cx='35' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='5' cy='35' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=274-->
+L55477:46
+<rect x='30' y='20' width='10' height='10' fill='#69d96a'/>
+<text x='35' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>34</text>
+L55525:12
+<rect x='0' y='30' width='10' height='10' fill='#30a2db'/>
+<text x='5' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>9</text>
+L55539:140
+<!--time=275-->
+L55680:200
+<circle cx='25' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+L55475
+<!--time=276-->
+L55883:200
+<circle cx='25' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+L56084
+<!--time=277-->
+L56086:200
+<circle cx='15' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='15' cy='25' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=278-->
+L56289:22
+<rect x='10' y='10' width='10' height='10' fill='#4cbca5'/>
+<text x='15' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>21</text>
+L56313:18
+<rect x='10' y='20' width='10' height='10' fill='#1e90ff'/>
+<text x='15' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>1</text>
+L56333:158
+<!--time=279-->
+L56492:200
+<circle cx='5' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='25' cy='25' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=280-->
+L56695:200
+<circle cx='5' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+L56896
+<!--time=281-->
+L56898:200
+<circle cx='15' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+L57099
+<!--time=282-->
+L57101:200
+<circle cx='25' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+L57302
+<!--time=283-->
+L57304:200
+<circle cx='35' cy='5' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='35' cy='25' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=284-->
+L57507:6
+<rect x='30' y='0' width='10' height='10' fill='#69d96a'/>
+<text x='35' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>34</text>
+L57515:38
+<rect x='30' y='20' width='10' height='10' fill='#299be9'/>
+<text x='35' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>6</text>
+L57555:154
+<!--time=285-->
+L57710:201
+L54866
+<!--time=286-->
+L57913:6
+<rect x='30' y='0' width='10' height='10' fill='#72e259'/>
+<text x='35' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>38</text>
+L57921:58
+<rect x='30' y='30' width='10' height='10' fill='#69d96a'/>
+<text x='35' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>34</text>
+L57981:134
+<!--time=287-->
+L58116:200
+L57504
+L55069
+<!--time=288-->
+L58319:200
+L57301
+L56287
+<!--time=289-->
+L58522:200
+L57098
+L55881
+<!--time=290-->
+L58725:200
+L56895
+L58926
+<!--time=291-->
+L58928:200
+L56692
+L59129
+<!--time=292-->
+L59131:200
+L56286
+L59332
+<!--time=293-->
+L59334:200
+<circle cx='35' cy='15' r='4' fill='none' stroke='red' stroke-width='2'/>
+L59535
+<!--time=294-->
+L59537:200
+L55880
+<circle cx='5' cy='25' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=295-->
+L59740:40
+<rect x='0' y='20' width='10' height='10' fill='#299be9'/>
+<text x='5' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>6</text>
+L59782:4
+<rect x='30' y='20' width='10' height='10' fill='#40b1bc'/>
+<text x='35' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>16</text>
+L59788:154
+<!--time=296-->
+L59943:200
+L56083
+L56693
+<!--time=297-->
+L60146:200
+L59534
+L58723
+<!--time=298-->
+L60349:24
+<rect x='20' y='10' width='10' height='10' fill='#39abc9'/>
+<text x='25' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>13</text>
+L60375:36
+<rect x='10' y='30' width='10' height='10' fill='#2c9de4'/>
+<text x='15' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>7</text>
+L60413:138
+<!--time=299-->
+L60552:200
+L59331
+L58520
+<!--time=300-->
+L60755:200
+L59128
+L57505
+<!--time=301-->
+L60958:200
+L58925
+<circle cx='25' cy='15' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=302-->
+L61161:200
+L58722
+<circle cx='15' cy='15' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=303-->
+L61364:200
+L58519
+<circle cx='5' cy='15' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=304-->
+L61567:200
+L58316
+<circle cx='5' cy='5' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=305-->
+<rect x='0' y='0' width='10' height='10' fill='#72e259'/>
+<text x='5' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>38</text>
+L61772:4
+<rect x='30' y='0' width='10' height='10' fill='#90ff1e'/>
+<text x='35' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>51</text>
+L61778:194
+<!--time=306-->
+L61973:200
+L61767
+L62174
+<!--time=307-->
+L62176:200
+L61564
+L62377
+<!--time=308-->
+L62379:200
+L61361
+L61768
+<!--time=309-->
+<rect x='0' y='0' width='10' height='10' fill='#7beb47'/>
+<text x='5' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>42</text>
+L62584:18
+<rect x='0' y='10' width='10' height='10' fill='#72e259'/>
+<text x='5' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>38</text>
+L62604:180
+<!--time=310-->
+L62785:200
+L62579:2
+<!--time=311-->
+L62988:200
+L62376
+<circle cx='15' cy='5' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=312-->
+L63191:200
+L62173
+<circle cx='25' cy='5' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=313-->
+L63394:4
+<rect x='20' y='0' width='10' height='10' fill='#90ff1e'/>
+<text x='25' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>51</text>
+<rect x='30' y='0' width='10' height='10' fill='#a4d725'/>
+<text x='35' y='5' font-size='5' text-anchor='middle' dominant-baseline='middle'>60</text>
+L63402:194
+<!--time=314-->
+L63597:200
+L63391:2
+<!--time=315-->
+L63800:200
+L63188:2
+<!--time=316-->
+L64003:200
+L62985:2
+<!--time=317-->
+L64206:200
+L61158
+L61565
+<!--time=318-->
+L64409:200
+L60955
+L61362
+<!--time=319-->
+L64612:200
+L60752
+L61159
+<!--time=320-->
+L64815:200
+L59737
+L60956
+<!--time=321-->
+L65018:26
+<rect x='30' y='10' width='10' height='10' fill='#33a4d7'/>
+<text x='35' y='15' font-size='5' text-anchor='middle' dominant-baseline='middle'>10</text>
+L65046:36
+<rect x='20' y='30' width='10' height='10' fill='#45b6b2'/>
+<text x='25' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>18</text>
+L65084:136
+<!--time=322-->
+L65221:200
+L65015
+L60753
+<!--time=323-->
+L65424:200
+L60346
+L59738
+<!--time=324-->
+L65627:44
+<rect x='20' y='20' width='10' height='10' fill='#30a2db'/>
+<text x='25' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>9</text>
+L65673:14
+<rect x='0' y='30' width='10' height='10' fill='#2ea0e0'/>
+<text x='5' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>8</text>
+L65689:140
+<!--time=325-->
+L65830:200
+<circle cx='15' cy='25' r='4' fill='none' stroke='red' stroke-width='2'/>
+L66031
+<!--time=326-->
+L66033:42
+<rect x='10' y='20' width='10' height='10' fill='#2ea0e0'/>
+<text x='15' y='25' font-size='5' text-anchor='middle' dominant-baseline='middle'>8</text>
+L66077:16
+<rect x='0' y='30' width='10' height='10' fill='#1e90ff'/>
+<text x='5' y='35' font-size='5' text-anchor='middle' dominant-baseline='middle'>1</text>
+L66095:140
+<!--time=327-->
+L66236:200
+L66030
+L65625
+<!--time=328-->
+L66439:200
+L60143
+L65422
+<!--time=329-->
+L66642:200
+L55474
+L58317
+<!--time=330-->
+L66845:201
+L54663
+<!--time=331-->
+L67048:201
+L43092
+<!--time=332-->
+L67251:201
+L53039
+<!--time=333-->
+L67454:201
+L53648
+<!--time=334-->
+L67657:200
+L55271
+<circle cx='55' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=335-->
+L67860:86
+<rect x='30' y='40' width='10' height='10' fill='#a2db24'/>
+<text x='35' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>59</text>
+L67948:42
+<rect x='50' y='60' width='10' height='10' fill='#a8ce27'/>
+<text x='55' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>62</text>
+L67992:70
+<!--time=336-->
+L68063:200
+<circle cx='45' cy='45' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='45' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=337-->
+L68266:200
+L53647
+<circle cx='35' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=338-->
+L68469:200
+L53444
+<circle cx='35' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=339-->
+L68672:201
+<circle cx='35' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=340-->
+L68875:200
+<circle cx='65' cy='55' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='35' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=341-->
+L69078:112
+<rect x='60' y='50' width='10' height='10' fill='#a6d226'/>
+<text x='65' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>61</text>
+L69192:72
+<rect x='30' y='90' width='10' height='10' fill='#a0e024'/>
+<text x='35' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>58</text>
+L69266:14
+<!--time=342-->
+L69281:200
+<circle cx='75' cy='55' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='45' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=343-->
+L69484:114
+<rect x='70' y='50' width='10' height='10' fill='#9de423'/>
+<text x='75' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>57</text>
+L69600:72
+<rect x='40' y='90' width='10' height='10' fill='#82f239'/>
+<text x='45' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>45</text>
+L69674:12
+<!--time=344-->
+L69687:200
+<circle cx='75' cy='65' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='45' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=345-->
+L69890:134
+<rect x='70' y='60' width='10' height='10' fill='#94f620'/>
+<text x='75' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>53</text>
+L70026:32
+<rect x='40' y='80' width='10' height='10' fill='#89f82c'/>
+<text x='45' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>48</text>
+L70060:32
+<!--time=346-->
+L70093:201
+L69076
+<!--time=347-->
+L70296:200
+<circle cx='65' cy='65' r='4' fill='none' stroke='red' stroke-width='2'/>
+L69482
+<!--time=348-->
+L70499:132
+<rect x='60' y='60' width='10' height='10' fill='#a0e024'/>
+<text x='65' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>58</text>
+L70633:52
+<rect x='30' y='90' width='10' height='10' fill='#97f220'/>
+<text x='35' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>54</text>
+L70687:14
+<!--time=349-->
+L70702:200
+L70496
+<circle cx='25' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=350-->
+L70905:134
+<rect x='70' y='60' width='10' height='10' fill='#9be822'/>
+<text x='75' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>56</text>
+L71041:48
+<rect x='20' y='90' width='10' height='10' fill='#94f620'/>
+<text x='25' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>53</text>
+L71091:16
+<!--time=351-->
+L71108:200
+L70902
+L71309
+<!--time=352-->
+L71311:200
+<circle cx='55' cy='65' r='4' fill='none' stroke='red' stroke-width='2'/>
+L71512
+<!--time=353-->
+L71514:200
+L54662
+L71715
+<!--time=354-->
+L71717:200
+L54865
+L71918
+<!--time=355-->
+L71920:200
+<circle cx='35' cy='75' r='4' fill='none' stroke='red' stroke-width='2'/>
+L72121
+<!--time=356-->
+L72123:200
+<circle cx='45' cy='75' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='15' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=357-->
+L72326:148
+<rect x='40' y='70' width='10' height='10' fill='#8bfb27'/>
+<text x='45' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>49</text>
+L72476:32
+<rect x='10' y='90' width='10' height='10' fill='#80ef3e'/>
+<text x='15' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>44</text>
+L72510:18
+<!--time=358-->
+L72529:200
+<circle cx='55' cy='75' r='4' fill='none' stroke='red' stroke-width='2'/>
+L72730
+<!--time=359-->
+L72732:200
+<circle cx='65' cy='75' r='4' fill='none' stroke='red' stroke-width='2'/>
+L72933
+<!--time=360-->
+L72935:200
+<circle cx='65' cy='85' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='5' cy='95' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=361-->
+L73138:172
+<rect x='60' y='80' width='10' height='10' fill='#4ebfa1'/>
+<text x='65' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>22</text>
+L73312:6
+<rect x='0' y='90' width='10' height='10' fill='#62d378'/>
+<text x='5' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>31</text>
+L73320:20
+<!--time=362-->
+L73341:200
+<circle cx='55' cy='85' r='4' fill='none' stroke='red' stroke-width='2'/>
+L73542
+<!--time=363-->
+L73544:170
+<rect x='50' y='80' width='10' height='10' fill='#62d378'/>
+<text x='55' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>31</text>
+L73716:8
+<rect x='0' y='90' width='10' height='10' fill='#85f434'/>
+<text x='5' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>46</text>
+L73726:20
+<!--time=364-->
+L73747:200
+<circle cx='55' cy='95' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='5' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=365-->
+L73950:160
+<rect x='0' y='80' width='10' height='10' fill='#70e05d'/>
+<text x='5' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>37</text>
+L74112:28
+<rect x='50' y='90' width='10' height='10' fill='#5ece81'/>
+<text x='55' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>29</text>
+L74142:10
+<!--time=366-->
+L74153:200
+<circle cx='65' cy='95' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='5' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=367-->
+L74356:200
+<circle cx='75' cy='95' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='5' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=368-->
+L74559:120
+<rect x='0' y='60' width='10' height='10' fill='#55c593'/>
+<text x='5' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>25</text>
+L74681:72
+<rect x='70' y='90' width='10' height='10' fill='#2597f2'/>
+<text x='75' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>4</text>
+L74755:6
+<!--time=369-->
+L74762:200
+<circle cx='75' cy='85' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='15' cy='65' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=370-->
+L74965:122
+<rect x='10' y='60' width='10' height='10' fill='#50c19c'/>
+<text x='15' y='65' font-size='5' text-anchor='middle' dominant-baseline='middle'>23</text>
+L75089:50
+<rect x='70' y='80' width='10' height='10' fill='#37a8ce'/>
+<text x='75' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>12</text>
+L75141:26
+<!--time=371-->
+L75168:200
+<circle cx='85' cy='85' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='15' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=372-->
+L75371:102
+<rect x='10' y='50' width='10' height='10' fill='#52c398'/>
+<text x='15' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>24</text>
+L75475:72
+<rect x='80' y='80' width='10' height='10' fill='#42b4b7'/>
+<text x='85' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>17</text>
+L75549:24
+<!--time=373-->
+L75574:200
+L75368
+L75775
+<!--time=374-->
+L75777:200
+L73541
+<circle cx='5' cy='55' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=375-->
+L75980:100
+<rect x='0' y='50' width='10' height='10' fill='#4ebfa1'/>
+<text x='5' y='55' font-size='5' text-anchor='middle' dominant-baseline='middle'>22</text>
+L76082:70
+<rect x='60' y='80' width='10' height='10' fill='#3eafc0'/>
+<text x='65' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>15</text>
+L76154:28
+<!--time=376-->
+L76183:200
+L73947
+L76384
+<!--time=377-->
+L76386:200
+L74353
+<circle cx='5' cy='45' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=378-->
+L76589:80
+<rect x='0' y='40' width='10' height='10' fill='#5ece81'/>
+<text x='5' y='45' font-size='5' text-anchor='middle' dominant-baseline='middle'>29</text>
+L76671:108
+<rect x='50' y='90' width='10' height='10' fill='#6ede62'/>
+<text x='55' y='95' font-size='5' text-anchor='middle' dominant-baseline='middle'>36</text>
+L76781:10
+<!--time=379-->
+L76792:200
+L76586:2
+<!--time=380-->
+L76995:201
+L74963
+<!--time=381-->
+L77198:200
+L72932
+L74557
+<!--time=382-->
+L77401:140
+<rect x='0' y='70' width='10' height='10' fill='#65d574'/>
+<text x='5' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>32</text>
+L77543:8
+<rect x='50' y='70' width='10' height='10' fill='#59ca8a'/>
+<text x='55' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>27</text>
+L77553:50
+<!--time=383-->
+L77604:201
+<circle cx='15' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=384-->
+L77807:201
+<circle cx='15' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=385-->
+L78010:200
+L72729
+L73136
+<!--time=386-->
+L78213:148
+L72474:2
+L78363:32
+L72508:2
+L78397:18
+<!--time=387-->
+L78416:201
+L72324
+<!--time=388-->
+L78619:201
+L70903
+<!--time=389-->
+L78822:200
+L72323
+L70497
+<!--time=390-->
+L79025:146
+<rect x='30' y='70' width='10' height='10' fill='#99ed21'/>
+<text x='35' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>55</text>
+L79173:18
+<rect x='30' y='80' width='10' height='10' fill='#92fb1f'/>
+<text x='35' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>52</text>
+L79193:34
+<!--time=391-->
+L79228:200
+L79022
+L70294
+<!--time=392-->
+L79431:200
+L78210
+<circle cx='55' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=393-->
+L79634:200
+L73135
+<circle cx='65' cy='85' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=394-->
+L79837:200
+<circle cx='75' cy='75' r='4' fill='none' stroke='red' stroke-width='2'/>
+<circle cx='65' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=395-->
+L80040:152
+<rect x='60' y='70' width='10' height='10' fill='#3cadc5'/>
+<text x='65' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>14</text>
+<rect x='70' y='70' width='10' height='10' fill='#2799ed'/>
+<text x='75' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>5</text>
+L80196:46
+<!--time=396-->
+L80243:200
+<circle cx='85' cy='75' r='4' fill='none' stroke='red' stroke-width='2'/>
+L80444
+<!--time=397-->
+L80446:200
+L75774
+<circle cx='75' cy='75' r='4' fill='none' stroke='blue' stroke-width='2'/>
+<!--time=398-->
+L80649:154
+<rect x='70' y='70' width='10' height='10' fill='#42b4b7'/>
+<text x='75' y='75' font-size='5' text-anchor='middle' dominant-baseline='middle'>17</text>
+L80805:20
+<rect x='80' y='80' width='10' height='10' fill='#2799ed'/>
+<text x='85' y='85' font-size='5' text-anchor='middle' dominant-baseline='middle'>5</text>
+L80827:24
+</svg>
